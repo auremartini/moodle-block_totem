@@ -64,9 +64,9 @@ class block_totem extends block_base {
         
         $this->content = new stdClass();
         
-        $this->content->text = 'abbregiated list of teachers notices';
+        $this->content->text .= 'abbregiated list of teachers notices (next '.$this->config->showdayinblock.' days)';
         $this->content->text .= '<br>abbregiated list of text infos';
-        $this->content->footer = 'View More / Admin Button';
+        $this->content->footer = 'View More Button';
         
         return $this->content;
     }

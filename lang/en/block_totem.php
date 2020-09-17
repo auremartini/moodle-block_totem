@@ -30,3 +30,5 @@ $string['pluginname'] = 'Totem block';
 
 $string['configtitle'] = 'Totem title';
 $string['newtotemblock'] = 'Totem block';
+$string['configshowdaysinblock'] = 'Show days in block';
+$string['configshowdaysinblock'] = 'Show days in extended page';
