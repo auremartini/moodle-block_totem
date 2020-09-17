@@ -28,6 +28,9 @@ $string['totem:myaddinstance'] = 'Add a new Totem block to Dashboard';
 $string['totem'] = 'Totem block';
 $string['pluginname'] = 'Totem block';
 
+$string['showmore'] = 'Show more days';
+
+
 $string['configtitle'] = 'Totem title';
 $string['newtotemblock'] = 'Totem block';
 $string['configshowdaysinblock'] = 'Show days in block';
