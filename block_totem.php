@@ -30,7 +30,19 @@ class block_totem extends block_base {
         $this->blockname = get_class($this);
         $this->title = get_string('pluginname', $this->blockname);
     }
-
+ 
+    function has_sconfig() {
+        return true;
+    }
+        
+    function specialization() {
+        if (isset($this->config->title)) {
+            $this->title = $this->title = format_string($this->config->title, true, ['context' => $this->context]);
+        } else {
+            $this->title = get_string('newtotemblock', 'block_totem');
+        }
+    }
+    
     /**
      * All multiple instances of this block
      * @return bool Returns false
@@ -52,11 +64,10 @@ class block_totem extends block_base {
         
         $this->content = new stdClass();
         
-        $this->content->text = 'This is the text';
-        $this->content->footer = 'This is the footer';
+        $this->content->text = 'abbregiated list of teachers notices';
+        $this->content->text .= '<br>abbregiated list of text infos';
+        $this->content->footer = 'View More / Admin Button';
         
-
-
         return $this->content;
     }
 
