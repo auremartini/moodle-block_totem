@@ -34,19 +34,18 @@ require_once("{$CFG->libdir}/formslib.php");
 class event_form extends moodleform {
     
     function definition() {
+        $mform =& $this->_form;
+        $mform->addElement('hidden', 'id');
+        $mform->addElement('hidden', 'blockid');
+        $mform->addElement('hidden', 'cohortsourceid');
+        
         $EVENT_TYPES = array(
             '-' => '',
             'A' => get_string('absentteacher', 'block_totem'),
-                'R' => get_string('reportedclass', 'block_totem')
+            'R' => get_string('reportedclass', 'block_totem')
         );
         
-        $TEACHER_LIST = array(
-            '-'     => '',
-            'Mar.A' => 'Martini Aureliano',
-            'Sim.M' => 'Simona Michea',
-            'Ven.M' => 'Venzi Mathias',
-            'Zen.G' => 'Zenoni Gianmarco'
-        );
+        $TEACHER_LIST = array('0' => '');
         
         $SUBJECTS_LIST = array(
             '-'   => '', 
@@ -56,9 +55,6 @@ class event_form extends moodleform {
             'STO' => 'Storia'
         );
         
-        $mform =& $this->_form;
-        $mform->addElement('hidden', 'id');
-        $mform->addElement('hidden', 'blockid');
         $mform->addElement('header', 'generalhdr', get_string('general'));
         
         // add type element
@@ -82,9 +78,28 @@ class event_form extends moodleform {
         $mform->addElement('text', 'time', get_string('displaytime', 'block_totem'), array('size'=>'10'));
         $mform->addRule('time', get_string('required'), 'required', null, 'client');
         
-        
         // add message element
-        $mform->addElement('editor', 'displaytext', get_string('displayedhtml', 'block_totem'), array('rows' => 10), array('maxfiles' => EDITOR_UNLIMITED_FILES,
-            'noclean' => true, 'context' => $this->context, 'subdirs' => true));
+        $mform->addElement('editor', 'displaytext', get_string('displayedhtml', 'block_totem'),
+                           array('rows' => 10), array('maxfiles' => EDITOR_UNLIMITED_FILES,
+                           'noclean' => true, 'context' => $this->context, 'subdirs' => true));
+    }
+    
+    public function set_data($default_values){
+        global $DB;
+        $mform =& $this->_form;
+        
+        //GET TEACHER LIST FROM DB
+        $sql = 'SELECT u.id, u.firstname, u.lastname FROM mdl_user u
+                LEFT JOIN mdl_cohort_members cm ON u.id = cm.userid
+                WHERE cm.cohortid = :cohortsourceid
+                ORDER BY u.lastname, u.firstname';
+        $rs = $DB->get_records_sql($sql, array('cohortsourceid'=>$default_values['cohortsourceid']));
+        foreach ($rs as $record) {
+            $mform->getElement('teacher')->_options[$record->id] = array(
+                'text' => $record->lastname.' '.$record->firstname,
+                'attr' => array('value' => $record->id)
+            );
+        }
+        return parent::set_data($default_values);
     }
 }

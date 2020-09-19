@@ -57,7 +57,7 @@ echo '<p><form method="post" action="'.$url.'">
       <button type="submit" class="btn btn-secondary" title="">'.get_string('slideshow', 'block_totem').'</button>
       </form></p>';
 
-$url = new moodle_url('/blocks/totem/event.php', array('id' => $id, 'blockid' => $blockid));
+$url = new moodle_url('/blocks/totem/event.php', array('id' => $id, 'blockid' => $blockid, 'cohortsourceid' => $block->config->cohortsourceid));
 echo '<p><form method="post" action="'.$url.'">
       <button type="submit" class="btn btn-secondary" title="">'.get_string('addtotemelement', 'block_totem').'</button>
       </form></p>';

@@ -31,7 +31,7 @@
 
 class block_totem_edit_form extends block_edit_form {
     protected function specific_definition($mform) {
-        global $CFG;
+        global $CFG, $DB;
 
         // Fields for editing HTML block title and contents.
         $mform->addElement('header', 'configheader', get_string('blocksettings', 'block'));
@@ -39,6 +39,16 @@ class block_totem_edit_form extends block_edit_form {
         $mform->addElement('text', 'config_title', get_string('configtitledesc', 'block_totem'));
         $mform->setType('config_title', PARAM_TEXT);
 
+        $sql = 'SELECT id, idnumber FROM mdl_cohort c
+                ORDER BY c.idnumber';
+        $rs = $DB->get_records_sql($sql);
+        $COHORTS = array();
+        foreach ($rs as $record) {
+            $COHORTS[$record->id] = $record->idnumber;
+        }
+        $mform->addElement('select', 'config_cohortsourceid', get_string('configcohortsourcedesc', 'block_totem'), $COHORTS);
+        $mform->setType('config_cohortsourceid', PARAM_NUMBER);
+        
         $mform->addElement('text', 'config_blockdays', get_string('configblockdaysdesc', 'block_totem'));
         $mform->setType('config_blockdays', PARAM_NUMBER);
 
