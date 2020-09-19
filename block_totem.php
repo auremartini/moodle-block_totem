@@ -141,12 +141,13 @@ class block_totem extends block_base {
      */
     protected function get_footer() {
         $footer = null;
-        
-        $footer = '<div style="text-align:right"><form method="post" action="/blocks/totem/view.php"><button type="submit" class="btn btn-secondary" title="">'.get_string('opentotempage', 'block_totem').'</button></form></div>';
+        $url = new moodle_url('/blocks/totem/view.php', array('blockid' => $this->instance->id));
+        $footer = '<div style="text-align:right"><form method="post" action="'.$url.'">
+                   <button type="submit" class="btn btn-secondary" title="">'.get_string('opentotempage', 'block_totem').'</button>
+                   </form></div>';
         
         return $footer;
-    }
-    
+    }    
     
     
     
