@@ -127,7 +127,7 @@ class block_totem extends block_base {
 //            }
 //        }
         
-//        $this->content->text = $renderer->render_block($block);
+        $this->content->text = '';
         $this->content->footer = $this->get_footer();
         
         return $this->content;

@@ -23,22 +23,33 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+// Administration
 $string['totem:addinstance'] = 'Add a new Totem block';
 $string['totem:myaddinstance'] = 'Add a new Totem block to Dashboard';
 $string['totem'] = 'Totem block';
 $string['pluginname'] = 'Totem block';
-
 $string['plugintitle'] = 'Totem';
+
+// Block
 $string['configurenewinstance'] = 'Click the edit icon above to configure this block.';
-$string['opentotempage'] = 'Open totem page';
 
-
+// Block edit
 $string['configtitledesc'] = 'Totem block title';
 $string['configblockdaysdesc'] = 'Days to show in block';
 $string['configpagedaysdesc'] = 'Days to show in extended page';
 
+// View page 
+$string['opentotempage'] = 'Open totem page';
+$string['slideshow'] = 'Slideshow';
+$string['addtotemelement'] = 'Add event';
 
-$string['msg:showmore'] = 'Show more days';
-$string['admin:titledesc'] = 'Totem block and totem page\'s title';
-$string['blockshowdaysinblock'] = 'Show days in block';
-$string['pageshowdaysinblock'] = 'Show days in extended page';
+// Edit event
+$string['absentteacher'] = 'Absent teacher';
+$string['reportedclass'] = 'Reported class';
+$string['eventtype'] = 'Event type';
+$string['teacher'] = 'Teacher';
+$string['subject'] = 'Subject';
+$string['classsection'] = 'Class or section';
+$string['displaydate'] = 'Event date';
+$string['displaytime'] = 'Event time';
+$string['displayedhtml'] = 'Displayed HTML message';

@@ -24,6 +24,7 @@
  */
  
 require_once(__DIR__ . '/../../config.php');
+require_once('form/event_form.php');
 
 global $DB, $OUTPUT, $PAGE;
 
@@ -32,14 +33,32 @@ require_login();
 
 //LOAD PARAMS & OBJECTS
 $blockname = 'totem';
+$id = optional_param('id', 0, PARAM_INT);
 $blockid = required_param('blockid', PARAM_INT);
 $blockinstance = $DB->get_records('block_instances', array('id' => $blockid));
 $block = block_instance($blockname, $blockinstance[$blockid]);
-$id = optional_param('id', 0, PARAM_INT);
 
+//SET FORM
+$form = new event_form();
+$form->set_data(array(
+    'id' => $id,
+    'blockid' => $blockid
+));
+
+//HANDLE EVENTS
+if($form->is_cancelled()) {
+    // Cancelled forms redirect to the course main page.
+    $courseurl = new moodle_url('/blocks/totem/view.php', array('id' => $id));
+    redirect($courseurl);
+} else if ($form->get_data()) {
+    // We need to add code to appropriately act on and store the submitted data
+    // but for now we will just redirect back to the course main page.
+    $courseurl = new moodle_url('/blocks/totem/view.php', array('id' => $courseid));
+    redirect($courseurl);
+}
 
 // SET PAGE ELEMENTS (HEADER)
-$PAGE->set_url(new moodle_url('/blocks/totem/view.php'));
+$PAGE->set_url(new moodle_url('/blocks/totem/event.php'));
 $PAGE->set_context(\context_system::instance());
 $PAGE->set_title($block->get_title());
 $PAGE->set_heading($block->get_title());
@@ -47,23 +66,11 @@ $settingsnode = $PAGE->settingsnav->add(get_string('plugintitle', 'block_totem')
 $url = new moodle_url('/blocks/totem/view.php', array('id' => $id, 'blockid' => $blockid));
 $node = $settingsnode->add($block->get_title(), $url);
 $node->make_active();
+$url = new moodle_url('/blocks/totem/event.php', array('id' => $id, 'blockid' => $blockid));
+$editnode = $node->add(get_string('addtotemelement', 'block_totem'), $url);
+$editnode->make_active();
 
 // PRINT CONTENT TO PAGE
 echo $OUTPUT->header();
-
-echo '<table width="100%"><tr><td style="vertical-align: top; width:15rem;">';
-echo '<div class="totem-box">DATE PICKER</div>';
-echo '<p><form method="post" action="'.$url.'">
-      <button type="submit" class="btn btn-secondary" title="">'.get_string('slideshow', 'block_totem').'</button>
-      </form></p>';
-
-$url = new moodle_url('/blocks/totem/event.php', array('id' => $id, 'blockid' => $blockid));
-echo '<p><form method="post" action="'.$url.'">
-      <button type="submit" class="btn btn-secondary" title="">'.get_string('addtotemelement', 'block_totem').'</button>
-      </form></p>';
-
-echo '</td><td style="width:1.25rem;">&nbsp;</td><td style="vertical-align: top;">';
-echo '<div class="totem-box">CONTENT DISPLAY</div>';
-echo '</td></tr></table>';
-
+$form->display();
 echo $OUTPUT->footer();

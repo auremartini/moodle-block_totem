@@ -28,6 +28,7 @@
  * @copyright 2009 Tim Hunt
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 class block_totem_edit_form extends block_edit_form {
     protected function specific_definition($mform) {
         global $CFG;
