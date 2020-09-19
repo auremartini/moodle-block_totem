@@ -35,14 +35,14 @@ class block_totem_edit_form extends block_edit_form {
         // Fields for editing HTML block title and contents.
         $mform->addElement('header', 'configheader', get_string('blocksettings', 'block'));
 
-        $mform->addElement('text', 'config_title', get_string('configtitle', 'block_totem'));
+        $mform->addElement('text', 'config_title', get_string('configtitledesc', 'block_totem'));
         $mform->setType('config_title', PARAM_TEXT);
-    
-        $mform->addElement('text', 'config_showdayinblock', get_string('configshowdaysinblock', 'block_totem'));
-        $mform->setType('config_showdayinblock', PARAM_ALPHANUM);
 
-        $mform->addElement('text', 'config_showdayinpage', get_string('configshowdaysinpage', 'block_totem'));
-        $mform->setType('config_showdayinpage', PARAM_ALPHANUM);
+        $mform->addElement('text', 'config_blockdays', get_string('configblockdaysdesc', 'block_totem'));
+        $mform->setType('config_blockdays', PARAM_NUMBER);
+
+        $mform->addElement('text', 'config_pagedays', get_string('configpagedaysdesc', 'block_totem'));
+        $mform->setType('config_pagedays', PARAM_NUMBER);
     }
 
     function set_data($defaults) {

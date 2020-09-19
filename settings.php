@@ -15,37 +15,16 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Tags block caps.
+ * Version details
  *
- * @package    block_totem
+ * @package    totem_blocks
  * @copyright  2020 Aureliano Martini
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
+defined('MOODLE_INTERNAL') || die;
 
-$capabilities = array(
-
-    'block/totem:myaddinstance' => array(
-        'captype' => 'write',
-        'contextlevel' => CONTEXT_SYSTEM,
-        'archetypes' => array(
-            'user' => CAP_ALLOW
-        ),
-        
-        'clonepermissionsfrom' => 'moodle/my:manageblocks'
-    ),
-    
-    'block/totem:addinstance' => array(
-        'riskbitmask' => RISK_SPAM | RISK_XSS,
-        
-        'captype' => 'write',
-        'contextlevel' => CONTEXT_BLOCK,
-        'archetypes' => array(
-            'editingteacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW
-        ),
-
-        'clonepermissionsfrom' => 'moodle/site:manageblocks'
-    )
-);
+if ($ADMIN->fulltree) {
+    $settings->add(new admin_setting_configtext('config_title', get_string('admin:titlename', 'block_totem'),
+        get_string('admin:titledesc', 'block_totem'), get_string('config:title', 'block_totem')));
+}

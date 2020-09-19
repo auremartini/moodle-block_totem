@@ -28,10 +28,17 @@ $string['totem:myaddinstance'] = 'Add a new Totem block to Dashboard';
 $string['totem'] = 'Totem block';
 $string['pluginname'] = 'Totem block';
 
-$string['showmore'] = 'Show more days';
+$string['plugintitle'] = 'Totem';
+$string['configurenewinstance'] = 'Click the edit icon above to configure this block.';
+$string['opentotempage'] = 'Open totem page';
 
 
-$string['configtitle'] = 'Totem title';
-$string['newtotemblock'] = 'Totem block';
-$string['configshowdaysinblock'] = 'Show days in block';
-$string['configshowdaysinblock'] = 'Show days in extended page';
+$string['configtitledesc'] = 'Totem block title';
+$string['configblockdaysdesc'] = 'Days to show in block';
+$string['configpagedaysdesc'] = 'Days to show in extended page';
+
+
+$string['msg:showmore'] = 'Show more days';
+$string['admin:titledesc'] = 'Totem block and totem page\'s title';
+$string['blockshowdaysinblock'] = 'Show days in block';
+$string['pageshowdaysinblock'] = 'Show days in extended page';
