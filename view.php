@@ -24,6 +24,7 @@
  */
  
 require_once(__DIR__ . '/../../config.php');
+require_once(__DIR__ . '/renderer/event.php');
 
 global $DB, $OUTPUT, $PAGE;
 
@@ -35,7 +36,7 @@ $blockname = 'totem';
 $blockid = required_param('blockid', PARAM_INT);
 $blockinstance = $DB->get_records('block_instances', array('id' => $blockid));
 $block = block_instance($blockname, $blockinstance[$blockid]);
-$date = optional_param('date', now(), PARAM_INT);
+$date = optional_param('date', 0, PARAM_INT);
 
 // SET PAGE ELEMENTS (HEADER)
 $PAGE->set_url(new moodle_url('/blocks/totem/view.php'));
@@ -51,6 +52,9 @@ $node->make_active();
 echo $OUTPUT->header();
 
 echo html_writer::start_tag('div');
+//$form = new calendar_picker();
+//$form->display();
+
 
 $url = new moodle_url('/blocks/totem/event.php', array('blockid' => $blockid, 'cohortsourceid' => $block->config->cohortsourceid));
 echo '<p><form method="post" action="'.$url.'">
@@ -58,42 +62,16 @@ echo '<p><form method="post" action="'.$url.'">
       </form></p>';
 echo html_writer::end_tag('div');
 
-
-echo html_writer::start_tag('div', array('class' => 'totem-table'));
-echo html_writer::start_tag('table', array('class' => 'generaltable', 'width' => '100%'));
-//echo html_writer::start_tag('thead');
-//echo html_writer::start_tag('tr');
-//echo html_writer::start_tag('th', array('class' => 'header c0')).''.html_writer::end_tag('th');
-//echo html_writer::start_tag('th', array('class' => 'header c1')).'Teacher'.html_writer::end_tag('th');
-//echo html_writer::start_tag('th', array('class' => 'header c2')).'Message'.html_writer::end_tag('th');
-//echo html_writer::end_tag('tr');
-//echo html_writer::end_tag('thead');
-$sql = "SELECT te.id, te.eventtype, u.idnumber, te.subject, te.section, te.time, te.displaytext
-        FROM mdl_block_totem_event te
-        LEFT JOIN mdl_user u ON te.userid = u.id
-        WHERE te.blockid = :blockid
-        ORDER BY te.date, te.time, u.idnumber";
-if ($rs = $DB->get_records_sql($sql, array('blockid' => $blockid))) {
-    echo html_writer::start_tag('tbody');
-    foreach ($rs as $record) {
-        echo html_writer::start_tag('tr');
-        echo html_writer::start_tag('td', array('class' => 'cell c0', 'width' => '50rem')).$record->eventtype.html_writer::end_tag('td');
-        echo html_writer::start_tag('td', array('class' => 'cell c1')).$record->idnumber.html_writer::end_tag('td');
-        echo html_writer::start_tag('td', array('class' => 'cell c2', 'width' => '100rem')).$record->subject.html_writer::end_tag('td');
-        echo html_writer::start_tag('td', array('class' => 'cell c3', 'width' => '100rem')).$record->section.html_writer::end_tag('td');
-        echo html_writer::start_tag('td', array('class' => 'cell c4', 'width' => '100rem')).$record->time.html_writer::end_tag('td');
-        echo html_writer::start_tag('td', array('class' => 'cell c5')).$record->displaytext.html_writer::end_tag('td');
-        if (TRUE) {
-            $url = new moodle_url('/blocks/totem/event.php', array('id' => $record->id, 'blockid' => $blockid, 'cohortsourceid' => $block->config->cohortsourceid));
-            echo html_writer::start_tag('td', array('class' => 'cell c5', 'width' => '50rem'));
-            echo html_writer::link($url, '[[E]]');
-            echo html_writer::end_tag('td');
-        }
-        echo html_writer::end_tag('tr');
+$d = new DateTime();
+if ($date) $d->setTimestamp($date);
+$d->setTime(0,0);
+$i = 0;
+while ($i < $block->config->pagedays) {
+    if ($block->config->pageskipweekend == 0 || intval($d->format('N')) <= 5) {
+        echo event_render_table($blockid, $d->getTimestamp(), ($block->config->pagedays == 1 ? 0 : ($i == 0 ? 1 : -1)), $block->config->cohortsourceid);
+        $i++;
     }
-    echo html_writer::end_tag('tbody');
+    $d->modify('+1 day');
 }
-echo html_writer::end_tag('table');
-echo html_writer::end_tag('div');
 
 echo $OUTPUT->footer();

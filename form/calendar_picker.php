@@ -15,15 +15,29 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version details
+ * Form for editing HTML block instances.
  *
- * @package    totem_blocks
- * @copyright  2020 Aureliano Martini
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package   block_html
+ * @copyright 2009 Tim Hunt
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
+/**
+ * Form for editing HTML block instances.
+ *
+ * @copyright 2009 Tim Hunt
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+ 
+require_once("{$CFG->libdir}/formslib.php");
 
-$plugin->version   = 2020092004;        // The current plugin version (Date: YYYYMMDDXX)
-$plugin->requires  = 2020060900;        // Requires this Moodle version
-$plugin->component = 'block_totem';      // Full name of the plugin (used for diagnostics)
+class calendar_picker extends moodleform {
+    
+    function definition() {
+        $mform =& $this->_form;
+        
+        $mform->addElement('date_selector', 'date', '');
+        //MOSTRA
+        //AGGIUNGI
+    }
+}

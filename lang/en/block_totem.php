@@ -38,6 +38,7 @@ $string['configtitledesc'] = 'Totem block title';
 $string['configcohortsourcedesc'] = 'Get teachers from cohort';
 $string['configblockdaysdesc'] = 'Days to show in block';
 $string['configpagedaysdesc'] = 'Days to show in extended page';
+$string['configskipweekend'] = 'Hide week-end days';
 
 // View page 
 $string['opentotempage'] = 'Open totem page';

@@ -47,12 +47,18 @@ class block_totem_edit_form extends block_edit_form {
             $COHORTS[$record->id] = $record->idnumber;
         }
         $mform->addElement('select', 'config_cohortsourceid', get_string('configcohortsourcedesc', 'block_totem'), $COHORTS);
-        $mform->setType('config_cohortsourceid', PARAM_NUMBER);
+        $mform->setType('config_cohortsourceid', PARAM_INT);
         
-        $mform->addElement('text', 'config_blockdays', get_string('configblockdaysdesc', 'block_totem'));
-        $mform->setType('config_blockdays', PARAM_NUMBER);
-
-        $mform->addElement('text', 'config_pagedays', get_string('configpagedaysdesc', 'block_totem'));
+        $a=array();
+        $a[] =& $mform->createElement('text', 'config_blockdays', '', array('size'=>'3'));
+        $a[] =& $mform->createElement('advcheckbox', 'config_blockskipweekend', '', get_string('configskipweekend', 'block_totem', '', array(0, 1)));
+        $mform->addGroup($a, 'blockdays', get_string('configblockdaysdesc', 'block_totem'), '', FALSE);
+        $mform->setType('config_blockdays', PARAM_INT);
+        
+        $a=array();
+        $a[] =& $mform->createElement('text', 'config_pagedays', '', array('size'=>'3'));
+        $a[] =& $mform->createElement('advcheckbox', 'config_pageskipweekend', '', get_string('configskipweekend', 'block_totem', '', array(0, 1)));
+        $mform->addGroup($a, 'pagedays', get_string('configpagedaysdesc', 'block_totem'), '', FALSE);
         $mform->setType('config_pagedays', PARAM_NUMBER);
     }
 

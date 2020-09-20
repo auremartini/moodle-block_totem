@@ -20,6 +20,8 @@
  * @copyright 2020 Aureliano Martini
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+require_once(__DIR__ . '/renderer/event.php');
+
 
 class block_totem extends block_base {
 
@@ -126,8 +128,18 @@ class block_totem extends block_base {
 //                $footer = $this->get_footer($rssfeeds);
 //            }
 //        }
+
+        $d = new DateTime();
+        $d->setTime(0,0);
+        $i = 0;
+        while ($i < $this->config->blockdays) {
+            if ($this->config->blockskipweekend == 0 || intval($d->format('N')) <= 5) {
+                $this->content->text .= event_render_table($this->instance->id, $d->getTimestamp(), ($this->config->blockdays == 1 ? 0 : ($i==0 ? 1 : -1)));
+                $i++;
+            }
+            $d->modify('+1 day');
+        }
         
-        $this->content->text = '';
         $this->content->footer = $this->get_footer();
         
         return $this->content;
