@@ -53,4 +53,8 @@ $string['subject'] = 'Subject';
 $string['classsection'] = 'Class or section';
 $string['displaydate'] = 'Event date';
 $string['displaytime'] = 'Event time';
-$string['displayedhtml'] = 'Displayed HTML message';
+$string['displaytext'] = 'Display message';
+
+// Database
+$string['inserteventerror'] = 'Error in insert event record in database';
+$string['updateeventerror'] = 'Error in updating event record in database';

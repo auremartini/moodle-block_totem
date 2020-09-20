@@ -39,23 +39,38 @@ $blockinstance = $DB->get_records('block_instances', array('id' => $blockid));
 $block = block_instance($blockname, $blockinstance[$blockid]);
 $cohortsourceid = required_param('cohortsourceid', PARAM_INT);
 
-//SET FORM
+// SET FORM
 $form = new event_form();
+$form->load_list('userid', array('cohortsourceid' => $cohortsourceid));
 $form->set_data(array(
     'id' => $id,
     'blockid' => $blockid,
     'cohortsourceid' => $cohortsourceid
 ));
 
-//HANDLE EVENTS
+// LOAD VALUES TO EDIT
+if ($id) {
+    $record = $DB->get_record('block_totem_event', array('id' => $id));
+    $form->set_data($record);
+}
+
+// HANDLE EVENTS
 if($form->is_cancelled()) {
     // Cancelled forms redirect to the course main page.
-    $courseurl = new moodle_url('/blocks/totem/view.php', array('id' => $id));
+    $courseurl = new moodle_url('/blocks/totem/view.php', array('blockid' => $blockid));
     redirect($courseurl);
-} else if ($form->get_data()) {
+} else if ($record = $form->get_data()) {
     // We need to add code to appropriately act on and store the submitted data
-    // but for now we will just redirect back to the course main page.
-    $courseurl = new moodle_url('/blocks/totem/view.php', array('id' => $courseid));
+    if ($id != 0) {
+        if (!$DB->update_record('block_totem_event', $record)) {
+            print_error('updateeventerror', 'block_totem');
+        }
+    } else {
+        if (!$DB->insert_record('block_totem_event', $record)) {
+            print_error('inserteventerror', 'block_totem');
+        }
+    }
+    $courseurl = new moodle_url('/blocks/totem/view.php', array('blockid' => $blockid, 'date' => $record->date));
     redirect($courseurl);
 }
 

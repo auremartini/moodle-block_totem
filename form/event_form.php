@@ -58,17 +58,17 @@ class event_form extends moodleform {
         $mform->addElement('header', 'generalhdr', get_string('general'));
         
         // add type element
-        $mform->addElement('select', 'type', get_string('eventtype', 'block_totem'), $EVENT_TYPES);
+        $mform->addElement('select', 'eventtype', get_string('eventtype', 'block_totem'), $EVENT_TYPES);
         
         // add teacher element
-        $mform->addElement('select', 'teacher', get_string('teacher', 'block_totem'), $TEACHER_LIST);
+        $mform->addElement('select', 'userid', get_string('teacher', 'block_totem'), $TEACHER_LIST);
         
         // add subject element
         $mform->addElement('select', 'subject', get_string('subject', 'block_totem'), $SUBJECTS_LIST);
         
         // add section element
-        $mform->addElement('text', 'classsection', get_string('classsection', 'block_totem'), array('size'=>'10'));
-        $mform->addRule('classsection', get_string('required'), 'required', null, 'client');
+        $mform->addElement('text', 'section', get_string('classsection', 'block_totem'), array('size'=>'10'));
+        $mform->addRule('section', get_string('required'), 'required', null, 'client');
         
         // add date element
         $mform->addElement('date_selector', 'date', get_string('displaydate', 'block_totem'));
@@ -79,27 +79,30 @@ class event_form extends moodleform {
         $mform->addRule('time', get_string('required'), 'required', null, 'client');
         
         // add message element
-        $mform->addElement('editor', 'displaytext', get_string('displayedhtml', 'block_totem'),
-                           array('rows' => 10), array('maxfiles' => EDITOR_UNLIMITED_FILES,
-                           'noclean' => true, 'context' => $this->context, 'subdirs' => true));
+        $mform->addElement('text', 'displaytext', get_string('displaytext', 'block_totem'), array('size'=>'255'));
+                           
+        $this->add_action_buttons();
     }
     
-    public function set_data($default_values){
+    public function load_list($list, $params){
         global $DB;
-        $mform =& $this->_form;
         
-        //GET TEACHER LIST FROM DB
-        $sql = 'SELECT u.id, u.firstname, u.lastname FROM mdl_user u
+        $sql = '';
+        $rs = null;
+        switch ($list) {
+            case 'userid': //GET FILTERED TEACHER LIST
+                $sql = 'SELECT u.id, u.firstname, u.lastname FROM mdl_user u
                 LEFT JOIN mdl_cohort_members cm ON u.id = cm.userid
                 WHERE cm.cohortid = :cohortsourceid
                 ORDER BY u.lastname, u.firstname';
-        $rs = $DB->get_records_sql($sql, array('cohortsourceid'=>$default_values['cohortsourceid']));
-        foreach ($rs as $record) {
-            $mform->getElement('teacher')->_options[$record->id] = array(
-                'text' => $record->lastname.' '.$record->firstname,
-                'attr' => array('value' => $record->id)
-            );
+                $rs = $DB->get_records_sql($sql, $params);
+                foreach ($rs as $record) {
+                    $this->_form->getElement('userid')->_options[$record->id] = array(
+                        'text' => $record->lastname.' '.$record->firstname,
+                        'attr' => array('value' => $record->id)
+                    );
+                }
+            default:
         }
-        return parent::set_data($default_values);
     }
 }
