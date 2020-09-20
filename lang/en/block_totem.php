@@ -44,6 +44,7 @@ $string['configskipweekend'] = 'Hide week-end days';
 $string['opentotempage'] = 'Open totem page';
 $string['slideshow'] = 'Slideshow';
 $string['addtotemelement'] = 'Add event';
+$string['fullscreen'] = 'Fullscreen';
 
 // Edit event
 $string['absentteacher'] = 'Absent teacher';

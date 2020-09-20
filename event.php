@@ -80,7 +80,7 @@ $PAGE->set_context(\context_system::instance());
 $PAGE->set_title($block->get_title());
 $PAGE->set_heading($block->get_title());
 $settingsnode = $PAGE->settingsnav->add(get_string('plugintitle', 'block_totem'));
-$url = new moodle_url('/blocks/totem/view.php', array('id' => $id, 'blockid' => $blockid, 'cohortsourceid' => $cohortsourceid));
+$url = new moodle_url('/blocks/totem/view.php', array('blockid' => $blockid));
 $node = $settingsnode->add($block->get_title(), $url);
 $node->make_active();
 $url = new moodle_url('/blocks/totem/event.php', array('id' => $id, 'blockid' => $blockid, 'cohortsourceid' => $cohortsourceid));

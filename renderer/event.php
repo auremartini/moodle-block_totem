@@ -38,7 +38,7 @@ function event_render_table($blockid, $date, $show = 1, $cohortsourceid = NULL) 
     }
     if ($cohortsourceid) $edit = true;
 
-    $return .= html_writer::start_tag('div', array('id' => 'totem-event-'.$date,'class' => 'totem-table'));
+    $return .= html_writer::start_tag('div', array('id' => 'totem-event'.$date,'class' => 'totem-table'));
     $return .= html_writer::start_tag('h3', array('id' => 'totem-title-'.$date));
     if ($show != 0) {
         $url = 'javascript:
