@@ -31,7 +31,7 @@
  
 require_once("{$CFG->libdir}/formslib.php");
 
-class event_form extends moodleform {
+class event_edit_form extends moodleform {
     
     function definition() {
         $mform =& $this->_form;

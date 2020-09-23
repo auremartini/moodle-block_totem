@@ -24,7 +24,7 @@
  */
  
 require_once(__DIR__ . '/../../config.php');
-require_once('form/event_form.php');
+require_once('class/event_edit_form.php');
 
 global $DB, $OUTPUT, $PAGE;
 
@@ -40,7 +40,7 @@ $block = block_instance($blockname, $blockinstance[$blockid]);
 $cohortsourceid = required_param('cohortsourceid', PARAM_INT);
 
 // SET FORM
-$form = new event_form();
+$form = new event_edit_form();
 $form->load_list('userid', array('cohortsourceid' => $cohortsourceid));
 $form->set_data(array(
     'id' => $id,
@@ -75,6 +75,7 @@ if($form->is_cancelled()) {
 }
 
 // SET PAGE ELEMENTS (HEADER)
+$PAGE->requires->js(new moodle_url($CFG->wwwroot . '/blocks/totem/js/event_edit_form.js'));
 $PAGE->set_url(new moodle_url('/blocks/totem/event.php'));
 $PAGE->set_context(\context_system::instance());
 $PAGE->set_title($block->get_title());
