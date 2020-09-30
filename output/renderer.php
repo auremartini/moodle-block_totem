@@ -1,7 +1,5 @@
 <?php
 
-use PhpOffice\PhpSpreadsheet\Shared\Date;
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -17,15 +15,22 @@ use PhpOffice\PhpSpreadsheet\Shared\Date;
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+class block_totem_renderer extends plugin_renderer_base {
+    
+    /**
+     * Defer to template
+     * 
+     * @param block_totem_element $totem
+     * @return string|boolean
+     */
+    public function render($totem) {
+        $data = $totem->export_for_template($this);
+        return parent::render_from_template('block_totem/totem_table', $data);
+    }
+}
+
 /**
- * Strings for component 'block_totem', language 'en', branch 'MOODLE_20_STABLE'
- *
- * @package   block_totem
- * @copyright 2020 Aureliano Martini
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
- 
-function event_render_table($blockid, $date, $show = 1, $cohortsourceid = NULL) {
+ function event_render_table($blockid, $date, $show = 1, $cohortsourceid = NULL) {
     global $DB;
     $return = "";
     $edit = false;
@@ -86,4 +91,4 @@ function event_render_table($blockid, $date, $show = 1, $cohortsourceid = NULL) 
     $return .= html_writer::end_tag('div');
 
     return $return;
-}
+}*/

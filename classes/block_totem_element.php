@@ -14,30 +14,26 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-/**
- * Form for editing HTML block instances.
- *
- * @package   block_html
- * @copyright 2009 Tim Hunt
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-
-/**
- * Form for editing HTML block instances.
- *
- * @copyright 2009 Tim Hunt
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
- 
-require_once("{$CFG->libdir}/formslib.php");
-
-class calendar_picker extends moodleform {
+class block_totem_element implements renderable, templatable {
     
-    function definition() {
-        $mform =& $this->_form;
+    /**
+     * Set the initial properties for the block
+     */
+    function init(string $id = NULL, int $date = NULL) {
+        $this->id = $id;
+        $this->date = $date;
+    }
+    
+    /**
+     * Export this data so it can be used as the context for a mustache template
+     * 
+     * @return stdClass
+     */
+    public function export_for_template(renderer_base $output) {
+        $data = new stdClass();
         
-        $mform->addElement('date_selector', 'date', '');
-        //MOSTRA
-        //AGGIUNGI
+        //@todo export some stuff
+        
+        return $data;
     }
 }

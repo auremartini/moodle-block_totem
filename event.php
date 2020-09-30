@@ -24,7 +24,7 @@
  */
  
 require_once(__DIR__ . '/../../config.php');
-require_once('class/event_edit_form.php');
+require_once('classes/event_edit_form.php');
 
 global $DB, $OUTPUT, $PAGE;
 

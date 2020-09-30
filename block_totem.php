@@ -20,8 +20,8 @@
  * @copyright 2020 Aureliano Martini
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-require_once(__DIR__ . '/renderer/event.php');
-
+require_once(__DIR__ . '/classes/block_totem_element.php');
+require_once(__DIR__ . '/output/renderer.php');
 
 class block_totem extends block_base {
 
@@ -66,7 +66,7 @@ class block_totem extends block_base {
      * @return object $this->content
      */
     function get_content() {
-        global $CFG, $DB;
+        global $CFG, $DB, $PAGE;
         
         // First check if we have already generated, don't waste cycles
         if ($this->content !== NULL) {
@@ -74,8 +74,8 @@ class block_totem extends block_base {
         }
         
         // initalise block content object
-        $this->content = new stdClass;
-        $this->content->text   = '';
+        $this->content = new stdClass();
+        $this->content->text = '';
         $this->content->footer = '';
         
         if (empty($this->instance)) {
@@ -134,7 +134,10 @@ class block_totem extends block_base {
         $i = 0;
         while ($i < $this->config->blockdays) {
             if ($this->config->blockskipweekend == 0 || intval($d->format('N')) <= 5) {
-                $this->content->text .= event_render_table($this->instance->id, $d->getTimestamp(), ($this->config->blockdays == 1 ? 0 : ($i==0 ? 1 : -1)));
+                // initalise new totem element
+                $totem = new block_totem_element($this->instance->id, $d->getTimestamp());
+               $this->content->text .= $PAGE->get_renderer('block_totem')->render($totem);
+                //event_render_table($this->instance->id, $d->getTimestamp(), ($this->config->blockdays == 1 ? 0 : ($i==0 ? 1 : -1)));
                 $i++;
             }
             $d->modify('+1 day');
