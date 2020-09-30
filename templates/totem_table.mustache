@@ -19,6 +19,38 @@
 	
 	Show totem as a table
 }}
-<div data-region="totem_element" id="totem-table-DATE" class="totem-table">
-	TABELLA
+<div data-region="totem_element" id="totem-element-{{date}}" class="totem-table">
+	<h3 id="totem-title-{{date}}">
+	{{#collapsible}}
+		<a href="javascript:document.getElementById('totem-table-{{date}}').classList.remove('hidden');document.getElementById('totem-switchoff-{{date}}').classList.remove('hidden');document.getElementById('totem-switchon-{{date}}').classList.add('hidden');" id="totem-switchon-{{date}}" class="{{#collapsed}}hidden{{/collapsed}}">&#9656;</a>
+		<a href="javascript:document.getElementById('totem-table-{{date}}').classList.add('hidden');document.getElementById('totem-switchoff-{{date}}').classList.add('hidden');document.getElementById('totem-switchon-{{date}}').classList.remove('hidden');" id="totem-switchoff-{{date}}" class="{{^collapsed}}hidden{{/collapsed}}">&#9662;</a>
+	{{/collapsible}}
+	{{date_text}}</h3>
+	<table id="totem-table-{{date}}">
+		<tr><td>AAAAA</td></tr>
+	</table>	
 </div>
+
+<script>
+	function show_totem_table(id, switch) {
+		alert(id);
+		document.getElementById("totem-switch" + "on-" + id).classList.add("hidden");
+        document.getElementById("totem-switch" + "on-" + id).classList.add("hidden");
+        document.getElementById("totem-switch" + "on-" + id).classList.remove("hidden");
+    }
+</script>
+
+{{!
+        $url = 'javascript:
+                document.getElementById("totem-table-'.$date.'").classList.add("hidden");
+                document.getElementById("totem-switchon-'.$date.'").classList.add("hidden");
+                document.getElementById("totem-switchoff-'.$date.'").classList.remove("hidden");
+                ';
+        $return .= html_writer::link($url, '&#9662;&nbsp;', array('id' => 'totem-switchon-'.$date, 'class' => ($show == 1 ? '' : 'hidden')));
+        $url = 'javascript:
+                document.getElementById("totem-table-'.$date.'").classList.remove("hidden");
+                document.getElementById("totem-switchon-'.$date.'").classList.remove("hidden");
+                document.getElementById("totem-switchoff-'.$date.'").classList.add("hidden");
+                ';
+        $return .= html_writer::link($url, '&#9656;&nbsp;', array('id' => 'totem-switchoff-'.$date, 'class' => ($show == 1 ? 'hidden' : '')));
+}}

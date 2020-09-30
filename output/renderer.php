@@ -24,8 +24,7 @@ class block_totem_renderer extends plugin_renderer_base {
      * @return string|boolean
      */
     public function render($totem) {
-        $data = $totem->export_for_template($this);
-        return parent::render_from_template('block_totem/totem_table', $data);
+        return parent::render_from_template('block_totem/totem_table', $totem->export_for_template($this));
     }
 }
 

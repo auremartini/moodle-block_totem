@@ -15,25 +15,35 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 class block_totem_element implements renderable, templatable {
+    private $data = [];
     
     /**
      * Set the initial properties for the block
+     * 
      */
-    function init(string $id = NULL, int $date = NULL) {
-        $this->id = $id;
-        $this->date = $date;
+    public function __construct($params) {
+        $this->data = $params;
+        $this->set_date($params['date']);
     }
     
+    public function set_date($date) {
+        if ($date > 0) {
+            $d = new DateTime();
+            $d->setTime(0,0);
+            $this->data['date'] = $d->getTimestamp();
+            $this->data['date_text'] = date('l d F Y', $date);
+        } else {
+            $this->data['date'] = 0;
+            $this->data['date_text'] = '';
+        }
+        return $this->data['date'];
+    }
     /**
      * Export this data so it can be used as the context for a mustache template
      * 
      * @return stdClass
      */
     public function export_for_template(renderer_base $output) {
-        $data = new stdClass();
-        
-        //@todo export some stuff
-        
-        return $data;
+        return $this->data;
     }
 }

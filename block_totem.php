@@ -135,8 +135,17 @@ class block_totem extends block_base {
         while ($i < $this->config->blockdays) {
             if ($this->config->blockskipweekend == 0 || intval($d->format('N')) <= 5) {
                 // initalise new totem element
-                $totem = new block_totem_element($this->instance->id, $d->getTimestamp());
-               $this->content->text .= $PAGE->get_renderer('block_totem')->render($totem);
+                $totem = new block_totem_element([
+                    'id' => $this->instance->id,
+                    'date' => $d->getTimestamp(),
+                    'collapsible' => TRUE,
+                    'collapsed' => TRUE,
+                    'showDate' => TRUE]);
+                
+                $this->content->text .= $PAGE->get_renderer('block_totem')->render($totem);
+               
+               
+               
                 //event_render_table($this->instance->id, $d->getTimestamp(), ($this->config->blockdays == 1 ? 0 : ($i==0 ? 1 : -1)));
                 $i++;
             }
