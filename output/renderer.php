@@ -26,6 +26,21 @@ class block_totem_renderer extends plugin_renderer_base {
     public function render($totem) {
         return parent::render_from_template('block_totem/totem_table', $totem->export_for_template($this));
     }
+    
+    public function render_fullscreen($totem) {
+        return parent::render_from_template('block_totem/totem_table_fullscreen', $totem->export_for_template($this));
+    }
+    
+    public function open_totem($totem) {
+        $footer = null;
+        $url = new moodle_url('/blocks/totem/view.php', array('blockid' => $totem->get_id()));
+        $footer = '<div style="text-align:right"><form method="post" action="'.$url.'">
+                   <button type="submit" class="btn btn-secondary" title="">'.get_string('opentotempage', 'block_totem').'</button>
+                   </form></div>';
+        
+        return $footer;
+    }
+    
 }
 
 /**

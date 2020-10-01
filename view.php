@@ -24,7 +24,8 @@
  */
  
 require_once(__DIR__ . '/../../config.php');
-require_once(__DIR__ . '/renderer/event.php');
+require_once(__DIR__ . '/classes/block_totem_table.php');
+require_once(__DIR__ . '/output/renderer.php');
 
 global $DB, $OUTPUT, $PAGE;
 
@@ -51,11 +52,6 @@ $node->make_active();
 // PRINT CONTENT TO PAGE
 echo $OUTPUT->header();
 
-echo html_writer::start_tag('div');
-//$form = new calendar_picker();
-//$form->display();
-
-
 $url = new moodle_url('/blocks/totem/event.php', array('blockid' => $blockid, 'cohortsourceid' => $block->config->cohortsourceid));
 echo '<p><form method="post" action="'.$url.'">
       <button type="submit" class="btn btn-secondary" title="">'.get_string('addtotemelement', 'block_totem').'</button>
@@ -70,11 +66,22 @@ if ($date) $d->setTimestamp($date);
 $d->setTime(0,0);
 $i = 0;
 while ($i < $block->config->pagedays) {
-    if ($block->config->pageskipweekend == 0 || intval($d->format('N')) <= 5) {
-        echo event_render_table($blockid, $d->getTimestamp(), ($block->config->pagedays == 1 ? 0 : ($i == 0 ? 1 : -1)), $block->config->cohortsourceid);
+    $collapsible = ($block->config->pagedays == 1 ? FALSE : TRUE);
+    $collapsed = ($i==0 ? FALSE : TRUE);
+    if ($block->config->blockskipweekend == 0 || intval($d->format('N')) <= 5) {
+        // initalise new totem element
+        $totem = new block_totem_table([
+            'blockid' => $block->instance->id,
+            'date' => $d->getTimestamp(),
+            'collapsible' => $collapsible,
+            'collapsed' => $collapsed,
+            'showDate' => TRUE]);
+        
+        echo $PAGE->get_renderer('block_totem')->render($totem);
         $i++;
     }
     $d->modify('+1 day');
+    
 }
 
 echo $OUTPUT->footer();

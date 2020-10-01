@@ -24,7 +24,8 @@
  */
  
 require_once(__DIR__ . '/../../config.php');
-require_once(__DIR__ . '/renderer/event.php');
+require_once(__DIR__ . '/classes/block_totem_table.php');
+require_once(__DIR__ . '/output/renderer.php');
 
 global $DB, $OUTPUT, $PAGE;
 
@@ -96,8 +97,18 @@ $d->setTime(0,0);
 $i = 0;
 echo html_writer::start_tag('div', array('id' => 'totem-fullscreen','class' => 'totem-fullscreen'));
 while ($i < $block->config->pagedays) {
-    if ($block->config->pageskipweekend == 0 || intval($d->format('N')) <= 5) {
-        echo event_render_table($blockid, $d->getTimestamp(), 0);
+    $collapsible = FALSE;
+    $collapsed = FALSE;
+    if ($block->config->blockskipweekend == 0 || intval($d->format('N')) <= 5) {
+        // initalise new totem element
+        $totem = new block_totem_table([
+            'blockid' => $block->instance->id,
+            'date' => $d->getTimestamp(),
+            'collapsible' => $collapsible,
+            'collapsed' => $collapsed,
+            'showDate' => TRUE]);
+        
+        echo $PAGE->get_renderer('block_totem')->render_fullscreen($totem);
         $i++;
     }
     $d->modify('+1 day');

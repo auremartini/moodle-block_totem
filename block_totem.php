@@ -20,7 +20,7 @@
  * @copyright 2020 Aureliano Martini
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-require_once(__DIR__ . '/classes/block_totem_element.php');
+require_once(__DIR__ . '/classes/block_totem_table.php');
 require_once(__DIR__ . '/output/renderer.php');
 
 class block_totem extends block_base {
@@ -92,93 +92,35 @@ class block_totem extends block_base {
             
             return $this->content;
         }
-        
-        // How many feed items should we display?
-//        $maxentries = 5;
-//        if ( !empty($this->config->shownumentries) ) {
-//            $maxentries = intval($this->config->shownumentries);
-//        }elseif( isset($CFG->block_rss_client_num_entries) ) {
-//            $maxentries = intval($CFG->block_rss_client_num_entries);
-//        }
-        
-        /* ---------------------------------
-         * Begin Normal Display of Block Content
-         * --------------------------------- */
-        
-//        $renderer = $this->page->get_renderer('block_rss_client');
-//        $block = new \block_rss_client\output\block();
-        
-//        if (!empty($this->config->rssid)) {
-//            list($rssidssql, $params) = $DB->get_in_or_equal($this->config->rssid);
-//            $rssfeeds = $DB->get_records_select('block_rss_client', "id $rssidssql", $params);
-            
-//            if (!empty($rssfeeds)) {
-//                $showtitle = false;
-//                if (count($rssfeeds) > 1) {
-//                    // When many feeds show the title for each feed.
-//                    $showtitle = true;
-//                }
-                
-//                foreach ($rssfeeds as $feed) {
-//                    if ($renderablefeed = $this->get_feed($feed, $maxentries, $showtitle)) {
-//                        $block->add_feed($renderablefeed);
-//                    }
-//                }
-                
-//                $footer = $this->get_footer($rssfeeds);
-//            }
-//        }
 
         $d = new DateTime();
         $d->setTime(0,0);
         $i = 0;
         while ($i < $this->config->blockdays) {
+            $collapsible = ($this->config->blockdays == 1 ? FALSE : TRUE);
+            $collapsed = ($i==0 ? TRUE : FALSE);
             if ($this->config->blockskipweekend == 0 || intval($d->format('N')) <= 5) {
                 // initalise new totem element
-                $totem = new block_totem_element([
-                    'id' => $this->instance->id,
+                $totem = new block_totem_table([
+                    'blockid' => $this->instance->id,
                     'date' => $d->getTimestamp(),
-                    'collapsible' => TRUE,
-                    'collapsed' => TRUE,
+                    'collapsible' => $collapsible,
+                    'collapsed' => $collapsed,
                     'showDate' => TRUE]);
                 
                 $this->content->text .= $PAGE->get_renderer('block_totem')->render($totem);
-               
-               
-               
-                //event_render_table($this->instance->id, $d->getTimestamp(), ($this->config->blockdays == 1 ? 0 : ($i==0 ? 1 : -1)));
                 $i++;
             }
             $d->modify('+1 day');
+            
         }
         
-        $this->content->footer = $this->get_footer();
+        $this->content->footer = $PAGE->get_renderer('block_totem')->open_totem($totem);
         
         return $this->content;
     }
     
 
-    /**
-     * Gets the footer, which is the totem page link button
-     *
-     * @return string|null The renderable footer or null if none should be displayed.
-     */
-    protected function get_footer() {
-        $footer = null;
-        $url = new moodle_url('/blocks/totem/view.php', array('blockid' => $this->instance->id));
-        $footer = '<div style="text-align:right"><form method="post" action="'.$url.'">
-                   <button type="submit" class="btn btn-secondary" title="">'.get_string('opentotempage', 'block_totem').'</button>
-                   </form></div>';
-        
-        return $footer;
-    }    
-    
-    
-    
-    
-    
-    
-    
     
     
     
