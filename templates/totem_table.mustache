@@ -19,7 +19,7 @@
 	
 	Show totem as a table
 }}
-<div data-region="totem_element" class="totem-table">
+<div data-region="totem_element-{{data}}" class="totem-table">
 	<h3 id="totem-title-{{date}}">
 	{{#collapsible}}
 		<a href="javascript:
@@ -34,7 +34,7 @@
 		   id="totem-switchon-{{date}}" class="{{^collapsed}}hidden{{/collapsed}}">&#9656;</a>
 	{{/collapsible}}
 	{{date_text}}</h3>
-	<table id="totem-table-{{date}}" class="generaltable{{#collapsed}} hidden{{/collapsed}}">
+	<table id="totem-table-{{date}}" class="generaltable{{#collapsible}}{{#collapsed}} hidden{{/collapsed}}{{/collapsible}}">
 		{{#records}}
 			<tr>
 			<td class="cell c0" width="40rem">{{eventtype}}</td>
