@@ -19,31 +19,25 @@
 	
 	Show totem as a table
 }}
-<div data-region="totem_element-{{data}}" class="totem-table hidden">
-	<h3 id="totem-title-{{date}}">
-	{{#collapsible}}
-		<a href="javascript:
-			 document.getElementById('totem-table-{{date}}').classList.add('hidden');
-			 document.getElementById('totem-switchoff-{{date}}').classList.add('hidden');
-			 document.getElementById('totem-switchon-{{date}}').classList.remove('hidden');"
-		   id="totem-switchoff-{{date}}" class="{{#collapsed}}hidden{{/collapsed}}">&#9662;</a>
-		<a href="javascript:
-		     document.getElementById('totem-table-{{date}}').classList.remove('hidden');
-		     document.getElementById('totem-switchoff-{{date}}').classList.remove('hidden');
-		     document.getElementById('totem-switchon-{{date}}').classList.add('hidden');"
-		   id="totem-switchon-{{date}}" class="{{^collapsed}}hidden{{/collapsed}}">&#9656;</a>
-	{{/collapsible}}
-	{{date_text}}</h3>
-	<table id="totem-table-{{date}}" class="generaltable{{#collapsed}} hidden{{/collapsed}}">
-		{{#records}}
-			<tr>
-			<td class="cell c0" width="40rem">{{eventtype}}</td>
-			<td class="cell c1" width="80rem">{{idnumber}}</td>
-			<td class="cell c2" width="80rem">{{subject}}</td>
-			<td class="cell c3" width="80rem">{{section}}</td>
-			<td class="cell c4" width="80rem">{{time}}</td>
-			<td class="cell c5">{{displaytext}}</td>
-			</tr>
-		{{/records}}
-	</table>	
+<div data-region="totem_element-fullscreen" class="totem-table">
+	<div data-region="totem_element-{{data}}" class="totem-table hidden">
+		<h3 id="totem-title-{{date}}">{{date_text}}</h3>
+		<table id="totem-table-{{date}}" class="generaltable{{#collapsed}} hidden{{/collapsed}}">
+			{{#records}}
+				<tr>
+				<td class="cell c0" width="40rem">{{eventtype}}</td>
+				<td class="cell c1" width="80rem">{{idnumber}}</td>
+				<td class="cell c2" width="80rem">{{subject}}</td>
+				<td class="cell c3" width="80rem">{{section}}</td>
+				<td class="cell c4" width="80rem">{{time}}</td>
+				<td class="cell c5">{{displaytext}}</td>
+				</tr>
+			{{/records}}
+		</table>	
+	</div>
 </div>
+{{#js}}
+	require(['block_totem/slideshow'], function(slideshow) {
+		slideshow.refresh({{date}});
+	});
+{{/js}}
