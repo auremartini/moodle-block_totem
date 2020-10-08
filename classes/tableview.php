@@ -14,7 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-class block_totem_table implements renderable, templatable {
+namespace block_totem;
+
+class tableview implements \renderable, \templatable {
     private $data = [];
     
     /**
@@ -31,7 +33,7 @@ class block_totem_table implements renderable, templatable {
     }
     
     public function set_date($date) {
-        $d = new DateTime();
+        $d = new \DateTime();
         $d->setTimestamp($date);
         
         $d->setTime(0,0);
@@ -75,9 +77,9 @@ class block_totem_table implements renderable, templatable {
     /**
      * Export this data so it can be used as the context for a mustache template
      * 
-     * @return stdClass
+     * @return \stdClass
      */
-    public function export_for_template(renderer_base $output) {
+    public function export_for_template(\renderer_base $output) {
         $this->get_records();
         return $this->data;
     }

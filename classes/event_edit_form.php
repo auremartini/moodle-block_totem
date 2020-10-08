@@ -28,10 +28,12 @@
  * @copyright 2009 Tim Hunt
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
- 
+
+namespace block_totem\classes;
+
 require_once("{$CFG->libdir}/formslib.php");
 
-class event_edit_form extends moodleform {
+class event_edit_form extends \moodleform {
     
     function definition() {
         $mform =& $this->_form;

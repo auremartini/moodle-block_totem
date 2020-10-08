@@ -40,7 +40,7 @@ $block = block_instance($blockname, $blockinstance[$blockid]);
 $cohortsourceid = required_param('cohortsourceid', PARAM_INT);
 
 // SET FORM
-$form = new event_edit_form();
+$form = new \block_totem\classes\event_edit_form();
 $form->load_list('userid', array('cohortsourceid' => $cohortsourceid));
 $form->set_data(array(
     'id' => $id,

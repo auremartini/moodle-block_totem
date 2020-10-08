@@ -14,16 +14,15 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-/**
- * Version details
- *
- * @package    totem_blocks
- * @copyright  2020 Aureliano Martini
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-
-defined('MOODLE_INTERNAL') || die();
-
-$plugin->version   = 2020100805;        // The current plugin version (Date: YYYYMMDDXX)
-$plugin->requires  = 2020060900;        // Requires this Moodle version
-$plugin->component = 'block_totem';      // Full name of the plugin (used for diagnostics)
+$functions = array(
+  'get_userlist' => array(
+      'classname' => 'block_totem\data\userlist',
+      'methodname' => 'get_userlist',
+      'classpath' => 'blocks/totem/classes/userlist.php',
+      'description' => '',
+      'type' => 'read',
+      'ajax' => true,
+//      'services' => array(MOODLE_OFFICIAL_MOBILE_SERVICE),
+      'capabilities' => array()
+  )
+);
