@@ -32,6 +32,7 @@
 namespace block_totem\classes;
 
 require_once("{$CFG->libdir}/formslib.php");
+require_once("userlist.php");
 
 class event_edit_form extends \moodleform {
     
@@ -87,21 +88,13 @@ class event_edit_form extends \moodleform {
     }
     
     public function load_list($list, $params){
-        global $DB;
-        
-        $sql = '';
-        $rs = null;
         switch ($list) {
             case 'userid': //GET FILTERED TEACHER LIST
-                $sql = 'SELECT u.id, u.firstname, u.lastname FROM mdl_user u
-                LEFT JOIN mdl_cohort_members cm ON u.id = cm.userid
-                WHERE cm.cohortid = :cohortsourceid
-                ORDER BY u.lastname, u.firstname';
-                $rs = $DB->get_records_sql($sql, $params);
+                $rs = \block_totem\data\userlist::get_userlist($params['cohortsourceid']);
                 foreach ($rs as $record) {
-                    $this->_form->getElement('userid')->_options[$record->id] = array(
-                        'text' => $record->lastname.' '.$record->firstname,
-                        'attr' => array('value' => $record->id)
+                    $this->_form->getElement('userid')->_options[$record['id']] = array(
+                        'text' => $record['lastname'].' '.$record['firstname'],
+                        'attr' => array('value' => $record['id'])
                     );
                 }
             default:
