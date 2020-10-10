@@ -76,7 +76,7 @@ if($form->is_cancelled()) {
 
 // SET PAGE ELEMENTS (HEADER)
 //$PAGE->requires->js(new moodle_url($CFG->wwwroot . '/blocks/totem/js/event_edit_form.js'));
-$PAGE->requires->js_call_amd('block_totem/event_edit_form', 'init');
+$PAGE->requires->js_call_amd('block_totem/event_edit_form', 'init', array(['cohortid' => cohortsourceid]));
 $PAGE->set_url(new moodle_url('/blocks/totem/event.php'));
 $PAGE->set_context(\context_system::instance());
 $PAGE->set_title($block->get_title());
