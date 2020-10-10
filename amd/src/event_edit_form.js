@@ -1,3 +1,11 @@
+/**
+ * @module    block_totem/event_edit_form
+ * @package   block_totem
+ * @copyright 2020 Aureliano Martini
+ * @licence   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @since	  3.0
+ */
+
 define(['jquery'], function($) {
     return {
         init: function() {
