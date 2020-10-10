@@ -20,7 +20,7 @@
 	Show totem as a table
 }}
 <div data-region="totem_element-{{data}}" class="totem-table">
-	<h3 id="totem-title-{{date}}">
+	{{#showDate}}<h3 id="totem-title-{{date}}">
 	{{#collapsible}}
 		<a href="javascript:
 			 document.getElementById('totem-table-{{date}}').classList.add('hidden');
@@ -33,7 +33,7 @@
 		     document.getElementById('totem-switchon-{{date}}').classList.add('hidden');"
 		   id="totem-switchon-{{date}}" class="{{^collapsed}}hidden{{/collapsed}}">&#9656;</a>
 	{{/collapsible}}
-	{{date_text}}</h3>
+	{{date_text}}</h3>{{/showDate}}
 	<table id="totem-table-{{date}}" class="generaltable{{#collapsible}}{{#collapsed}} hidden{{/collapsed}}{{/collapsible}}">
 		{{#records}}
 			<tr>

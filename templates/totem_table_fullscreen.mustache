@@ -21,7 +21,7 @@
 }}
 <div data-region="totem_element-fullscreen" class="totem-table">
 	<div data-region="totem_element-{{data}}" class="totem-table hidden">
-		<h3 id="totem-title-{{date}}">{{date_text}}</h3>
+		{{#showDate}}<h3 id="totem-title-{{date}}">{{date_text}}</h3>{{/showDate}}
 		<table id="totem-table-{{date}}" class="generaltable{{#collapsed}} hidden{{/collapsed}}">
 			{{#records}}
 				<tr>

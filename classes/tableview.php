@@ -53,7 +53,7 @@ class tableview implements \renderable, \templatable {
             LEFT JOIN mdl_user u ON te.userid = u.id
             WHERE te.blockid = :blockid AND te.date = :date
             ORDER BY te.date, te.time, u.idnumber";
-        
+        $this->data['sql']=$sql;
         $params['blockid'] = $this->data['blockid'];
         $params['date'] = $this->data['date'];
         
@@ -71,7 +71,7 @@ class tableview implements \renderable, \templatable {
         $this->data['recordcount'] = count($return);
         $this->data['records'] = $return;
 
-        return $data;
+        return $return;
     }
     
     /**

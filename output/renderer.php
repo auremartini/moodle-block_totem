@@ -15,12 +15,14 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-class block_totem_renderer extends plugin_renderer_base {
+namespace block_totem\output;
+
+class renderer extends \plugin_renderer_base {
     
     /**
      * Defer to template
      * 
-     * @param block_totem_element $totem
+     * @param \block_totem\tableview $totem
      * @return string|boolean
      */
     public function render($totem) {
@@ -33,7 +35,7 @@ class block_totem_renderer extends plugin_renderer_base {
     
     public function open_totem($totem) {
         $footer = null;
-        $url = new moodle_url('/blocks/totem/view.php', array('blockid' => $totem->get_id()));
+        $url = new \moodle_url('/blocks/totem/view.php', array('blockid' => $totem->get_id()));
         $footer = '<div style="text-align:right"><form method="post" action="'.$url.'">
                    <button type="submit" class="btn btn-secondary" title="">'.get_string('opentotempage', 'block_totem').'</button>
                    </form></div>';
