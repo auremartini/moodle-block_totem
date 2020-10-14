@@ -19,10 +19,10 @@
 	
 	Show totem as a table
 }}
-<div data-region="totem_element-fullscreen" class="totem-table">
-	<div data-region="totem_element-{{data}}" class="totem-table hidden">
-		{{#showDate}}<h3 id="totem-title-{{date}}">{{date_text}}</h3>{{/showDate}}
-		<table id="totem-table-{{date}}" class="generaltable{{#collapsed}} hidden{{/collapsed}}">
+<div id="totem-element-{{date}}" class="totem-table">
+	<h3 id="totem-title-{{date}}">{{date_text}}</h3>
+	<div id="totem-scroll-{{date}}">
+		<table id="totem-table-{{date}}" class="generaltable hidden">
 			{{#records}}
 				<tr>
 				<td class="cell c0" width="40rem">{{eventtype}}</td>
@@ -33,11 +33,29 @@
 				<td class="cell c5">{{displaytext}}</td>
 				</tr>
 			{{/records}}
-		</table>	
+		</table>
+	</div>	
+	<div id="totem-msg-{{date}}">
+
 	</div>
 </div>
 {{#js}}
-	require(['block_totem/slideshow'], function(slideshow) {
-		slideshow.refresh({{date}});
-	});
+	document.getElementById("totem-scroll-{{date}}").style.height = (document.getElementById("totem-element-fullscreen").offsetHeight - document.getElementById("totem-title-{{date}}").offsetHeight - document.getElementById("totem-msg-{{date}}").offsetHeight) + "px";
+	document.getElementById("totem-scroll-{{date}}").style.overflow = "hidden";
+	document.getElementById("totem-table-{{date}}").classList.remove('hidden');
+
+	var sto = setInterval(scroll, 2500);
+	
+	var scrollItem = 0
+	
+	function scroll() {
+		document.getElementById("totem-table-{{date}}").children[0].children[scrollItem].scrollIntoView();
+		scrollItem++;
+		if (document.getElementById("totem-table-{{date}}").children[0].children.length == scrollItem ) {
+			clearTimeout(sto);
+			require(['block_totem/get_ajax_totemtable'], function(totemtable) {
+				totemtable.load({{date}}, {{index}}, {{limit}});
+			});
+		}
+	}
 {{/js}}

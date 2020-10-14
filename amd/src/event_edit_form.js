@@ -8,10 +8,10 @@
 
 define(['jquery'], function() {
     return {
-        init: function(cohortid) {
+        init: function(params) {
             require(['jquery', 'core/ajax', 'core/notification'], function($, ajax, notification) {
                 var promises = ajax.call([
-                    { methodname: 'get_userlist', args: { cohortid: intval(cohortid) } }
+                    { methodname: 'get_userlist', args: { cohortid: parseInt(params.cohortid + "") } }
                 ]);
                 promises[0].done(function(response) {
                     document.getElementById('id_userid').innerHTML = "";

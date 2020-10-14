@@ -44,7 +44,7 @@ class userlist extends \external_api {
                 WHERE c.cohortid = :cohortid
                 ORDER BY u.lastname, u.firstname";
         
-        $params['cohortid'] = $cohortid;
+        $params['cohortid'] = intval($cohortid);
         
         $rs = $DB->get_records_sql($sql, $params);
         foreach ($rs as $record) {

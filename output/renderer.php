@@ -33,9 +33,9 @@ class renderer extends \plugin_renderer_base {
         return parent::render_from_template('block_totem/totem_table_fullscreen', $totem->export_for_template($this));
     }
     
-    public function open_totem($totem) {
+    public function open_totem($id) {
         $footer = null;
-        $url = new \moodle_url('/blocks/totem/view.php', array('blockid' => $totem->get_id()));
+        $url = new \moodle_url('/blocks/totem/view.php', array('blockid' => $id));
         $footer = '<div style="text-align:right"><form method="post" action="'.$url.'">
                    <button type="submit" class="btn btn-secondary" title="">'.get_string('opentotempage', 'block_totem').'</button>
                    </form></div>';

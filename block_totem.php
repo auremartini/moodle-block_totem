@@ -20,7 +20,7 @@
  * @copyright 2020 Aureliano Martini
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-require_once(__DIR__ . '/classes/tableview.php');
+require_once(__DIR__ . '/classes/totemtable.php');
 require_once(__DIR__ . '/output/renderer.php');
 
 class block_totem extends block_base {
@@ -101,43 +101,21 @@ class block_totem extends block_base {
             $collapsed = ($i==0 ? TRUE : FALSE);
             if ($this->config->blockskipweekend == 0 || intval($d->format('N')) <= 5) {
                 // initalise new totem element
-                $totem = new \block_totem\tableview([
+                $this->content->text .= $PAGE->get_renderer('block_totem')->render(new \block_totem\totemtable([
                     'blockid' => $this->instance->id,
                     'date' => $d->getTimestamp(),
                     'collapsible' => $collapsible,
                     'collapsed' => $collapsed,
-                    'showDate' => TRUE]);
-                
-                $this->content->text .= $PAGE->get_renderer('block_totem')->render($totem);
+                    'showDate' => TRUE
+                ]));
                 $i++;
             }
             $d->modify('+1 day');
             
         }
         
-        $this->content->footer = $PAGE->get_renderer('block_totem')->open_totem($totem);
+        $this->content->footer = $PAGE->get_renderer('block_totem')->open_totem($this->instance->id);
         
         return $this->content;
     }
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-/**    function get_content() {
-        $this->content = new stdClass();
-        
-        $this->content->text .= 'abbregiated list of teachers notices (next '.(($this->config->showdayinblock)-1).' days)';
-        $this->content->text .= '<br>abbregiated list of text infos';
-        $this->content->footer = '<div style="text-align:right"><form method="post" action="/blocks/totem/view.php"><button type="submit" class="btn btn-secondary" title="">'.get_string('text:showmore', 'block_totem').'</button></form></div>';
-        
-        return $this->content;
-    }*/
-
 }

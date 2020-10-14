@@ -24,7 +24,7 @@
  */
  
 require_once(__DIR__ . '/../../config.php');
-require_once(__DIR__ . '/classes/tableview.php');
+require_once(__DIR__ . '/classes/totemtable.php');
 require_once(__DIR__ . '/output/renderer.php');
 
 global $DB, $OUTPUT, $PAGE;
@@ -70,14 +70,13 @@ while ($i < $block->config->pagedays) {
     $collapsed = ($i==0 ? FALSE : TRUE);
     if ($block->config->blockskipweekend == 0 || intval($d->format('N')) <= 5) {
         // initalise new totem element
-        $totem = new \block_totem\tableview([
+        echo $PAGE->get_renderer('block_totem')->render(new \block_totem\totemtable([
             'blockid' => $block->instance->id,
             'date' => $d->getTimestamp(),
             'collapsible' => $collapsible,
             'collapsed' => $collapsed,
-            'showDate' => TRUE]);
-        
-        echo $PAGE->get_renderer('block_totem')->render($totem);
+            'showDate' => TRUE
+        ]));
         $i++;
     }
     $d->modify('+1 day');

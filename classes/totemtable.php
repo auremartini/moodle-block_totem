@@ -16,7 +16,7 @@
 
 namespace block_totem;
 
-class tableview implements \renderable, \templatable {
+class totemtable implements \renderable, \templatable {
     private $data = [];
     
     /**

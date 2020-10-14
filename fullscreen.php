@@ -24,7 +24,7 @@
  */
  
 require_once(__DIR__ . '/../../config.php');
-require_once(__DIR__ . '/classes/tableview.php');
+require_once(__DIR__ . '/classes/totemtable.php');
 require_once(__DIR__ . '/output/renderer.php');
 
 global $DB, $OUTPUT, $PAGE;
@@ -95,25 +95,19 @@ $d = new DateTime();
 if ($date) $d->setTimestamp($date);
 $d->setTime(0,0);
 $i = 0;
-echo html_writer::start_tag('div', array('id' => 'totem-fullscreen','class' => 'totem-fullscreen'));
-while ($i < $block->config->pagedays) {
-    $collapsible = FALSE;
-    $collapsed = FALSE;
-    if ($block->config->blockskipweekend == 0 || intval($d->format('N')) <= 5) {
-        // initalise new totem element
-        $totem = new \block_totem\tableview([
-            'blockid' => $block->instance->id,
-            'date' => $d->getTimestamp(),
-            'collapsible' => $collapsible,
-            'collapsed' => $collapsed,
-            'showDate' => TRUE]);
-        
-        echo $PAGE->get_renderer('block_totem')->render_fullscreen($totem);
-        $i++;
-    }
-    $d->modify('+1 day');
-}
+echo html_writer::start_tag('div', array('id' => 'totem-element-fullscreen', 'class' => 'totem-fullscreen'));
+
+echo $PAGE->get_renderer('block_totem')->render_fullscreen(new \block_totem\totemtable([
+    'blockid' => $block->instance->id,
+    'date' => $d->getTimestamp(),
+    'collapsible' => FALSE,
+    'collapsed' => FALSE,
+    'showDate' => TRUE,
+    'skipweekend' => $block->config->blockskipweekend,
+    'index' => 0,
+    'limit' => $block->config->pagedays
+]));
+
 echo html_writer::end_tag('div');
-echo html_writer::script($jscode);
 
 echo $OUTPUT->footer();
