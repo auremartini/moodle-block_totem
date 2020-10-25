@@ -37,15 +37,14 @@ $id = optional_param('id', 0, PARAM_INT);
 $blockid = required_param('blockid', PARAM_INT);
 $blockinstance = $DB->get_records('block_instances', array('id' => $blockid));
 $block = block_instance($blockname, $blockinstance[$blockid]);
-$cohortsourceid = required_param('cohortsourceid', PARAM_INT);
 
 // SET FORM
 $form = new \block_totem\classes\event_edit_form();
-$form->load_list('userid', array('cohortsourceid' => $cohortsourceid));
 $form->set_data(array(
     'id' => $id,
     'blockid' => $blockid,
-    'cohortsourceid' => $cohortsourceid
+    'source' => $block->config->source,
+    'sourceid' => ($block->config->source == 0 ? $block->config->sourceroleid : $block->config->sourcecohortid)
 ));
 
 // LOAD VALUES TO EDIT
@@ -76,7 +75,10 @@ if($form->is_cancelled()) {
 
 // SET PAGE ELEMENTS (HEADER)
 //$PAGE->requires->js(new moodle_url($CFG->wwwroot . '/blocks/totem/js/event_edit_form.js'));
-$PAGE->requires->js_call_amd('block_totem/event_edit_form', 'init', array(['cohortid' => $cohortsourceid]));
+$PAGE->requires->js_call_amd('block_totem/add_event_edit_form_dynamics', 'init', array([
+    'source' => $block->config->source,
+    'sourceid' => ($block->config->source == 0 ? $block->config->sourceroleid : $block->config->sourcecohortid)
+]));
 $PAGE->set_url(new moodle_url('/blocks/totem/event.php'));
 $PAGE->set_context(\context_system::instance());
 $PAGE->set_title($block->get_title());

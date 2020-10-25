@@ -1,5 +1,5 @@
 /**
- * @module    block_totem/event_edit_form
+ * @module    block_totem/add_event_edit_form_dynamics
  * @package   block_totem
  * @copyright 2020 Aureliano Martini
  * @licence   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -11,7 +11,10 @@ define(['jquery'], function() {
         init: function(params) {
             require(['jquery', 'core/ajax', 'core/notification'], function($, ajax, notification) {
                 var promises = ajax.call([
-                    { methodname: 'get_userlist', args: { cohortid: parseInt(params.cohortid + "") } }
+                    {
+                        methodname: 'get_userlist',
+                        args: { source: parseInt(params.source + ""), sourceid: parseInt(params.sourceid + "") }
+                    }
                 ]);
                 promises[0].done(function(response) {
                     document.getElementById('id_userid').innerHTML = "";

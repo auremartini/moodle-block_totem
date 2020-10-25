@@ -52,43 +52,6 @@ $url = new moodle_url('/blocks/totem/fullscreen.php', array('blockid' => $blocki
 $editnode = $node->add(get_string('fullscreen', 'block_totem'), $url);
 $editnode->make_active();
 
-//JAVASCRIPT CODE
-
-/**
-   $jscode =  'window.onload = function () {
-                hideSlides();
-                showSlide(0);
-            }
-
-            var cicles = 0;
-
-            function hideSlides() {
-                var slides = document.getElementById("totem-fullscreen").children;
-                for (var i = 0; i < slides.length; i++) {
-                    slides[i].style.display = "none";
-                }
-            }
-            
-            function showSlide(slideIndex) {
-                var speed = 5000; //change slide every 5 seconds 
-                var slides = document.getElementById("totem-fullscreen").children;
-                //show slide
-                if (slideIndex >= slides.length) {
-                    slideIndex = 0;
-                    cicles++;
-                }
-                if (cicles == 10) { location.reload(); }
-                slides[slideIndex].style.display = "block";
-                //hide previous
-                if (slideIndex == 0) {
-                    slides[slides.length-1].style.display = "none";
-                } else {
-                   slides[slideIndex-1].style.display = "none";
-                }
-                setTimeout(showSlide, speed, slideIndex+1);
-            }
-            ';*/
-
 // PRINT CONTENT TO PAGE
 echo $OUTPUT->header();
 
@@ -102,8 +65,8 @@ $PAGE->requires->js_call_amd('block_totem/add_totemfullscreen_dynamics', 'init',
     'blockid' => intval($block->instance->id),
     'date' => $d->getTimestamp(),
     'offset' => 0,
-    'limit' => intval($block->config->pagedays),
-    'skipweekend' => intval($block->config->pageskipweekend)
+    'limit' => intval($block->config->fullscreendays),
+    'skipweekend' => $block->config->fullscreenskipweekend
 ]));
 
 

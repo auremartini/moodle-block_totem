@@ -35,9 +35,10 @@ $string['configurenewinstance'] = 'Click the edit icon above to configure this b
 
 // Block edit
 $string['configtitledesc'] = 'Totem block title';
-$string['configcohortsourcedesc'] = 'Get teachers from cohort';
+$string['configsourcedesc'] = 'Get teachers from';
 $string['configblockdaysdesc'] = 'Days to show in block';
 $string['configpagedaysdesc'] = 'Days to show in extended page';
+$string['configfullscreendaysdesc'] = 'Days to show in fullscreen page';
 $string['configskipweekend'] = 'Hide week-end days';
 
 // View page 

@@ -24,7 +24,8 @@ require_once($CFG->libdir . "/externallib.php");
 class userlist extends \external_api {
     public static function get_userlist_parameters() {
         return new \external_function_parameters(array(
-            'cohortid' => new \external_value(PARAM_INT, 'Filter cohort ID', PARAM_REQUIRED)
+            'source' => new \external_value(PARAM_INT, 'Filter type (0: Roles, 1: Cohorts)', PARAM_REQUIRED),
+            'sourceid' => new \external_value(PARAM_INT, 'Filter ID', PARAM_REQUIRED)
         ));
     }
     
@@ -32,19 +33,27 @@ class userlist extends \external_api {
         return true;
     }
     
-    public static function get_userlist($cohortid) {
+    public static function get_userlist($source, $sourceid) {
         global $DB;
         $return = array();
         $sql = '';
         $params = array();
         $rs = null;
-        $sql = "SELECT u.id, u.firstname, u.lastname
-                FROM mdl_cohort_members c
-                LEFT JOIN mdl_user u ON c.userid = u.id
-                WHERE c.cohortid = :cohortid
-                ORDER BY u.lastname, u.firstname";
+        if ($source == 0) {
+            $sql = "SELECT u.id, u.firstname, u.lastname
+                    FROM mdl_role_assignments r
+                    LEFT JOIN mdl_user u ON r.userid = u.id
+                    WHERE r.roleid = :sourceid AND r.contextid = 1
+                    ORDER BY u.lastname, u.firstname";
+        } else {
+            $sql = "SELECT u.id, u.firstname, u.lastname
+                    FROM mdl_cohort_members c
+                    LEFT JOIN mdl_user u ON c.userid = u.id
+                    WHERE c.cohortid = :sourceid
+                    ORDER BY u.lastname, u.firstname";
+        }
         
-        $params['cohortid'] = intval($cohortid);
+        $params['sourceid'] = intval($sourceid);
         
         $rs = $DB->get_records_sql($sql, $params);
         foreach ($rs as $record) {

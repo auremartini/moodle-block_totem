@@ -52,7 +52,7 @@ $node->make_active();
 // PRINT CONTENT TO PAGE
 echo $OUTPUT->header();
 
-$url = new moodle_url('/blocks/totem/event.php', array('blockid' => $blockid, 'cohortsourceid' => $block->config->cohortsourceid));
+$url = new moodle_url('/blocks/totem/event.php', array('blockid' => $blockid));
 echo '<p><form method="post" action="'.$url.'">
       <button type="submit" class="btn btn-secondary" title="">'.get_string('addtotemelement', 'block_totem').'</button>
       </form></p>';

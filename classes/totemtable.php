@@ -46,7 +46,7 @@ class totemtable extends \external_api implements \renderable, \templatable {
         }
         
         $this->data['date'] = $d->getTimestamp();
-        $this->data['date_text'] = get_string('day-'.date('N', $d->getTimestamp()), 'block_totem').' '.date('N', $d->getTimestamp()).' '.get_string('month-'.date('n', $d->getTimestamp()), 'block_totem').' '.date('Y', $d->getTimestamp());
+        $this->data['date_text'] = get_string('day-'.$d->format('N'), 'block_totem').' '.$d->format('j').' '.get_string('month-'.$d->format('n'), 'block_totem').' '.$d->format('Y');
 
         return $this->data['date'];
     }
@@ -115,13 +115,14 @@ class totemtable extends \external_api implements \renderable, \templatable {
         $d->setTimestamp($date);
         $d->setTime(0,0);
         $i=0;
-        while ($i < $offset) {
+        
+        while($i<$offset || ($skipweekend == 1 && intval($d->format('N')) > 5)) {
             if ($skipweekend == 0 || intval($d->format('N')) <= 5) {
                 $i++;
             }
             $d->modify('+1 day');
         }
- 
+        
         //get_records
         $totem = new totemtable(array(
             'blockid' => $blockid,

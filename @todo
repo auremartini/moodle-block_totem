@@ -1,10 +1,9 @@
-@todo Fullscreen ajax load of totems
+@todo block_totem/edit_form: restrict roles list depending to user roles
+@todo block_totem/classes/event_edit_form.php: do not edit if user can't view roles
+
+
 
 @todo totem_table add priviledges (edit, delete)
-@todo totem_table date translation
 
-@todo event_edit load users with ajax
 @todo event_edit load subjects with ajax
 @todo event_edit edit an event (maybe there is some load teachers/subject issues)
-
-@todo block settings: add defaults values

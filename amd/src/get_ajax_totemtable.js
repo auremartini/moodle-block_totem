@@ -36,7 +36,7 @@ define(['jquery', 'core/ajax', 'core/templates', 'core/notification'], function(
                     $('[data-region="totem_fullscreen-table"]').removeClass('hidden');
 
                     //SET SCROLL FUNCTION
-                    var speed = 2500;
+                    var speed = 2000;
                     var scrollItemIndex = 0;
                     var scrollTimeInterval = setInterval(function() {
                         var row = $('[data-region="totem_fullscreen-table-row"]');
