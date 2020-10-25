@@ -15,14 +15,24 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 $functions = array(
-  'get_userlist' => array(
-      'classname' => 'block_totem\data\userlist',
-      'methodname' => 'get_userlist',
-      'classpath' => 'blocks/totem/classes/userlist.php',
-      'description' => '',
-      'type' => 'read',
-      'ajax' => true,
+    'get_userlist' => array(
+        'classname' => 'block_totem\data\userlist',
+        'methodname' => 'get_userlist',
+        'classpath' => 'blocks/totem/classes/userlist.php',
+        'description' => '',
+        'type' => 'read',
+        'ajax' => true,
 //      'services' => array(MOODLE_OFFICIAL_MOBILE_SERVICE),
-      'capabilities' => array()
-  )
+        'capabilities' => array()
+    ),
+    'get_totemtable' => array(
+        'classname' => 'block_totem\data\totemtable',
+        'methodname' => 'get_totemtable',
+        'classpath' => 'blocks/totem/classes/totemtable.php',
+        'description' => '',
+        'type' => 'read',
+        'ajax' => true,
+        //      'services' => array(MOODLE_OFFICIAL_MOBILE_SERVICE),
+        'capabilities' => array()
+    )
 );

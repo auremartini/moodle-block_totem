@@ -60,3 +60,26 @@ $string['displaytext'] = 'Display message';
 // Database
 $string['inserteventerror'] = 'Error in insert event record in database';
 $string['updateeventerror'] = 'Error in updating event record in database';
+
+//Days of the week
+$string['day-1'] = 'Lunedì';
+$string['day-2'] = 'Martedì';
+$string['day-3'] = 'Mercoledì';
+$string['day-4'] = 'Giovedì';
+$string['day-5'] = 'Venerdì';
+$string['day-6'] = 'Sabato';
+$string['day-7'] = 'Domenica';
+
+//Months
+$string['month-1'] = 'Gennaio';
+$string['month-2'] = 'Febbraio';
+$string['month-3'] = 'Marzo';
+$string['month-4'] = 'Aprile';
+$string['month-5'] = 'Maggio';
+$string['month-6'] = 'Giugno';
+$string['month-7'] = 'Luglio';
+$string['month-8'] = 'Agosto';
+$string['month-9'] = 'Settembre';
+$string['month-10'] = 'Ottobre';
+$string['month-11'] = 'Novembre';
+$string['month-12'] = 'Dicembre';

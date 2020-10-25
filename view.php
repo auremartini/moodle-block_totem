@@ -68,9 +68,9 @@ $i = 0;
 while ($i < $block->config->pagedays) {
     $collapsible = ($block->config->pagedays == 1 ? FALSE : TRUE);
     $collapsed = ($i==0 ? FALSE : TRUE);
-    if ($block->config->blockskipweekend == 0 || intval($d->format('N')) <= 5) {
+    if ($block->config->pageskipweekend == 0 || intval($d->format('N')) <= 5) {
         // initalise new totem element
-        echo $PAGE->get_renderer('block_totem')->render(new \block_totem\totemtable([
+        echo $PAGE->get_renderer('block_totem')->render(new \block_totem\data\totemtable([
             'blockid' => $block->instance->id,
             'date' => $d->getTimestamp(),
             'collapsible' => $collapsible,

@@ -19,12 +19,12 @@
 	
 	Show totem as a table
 }}
-<div id="totem-element-{{date}}" class="totem-table">
-	<h3 id="totem-title-{{date}}">{{date_text}}</h3>
-	<div id="totem-scroll-{{date}}">
-		<table id="totem-table-{{date}}" class="generaltable hidden">
+<div data-region="totem_fullscreen" class="totem-fullscreen">
+	<h3 data-region="totem_fullscreen-title">{{date_text}}</h3>
+	<div data-region="totem_fullscreen-scroll">
+		<table data-region="totem_fullscreen-table" class="generaltable hidden">
 			{{#records}}
-				<tr>
+				<tr data-region="totem_fullscreen-table-row">
 				<td class="cell c0" width="40rem">{{eventtype}}</td>
 				<td class="cell c1" width="80rem">{{idnumber}}</td>
 				<td class="cell c2" width="80rem">{{subject}}</td>
@@ -35,27 +35,7 @@
 			{{/records}}
 		</table>
 	</div>	
-	<div id="totem-msg-{{date}}">
+	<div data-region="totem_fullscreen-msg">
 
 	</div>
 </div>
-{{#js}}
-	document.getElementById("totem-scroll-{{date}}").style.height = (document.getElementById("totem-element-fullscreen").offsetHeight - document.getElementById("totem-title-{{date}}").offsetHeight - document.getElementById("totem-msg-{{date}}").offsetHeight) + "px";
-	document.getElementById("totem-scroll-{{date}}").style.overflow = "hidden";
-	document.getElementById("totem-table-{{date}}").classList.remove('hidden');
-
-	var sto = setInterval(scroll, 2500);
-	
-	var scrollItem = 0
-	
-	function scroll() {
-		document.getElementById("totem-table-{{date}}").children[0].children[scrollItem].scrollIntoView();
-		scrollItem++;
-		if (document.getElementById("totem-table-{{date}}").children[0].children.length == scrollItem ) {
-			clearTimeout(sto);
-			require(['block_totem/get_ajax_totemtable'], function(totemtable) {
-				totemtable.load({{date}}, {{index}}, {{limit}});
-			});
-		}
-	}
-{{/js}}

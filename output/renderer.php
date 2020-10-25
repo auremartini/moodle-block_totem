@@ -19,12 +19,6 @@ namespace block_totem\output;
 
 class renderer extends \plugin_renderer_base {
     
-    /**
-     * Defer to template
-     * 
-     * @param \block_totem\tableview $totem
-     * @return string|boolean
-     */
     public function render($totem) {
         return parent::render_from_template('block_totem/totem_table', $totem->export_for_template($this));
     }

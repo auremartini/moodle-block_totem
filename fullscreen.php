@@ -54,7 +54,8 @@ $editnode->make_active();
 
 //JAVASCRIPT CODE
 
-$jscode =  'window.onload = function () {
+/**
+   $jscode =  'window.onload = function () {
                 hideSlides();
                 showSlide(0);
             }
@@ -86,7 +87,7 @@ $jscode =  'window.onload = function () {
                 }
                 setTimeout(showSlide, speed, slideIndex+1);
             }
-            ';
+            ';*/
 
 // PRINT CONTENT TO PAGE
 echo $OUTPUT->header();
@@ -94,20 +95,26 @@ echo $OUTPUT->header();
 $d = new DateTime();
 if ($date) $d->setTimestamp($date);
 $d->setTime(0,0);
-$i = 0;
-echo html_writer::start_tag('div', array('id' => 'totem-element-fullscreen', 'class' => 'totem-fullscreen'));
+echo html_writer::start_tag('div', array('data-region' => "totem_fullscreen", 'class' => 'totem-fullscreen'));
+echo html_writer::end_tag('div');
 
-echo $PAGE->get_renderer('block_totem')->render_fullscreen(new \block_totem\totemtable([
+$PAGE->requires->js_call_amd('block_totem/add_totemfullscreen_dynamics', 'init', array([
+    'blockid' => intval($block->instance->id),
+    'date' => $d->getTimestamp(),
+    'offset' => 0,
+    'limit' => intval($block->config->pagedays),
+    'skipweekend' => intval($block->config->pageskipweekend)
+]));
+
+
+/*echo $PAGE->get_renderer('block_totem')->render_fullscreen(new \block_totem\data\totemtable([
     'blockid' => $block->instance->id,
     'date' => $d->getTimestamp(),
     'collapsible' => FALSE,
     'collapsed' => FALSE,
     'showDate' => TRUE,
-    'skipweekend' => $block->config->blockskipweekend,
-    'index' => 0,
-    'limit' => $block->config->pagedays
-]));
-
-echo html_writer::end_tag('div');
+    'offset' => 0,
+    'skipweekend' => $block->config->pageskipweekend
+]));*/
 
 echo $OUTPUT->footer();
