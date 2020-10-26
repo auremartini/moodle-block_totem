@@ -43,6 +43,7 @@ $form = new \block_totem\classes\event_edit_form();
 $form->set_data(array(
     'id' => $id,
     'blockid' => $blockid,
+    'blockteachings' => $block->config->teachings,
     'source' => $block->config->source,
     'sourceid' => ($block->config->source == 0 ? $block->config->sourceroleid : $block->config->sourcecohortid)
 ));
@@ -76,6 +77,7 @@ if($form->is_cancelled()) {
 // SET PAGE ELEMENTS (HEADER)
 //$PAGE->requires->js(new moodle_url($CFG->wwwroot . '/blocks/totem/js/event_edit_form.js'));
 $PAGE->requires->js_call_amd('block_totem/add_event_edit_form_dynamics', 'init', array([
+    'blockteachings' => $block->config->teachings,
     'source' => $block->config->source,
     'sourceid' => ($block->config->source == 0 ? $block->config->sourceroleid : $block->config->sourcecohortid)
 ]));
@@ -87,7 +89,7 @@ $settingsnode = $PAGE->settingsnav->add(get_string('plugintitle', 'block_totem')
 $url = new moodle_url('/blocks/totem/view.php', array('blockid' => $blockid));
 $node = $settingsnode->add($block->get_title(), $url);
 $node->make_active();
-$url = new moodle_url('/blocks/totem/event.php', array('id' => $id, 'blockid' => $blockid, 'cohortsourceid' => $cohortsourceid));
+$url = new moodle_url('/blocks/totem/event.php', array('blockid' => $blockid, 'id' => $id));
 $editnode = $node->add(get_string('addtotemelement', 'block_totem'), $url);
 $editnode->make_active();
 

@@ -32,7 +32,7 @@
 namespace block_totem\classes;
 
 require_once("{$CFG->libdir}/formslib.php");
-require_once("userlist.php");
+//require_once("userlist.php");
 
 class event_edit_form extends \moodleform {
     
@@ -40,8 +40,8 @@ class event_edit_form extends \moodleform {
         $mform =& $this->_form;
         $mform->addElement('hidden', 'id');
         $mform->addElement('hidden', 'blockid');
-        $mform->addElement('hidden', 'source');
-        $mform->addElement('hidden', 'sourceid');
+        $mform->addElement('hidden', 'userid');
+        $mform->addElement('hidden', 'teaching');
         
         $EVENT_TYPES = array(
             '-' => '',
@@ -51,36 +51,37 @@ class event_edit_form extends \moodleform {
         
         $TEACHER_LIST = array('0' => '');
         
-        $SUBJECTS_LIST = array(
-            '-'   => '', 
-            'MAT' => 'Matematica',
-            'ITA' => 'Italiano',
-            'FRA' => 'Francese',
-            'STO' => 'Storia'
-        );
+        $TEACHINGS = array();
         
         $mform->addElement('header', 'generalhdr', get_string('general'));
-        
+
         // add type element
         $mform->addElement('select', 'eventtype', get_string('eventtype', 'block_totem'), $EVENT_TYPES);
+        $mform->setType('eventtype', PARAM_TEXT);
         
         // add teacher element
-        $mform->addElement('select', 'userid', get_string('teacher', 'block_totem'), $TEACHER_LIST);
+        $mform->addElement('select', 'useridlist', get_string('teacher', 'block_totem'), $TEACHER_LIST);
+        $mform->setType('useridlist', PARAM_INT);
         
         // add subject element
-        $mform->addElement('select', 'subject', get_string('subject', 'block_totem'), $SUBJECTS_LIST);
+        $a=array();
+        $a[] =& $mform->createElement('select', 'teachinglist', '', $TEACHINGS);
+        $a[] =& $mform->createElement('text', 'subject', '', array('size'=>'10'));
+        $mform->addGroup($a, 'teachingandsubject', get_string('teaching', 'block_totem'), '', FALSE);
+        $mform->setType('teaching', PARAM_TEXT);
+        $mform->setType('subject', PARAM_TEXT);
         
-        // add section element
-        $mform->addElement('text', 'section', get_string('classsection', 'block_totem'), array('size'=>'10'));
-        $mform->addRule('section', get_string('required'), 'required', null, 'client');
+        // add time element
+        $mform->addElement('text', 'section', get_string('classsection', 'block_totem'), array('size'=>'20'));
+        $mform->setType('section', PARAM_TEXT);
         
         // add date element
         $mform->addElement('date_selector', 'date', get_string('displaydate', 'block_totem'));
-        $mform->addRule('date', get_string('required'), 'required', null, 'client');
+        $mform->setType('date', PARAM_INT);
         
         // add time element
-        $mform->addElement('text', 'time', get_string('displaytime', 'block_totem'), array('size'=>'10'));
-        $mform->addRule('time', get_string('required'), 'required', null, 'client');
+        $mform->addElement('text', 'time', get_string('displaytime', 'block_totem'), array('size'=>'20'));
+        $mform->setType('time', PARAM_TEXT);
         
         // add message element
         $mform->addElement('text', 'displaytext', get_string('displaytext', 'block_totem'), array('size'=>'255'));

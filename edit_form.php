@@ -67,12 +67,16 @@ class block_totem_edit_form extends block_edit_form {
         $a[] =& $mform->createElement('select', 'config_source', '', $SOURCE);
         $a[] =& $mform->createElement('select', 'config_sourceroleid', '', $ROLES);
         $a[] =& $mform->createElement('select', 'config_sourcecohortid', '', $COHORTS);
-        $mform->addGroup($a, 'blockdays', get_string('configsourcedesc', 'block_totem'), '', FALSE);
+        $mform->addGroup($a, 'teachersdays', get_string('configsourcedesc', 'block_totem'), '', FALSE);
         $mform->setType('config_source', PARAM_INT);
         $mform->setType('config_sourceroleid', PARAM_INT);
         $mform->setType('config_sourcecohortid', PARAM_INT);
         $mform->hideIf('config_sourceroleid', 'config_source', 'neq', '0');
         $mform->hideIf('config_sourcecohortid', 'config_source', 'neq', '1');
+        
+        // Teaching groups list
+        $a = $mform->addElement('select', 'config_teachings', get_string('configteachingdesc', 'block_totem'), $COHORTS, array('size'=>'10'));
+        $a->setMultiple(true);
         
         // Block settings
         $a=array();
@@ -96,7 +100,7 @@ class block_totem_edit_form extends block_edit_form {
         $a=array();
         $a[] =& $mform->createElement('text', 'config_fullscreendays', '', array('size'=>'3'));
         $a[] =& $mform->createElement('advcheckbox', 'config_fullscreenskipweekend', '', get_string('configskipweekend', 'block_totem', '', array(0, 1)));
-        $mform->addGroup($a, 'pagedays', get_string('configfullscreendaysdesc', 'block_totem'), '', FALSE);
+        $mform->addGroup($a, 'fullscreendays', get_string('configfullscreendaysdesc', 'block_totem'), '', FALSE);
         $mform->setType('config_fullscreendays', PARAM_INT);
         $mform->setType('config_fullscreenskipweekend', PARAM_BOOL);
         $mform->setDefault('config_fullscreendays', 3);

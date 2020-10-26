@@ -25,7 +25,16 @@ $functions = array(
 //      'services' => array(MOODLE_OFFICIAL_MOBILE_SERVICE),
         'capabilities' => array()
     ),
-    'get_totemtable' => array(
+    'get_teachinglist' => array(
+        'classname' => 'block_totem\data\teachinglist',
+        'methodname' => 'get_teachinglist',
+        'classpath' => 'blocks/totem/classes/teachinglist.php',
+        'description' => '',
+        'type' => 'read',
+        'ajax' => true,
+        //      'services' => array(MOODLE_OFFICIAL_MOBILE_SERVICE),
+        'capabilities' => array()
+    ),'get_totemtable' => array(
         'classname' => 'block_totem\data\totemtable',
         'methodname' => 'get_totemtable',
         'classpath' => 'blocks/totem/classes/totemtable.php',

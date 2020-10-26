@@ -56,7 +56,7 @@ class totemtable extends \external_api implements \renderable, \templatable {
         $return = array();
         $sql = '';
         $rs = null;
-        $sql = "SELECT te.id, te.blockid, te.eventtype, u.idnumber, te.subject, te.section, te.time, te.displaytext
+        $sql = "SELECT te.id, te.blockid, te.eventtype, u.idnumber, te.teaching, te.subject, te.section, te.time, te.displaytext
             FROM mdl_block_totem_event te
             LEFT JOIN mdl_user u ON te.userid = u.id
             WHERE te.blockid = :blockid AND te.date = :date
@@ -73,6 +73,7 @@ class totemtable extends \external_api implements \renderable, \templatable {
             $return[] = array(
                 'eventtype' => $record->eventtype,
                 'idnumber' => $record->idnumber,
+                'teaching' => $record->teaching,
                 'subject' => $record->subject,
                 'section' => $record->section,
                 'time' => $record->time,
@@ -141,6 +142,7 @@ class totemtable extends \external_api implements \renderable, \templatable {
             'records' => new \external_multiple_structure(new \external_single_structure(array(
                 'eventtype' => new \external_value(PARAM_TEXT, 'Event type', PARAM_REQUIRED),
                 'idnumber' => new \external_value(PARAM_TEXT, 'Teacher Number ID', PARAM_REQUIRED),
+                'teaching' => new \external_value(PARAM_TEXT, 'Teaching', PARAM_REQUIRED),
                 'subject' => new \external_value(PARAM_TEXT, 'Subject', PARAM_REQUIRED),
                 'section' => new \external_value(PARAM_TEXT, 'School section', PARAM_REQUIRED),
                 'time' => new \external_value(PARAM_TEXT, 'Event time', PARAM_REQUIRED),
