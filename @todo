@@ -4,9 +4,4 @@
 
 
 @todo totem_table add priviledges (edit, delete)
-
-@todo event_edit load subjects with ajax:
-$form->addElement('select', 'iselTest', 'Test Select:', $arrayOfOptions, array('onchange' => 'javascript:myFunctionToDoSomething();'));
-
-
 @todo event_edit edit an event (maybe there is some load teachers/subject issues)

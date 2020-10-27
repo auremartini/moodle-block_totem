@@ -9,6 +9,8 @@
 define(['jquery'], function() {
     return {
         init: function(params) {
+            //@todo in collegamento con il problema della definizione dei tipi di evento in admin settings
+            //document.getElementById('id_eventtype').children[1].style.color = "red";
             require(['jquery', 'core/ajax', 'core/notification'], function($, ajax, notification) {
                 var promises = ajax.call([
                     {
@@ -28,7 +30,6 @@ define(['jquery'], function() {
                         option.text = item.firstname + " " + item.lastname;
                         document.getElementById('id_useridlist').add(option);
                     });
-                    document.getElementById("id_useridlist").value = document.getElementsByName('userid')[0].value;
                     document.getElementById('id_useridlist').addEventListener('change', function(){
                         document.getElementsByName('userid')[0].value = document.getElementById("id_useridlist").value;
                         var promises2 = ajax.call([
@@ -58,9 +59,19 @@ define(['jquery'], function() {
                             }
                             document.getElementById('id_teachinglist').addEventListener('change', function(){
                                 document.getElementsByName('teaching')[0].value = document.getElementById("id_teachinglist").value;
+                                if (document.getElementsByName('userid')[0].value != '') {
+                                    var element = document.getElementById("id_teachinglist");
+                                    element.value = document.getElementsByName('teaching')[0].value;
+                                    element.dispatchEvent(new Event('change'));
+                                }
                             }, false);
                         }).fail(notification.exception);
                     }, false);
+                    if (document.getElementsByName('userid')[0].value != '') {
+                        var element = document.getElementById("id_useridlist");
+                        element.value = document.getElementsByName('userid')[0].value;
+                        element.dispatchEvent(new Event('change'));
+                    }
                 }).fail(notification.exception);
              });
         }

@@ -71,6 +71,7 @@ class totemtable extends \external_api implements \renderable, \templatable {
         $rs = $DB->get_records_sql($sql, $params);
         foreach ($rs as $record) {
             $return[] = array(
+                'id' => $record->id,
                 'eventtype' => $record->eventtype,
                 'idnumber' => $record->idnumber,
                 'teaching' => $record->teaching,
@@ -140,6 +141,7 @@ class totemtable extends \external_api implements \renderable, \templatable {
             'date_text' => new \external_value(PARAM_TEXT, 'Totemtable date extended text', PARAM_REQUIRED),
             'recordcount' => new \external_value(PARAM_TEXT, 'Totemtable date extended text', PARAM_REQUIRED),
             'records' => new \external_multiple_structure(new \external_single_structure(array(
+                'id' => new \external_value(PARAM_INT, 'Event ID', PARAM_REQUIRED),
                 'eventtype' => new \external_value(PARAM_TEXT, 'Event type', PARAM_REQUIRED),
                 'idnumber' => new \external_value(PARAM_TEXT, 'Teacher Number ID', PARAM_REQUIRED),
                 'teaching' => new \external_value(PARAM_TEXT, 'Teaching', PARAM_REQUIRED),

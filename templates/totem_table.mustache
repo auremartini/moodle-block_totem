@@ -43,6 +43,9 @@
 			<td class="cell c3" width="80rem">{{section}}</td>
 			<td class="cell c4" width="80rem">{{time}}</td>
 			<td class="cell c5">{{displaytext}}</td>
+			{{#edit}}
+				<td class="cell c6"><a href="event.php?id={{id}}&blockid={{blockid}}">[[E]]</a></td>
+			{{/edit}}
 			</tr>
 		{{/records}}
 	</table>	

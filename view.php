@@ -75,7 +75,8 @@ while ($i < $block->config->pagedays) {
             'date' => $d->getTimestamp(),
             'collapsible' => $collapsible,
             'collapsed' => $collapsed,
-            'showDate' => TRUE
+            'showDate' => TRUE,
+            'edit' => TRUE
         ]));
         $i++;
     }

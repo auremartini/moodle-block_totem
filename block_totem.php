@@ -26,29 +26,50 @@ require_once(__DIR__ . '/output/renderer.php');
 class block_totem extends block_base {
 
     /**
-     * Set the initial properties for the block
+     * Core function used to initialize the block.
      */
     function init() {
         $this->blockname = get_class($this);
         $this->title = get_string('pluginname', $this->blockname);
     }
  
+    /**
+     * Allow the block to have a configuration page
+     *
+     * @return boolean
+     */
     function has_sconfig() {
         return true;
     }
 
+    /**
+     * Core function, specifies where the block can be used.
+     * @return array
+     */
+//    public function applicable_formats() {
+//        return array('course-view' => true, 'mod' => true);
+//    }
+    
+    /**
+     * Allow the block instance to have a configuration page
+     * @return array
+     */
     function instance_allow_config() {
         return true;
     }
     
     /**
-     * All multiple instances of this block
-     * @return bool Returns false
+     * Allows the block to be added multiple times to a single page
+     * @return boolean
      */
     function instance_allow_multiple() {
         return true;
     }
     
+    /**
+     * Allows the block to be added multiple times to a single page
+     * @return boolean
+     */
     function specialization() {
         // After the block has been loaded we customize the block's title display
         if (!empty($this->config) && !empty($this->config->title)) {
@@ -61,9 +82,16 @@ class block_totem extends block_base {
     }
     
     /**
-     * Gets the content for this block by grabbing it from $this->page
-     *
-     * @return object $this->content
+     * Cleanup of all data associated with the block on deletion
+     */
+    public function instance_delete() {
+//        global $DB;
+//        $DB->delete_records('block_simplehtml', array('blockid' => $this->instance->id));
+    }
+    
+    /**
+     * Used to generate the content for the block.
+     * @return string
      */
     function get_content() {
         global $CFG, $DB, $PAGE;
