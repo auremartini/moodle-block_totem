@@ -56,11 +56,21 @@ define(['jquery'], function() {
                                 option.text = item.name;
                                 document.getElementById('id_teachinglist').add(option);
                             });
-                            if (document.getElementsByName('teaching')[0].value == '-') {
-                                document.getElementsByName('teaching')[0].value = response2[0].id;
-                                document.getElementById("id_teachinglist").value = response2[0].id;
+                            if (document.getElementsByName('id')[0].value == '0') {
+                                if (response2.length > 0) {
+                                    document.getElementsByName('teaching')[0].value = response2[0].id;
+                                    document.getElementById("id_teachinglist").value = response2[0].id;
+                                }
                             } else {
-                                document.getElementById("id_teachinglist").value = document.getElementsByName('teaching')[0].value;
+                            	if (document.getElementsByName('teaching')[0].value == '') {
+                                    document.getElementById("id_teachinglist").value = document.getElementsByName('teaching')[0].value;
+                            	} else {
+                            	    document.getElementById("id_teachinglist").value = document.getElementsByName('teaching')[0].value;
+                                    if (document.getElementById("id_teachinglist").value == '') {
+                                        document.getElementsByName('teaching')[0].value = response2[0].id;
+                                        document.getElementById("id_teachinglist").value = response2[0].id;
+                                    }
+                                }
                             }
                             document.getElementById('id_teachinglist').addEventListener('change', function(){
                                 document.getElementsByName('teaching')[0].value = document.getElementById("id_teachinglist").value;
