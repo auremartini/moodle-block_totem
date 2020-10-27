@@ -32,6 +32,9 @@ define(['jquery'], function() {
                     });
                     document.getElementById('id_useridlist').addEventListener('change', function(){
                         document.getElementsByName('userid')[0].value = document.getElementById("id_useridlist").value;
+                        if (document.getElementsByName('teaching')[0].value != '') {
+                            document.getElementsByName('teaching')[0].value = '-';
+                        }
                         var promises2 = ajax.call([
                             {
                                 methodname: 'get_teachinglist',
@@ -53,17 +56,14 @@ define(['jquery'], function() {
                                 option.text = item.name;
                                 document.getElementById('id_teachinglist').add(option);
                             });
-                            if(response2.length == 1) {
+                            if (document.getElementsByName('teaching')[0].value == '-') {
                                 document.getElementsByName('teaching')[0].value = response2[0].id;
                                 document.getElementById("id_teachinglist").value = response2[0].id;
+                            } else {
+                                document.getElementById("id_teachinglist").value = document.getElementsByName('teaching')[0].value;
                             }
                             document.getElementById('id_teachinglist').addEventListener('change', function(){
                                 document.getElementsByName('teaching')[0].value = document.getElementById("id_teachinglist").value;
-                                if (document.getElementsByName('userid')[0].value != '') {
-                                    var element = document.getElementById("id_teachinglist");
-                                    element.value = document.getElementsByName('teaching')[0].value;
-                                    element.dispatchEvent(new Event('change'));
-                                }
                             }, false);
                         }).fail(notification.exception);
                     }, false);
