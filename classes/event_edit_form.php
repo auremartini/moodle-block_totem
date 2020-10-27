@@ -88,18 +88,4 @@ class event_edit_form extends \moodleform {
                            
         $this->add_action_buttons();
     }
-    
-/*    public function load_list($list, $params){
-        switch ($list) {
-            case 'userid': //GET FILTERED TEACHER LIST
-                $rs = \block_totem\data\userlist::get_userlist($params['source'], $params['sourceid']);
-                foreach ($rs as $record) {
-                    $this->_form->getElement('userid')->_options[$record['id']] = array(
-                        'text' => $record['lastname'].' '.$record['firstname'],
-                        'attr' => array('value' => $record['id'])
-                    );
-                }
-            default:
-        }
-    }*/
 }

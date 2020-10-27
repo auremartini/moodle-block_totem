@@ -76,12 +76,16 @@ while ($i < $block->config->pagedays) {
             'collapsible' => $collapsible,
             'collapsed' => $collapsed,
             'showDate' => TRUE,
-            'edit' => TRUE
+            'edit' => TRUE,
+            'copy' => TRUE,
+            'delete' => TRUE,
+            'lang_edit_totemelement' => get_string('edittotemelement', 'block_totem'),
+            'lang_copy_totemelement' => get_string('copytotemelement', 'block_totem'),
+            'lang_delete_totemelement' => get_string('deletetotemelement', 'block_totem')
         ]));
         $i++;
     }
     $d->modify('+1 day');
-    
 }
-
+$PAGE->requires->js_call_amd('block_totem/delete_confirm', 'init', array());
 echo $OUTPUT->footer();

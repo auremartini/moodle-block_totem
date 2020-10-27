@@ -46,6 +46,9 @@ $string['configskipweekend'] = 'Hide week-end days';
 $string['opentotempage'] = 'Open totem page';
 $string['slideshow'] = 'Slideshow';
 $string['addtotemelement'] = 'Add event';
+$string['edittotemelement'] = 'Edit event';
+$string['copytotemelement'] = 'Copy event';
+$string['deletetotemelement'] = 'Delete event';
 $string['fullscreen'] = 'Fullscreen';
 
 // Edit event

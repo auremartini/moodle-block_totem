@@ -34,28 +34,30 @@ require_login();
 //LOAD PARAMS & OBJECTS
 $blockname = 'totem';
 $id = optional_param('id', 0, PARAM_INT);
+$action = optional_param('action', '', PARAM_TEXT);
 $blockid = required_param('blockid', PARAM_INT);
 $blockinstance = $DB->get_records('block_instances', array('id' => $blockid));
 $block = block_instance($blockname, $blockinstance[$blockid]);
 
 // SET FORM
 $form = new \block_totem\classes\event_edit_form();
-$form->set_data(array(
-    'id' => $id,
-    'blockid' => $blockid,
-    'blockteachings' => $block->config->teachings,
-    'source' => $block->config->source,
-    'sourceid' => ($block->config->source == 0 ? $block->config->sourceroleid : $block->config->sourcecohortid)
-));
 
 // LOAD VALUES TO EDIT
-if ($id) {
-    $record = $DB->get_record('block_totem_event', array('id' => $id));
-    $form->set_data($record);
-}
+//if ($id) {
+//    $record = $DB->get_record('block_totem_event', array('id' => $id));
+//    $form->set_data($record);
+//}
 
 // HANDLE EVENTS
-if($form->is_cancelled()) {
+if ($action == 'delete') {
+    if ($id != 0) {
+        if (!$DB->delete_records('block_totem_event', array('id' => $id))) {
+            print_error('deleteeventerror', 'block_totem');
+        }
+    }
+    $courseurl = new moodle_url('/blocks/totem/view.php', array('blockid' => $blockid, 'date' => $record->date));
+    redirect($courseurl);
+} elseif($form->is_cancelled()) {
     // Cancelled forms redirect to the course main page.
     $courseurl = new moodle_url('/blocks/totem/view.php', array('blockid' => $blockid));
     redirect($courseurl);
@@ -72,7 +74,27 @@ if($form->is_cancelled()) {
     }
     $courseurl = new moodle_url('/blocks/totem/view.php', array('blockid' => $blockid, 'date' => $record->date));
     redirect($courseurl);
+} elseif ($action == 'copy') {
+    // Load event id data and prepare a new record
+    $record = $DB->get_record('block_totem_event', array('id' => $id));
+    $id = null;
+    $record->id = null;
+    $form->set_data($record);
+} else {
+    // Load values to edit
+    if ($id) {
+        $record = $DB->get_record('block_totem_event', array('id' => $id));
+        $form->set_data($record);
+    }
 }
+$form->set_data(array(
+    'id' => $id,
+    'blockid' => $blockid,
+    'blockteachings' => $block->config->teachings,
+    'source' => $block->config->source,
+    'sourceid' => ($block->config->source == 0 ? $block->config->sourceroleid : $block->config->sourcecohortid)
+));
+
 
 // SET PAGE ELEMENTS (HEADER)
 //$PAGE->requires->js(new moodle_url($CFG->wwwroot . '/blocks/totem/js/event_edit_form.js'));

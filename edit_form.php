@@ -75,8 +75,10 @@ class block_totem_edit_form extends block_edit_form {
         $mform->hideIf('config_sourcecohortid', 'config_source', 'neq', '1');
         
         // Teaching groups list
-        $a = $mform->addElement('select', 'config_teachings', get_string('configteachingdesc', 'block_totem'), $COHORTS, array('size'=>'10'));
-        $a->setMultiple(true);
+        $mform->addElement('autocomplete', 'config_teachings', get_string('configteachingdesc', 'block_totem'), $COHORTS, array(
+            'size'=>'20',
+            'multiple' => TRUE
+        ));
         
         // Block settings
         $a=array();

@@ -43,9 +43,11 @@
 			<td class="cell c3" width="80rem">{{section}}</td>
 			<td class="cell c4" width="80rem">{{time}}</td>
 			<td class="cell c5">{{displaytext}}</td>
-			{{#edit}}
-				<td class="cell c6"><a href="event.php?id={{id}}&blockid={{blockid}}">[[E]]</a></td>
-			{{/edit}}
+			<td class="cell c6">
+				{{#edit}}<a href="event.php?id={{id}}&blockid={{blockid}}"><i class="icon fa fa-cog fa-fw " title="{{lang_edit_totemelement}}" aria-label="{{lang_edit_totemelement}}"></i></a>{{/edit}}
+				{{#copy}}<a href="event.php?id={{id}}&blockid={{blockid}}&action=copy"><i class="icon fa fa-copy fa-fw " title="{{lang_copy_totemelement}}" aria-label="{{lang_copy_totemelement}}"></i></a>{{/copy}}
+				{{#delete}}<a href="#" src="event.php?id={{id}}&blockid={{blockid}}" class="icon-delete"><i class="icon fa fa-trash fa-fw " title="{{lang_delete_totemelement}}" aria-label="{{lang_delete_totemelement}}"></i></a>{{/delete}}
+			</td>
 			</tr>
 		{{/records}}
 	</table>	
