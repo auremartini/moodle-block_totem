@@ -56,9 +56,15 @@ $url = new moodle_url('/blocks/totem/event.php', array('blockid' => $blockid));
 echo '<p><form method="post" action="'.$url.'">
       <button type="submit" class="btn btn-secondary" title="">'.get_string('addtotemelement', 'block_totem').'</button>
       </form></p>';
+
 $url = new moodle_url('/blocks/totem/fullscreen.php', array('blockid' => $blockid));
 echo '<p><form method="post" action="'.$url.'">
       <button type="submit" class="btn btn-secondary" title="">'.get_string('fullscreen', 'block_totem').'</button>
+      </form></p>';
+
+$url = new moodle_url('/blocks/totem/config.php', array('blockid' => $blockid, 'date' => $date));
+echo '<p><form method="post" action="'.$url.'">
+      <button type="submit" class="btn btn-secondary" title="">'.get_string('config', 'block_totem').'</button>
       </form></p>';
 
 $d = new DateTime();

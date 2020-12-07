@@ -126,7 +126,7 @@ class block_totem extends block_base {
         $i = 0;
         while ($i < $this->config->blockdays) {
             $collapsible = ($this->config->blockdays == 1 ? FALSE : TRUE);
-            $collapsed = ($i==0 ? TRUE : FALSE);
+            $collapsed = ($i==0 ? FALSE : TRUE);
             if ($this->config->blockskipweekend == 0 || intval($d->format('N')) <= 5) {
                 // initalise new totem element
                 $this->content->text .= $PAGE->get_renderer('block_totem')->render(new \block_totem\data\totemtable([
