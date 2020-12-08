@@ -43,6 +43,6 @@ class datepicker_form extends \moodleform {
         $a=array();
         $a[] =& $mform->createElement('date_selector', 'date_search', '');
         $a[] =& $mform->createElement('submit', 'submitbutton', get_string('gotoday', 'block_totem'));
-        $mform->addGroup($a, 'gotoday', '', '', FALSE);
+        $mform->addGroup($a, 'gotodate', '', '', FALSE);
     }
 }

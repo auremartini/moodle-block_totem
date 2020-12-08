@@ -45,13 +45,14 @@ $string['configskipweekend'] = 'Hide week-end days';
 // View page 
 $string['opentotempage'] = 'Open totem page';
 $string['slideshow'] = 'Slideshow';
-$string['addtotemelement'] = 'Add event';
+$string['addtotemevent'] = 'Add event';
+$string['addtotemnews'] = 'Add news';
 $string['edittotemelement'] = 'Edit event';
 $string['copytotemelement'] = 'Copy event';
 $string['deletetotemelement'] = 'Delete event';
 $string['fullscreen'] = 'Fullscreen';
 $string['config'] = 'Configure';
-$string['gotoday'] = 'Go to';
+$string['gotodate'] = 'Go to';
 
 // Edit event
 $string['absentteacher'] = 'Absent teacher';
@@ -63,6 +64,8 @@ $string['classsection'] = 'Class or section';
 $string['displaydate'] = 'Event date';
 $string['displaytime'] = 'Event time';
 $string['displaytext'] = 'Display message';
+$string['displayfrom'] = 'Display from';
+$string['displayto'] = 'Display to';
 
 // Database
 $string['inserteventerror'] = 'Error in insert event record in database';
@@ -90,3 +93,9 @@ $string['month-9'] = 'Settembre';
 $string['month-10'] = 'Ottobre';
 $string['month-11'] = 'Novembre';
 $string['month-12'] = 'Dicembre';
+
+//Colors
+$string['red'] = 'Red';
+$string['blue'] = 'Blue';
+$string['green'] = 'Green';
+$string['yellow'] = 'Yellow';

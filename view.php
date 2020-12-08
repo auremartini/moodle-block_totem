@@ -42,6 +42,14 @@ $blockinstance = $DB->get_records('block_instances', array('id' => $blockid));
 $block = block_instance($blockname, $blockinstance[$blockid]);
 $date = optional_param('date', 0, PARAM_INT);
 
+// LOAD AND HANDRE TOOLBAR FORM EVENT
+$toolbar = new \block_totem\classes\datepicker_form();
+if($toolbar->get_data()) $date = $toolbar->get_data()->date_search;
+$toolbar->set_data(array('blockid' => $blockid, 'date_search' => $date));
+
+// Prevent caching of this page to stop confusion when changing page after making AJAX changes
+$PAGE->set_cacheable(false);
+
 // SET PAGE ELEMENTS (HEADER)
 $PAGE->set_url(new moodle_url('/blocks/totem/view.php'));
 $PAGE->set_context(\context_system::instance());
@@ -51,9 +59,6 @@ $settingsnode = $PAGE->settingsnav->add(get_string('plugintitle', 'block_totem')
 $url = new moodle_url('/blocks/totem/view.php', array('blockid' => $blockid));
 $node = $settingsnode->add($block->get_title(), $url);
 $node->make_active();
-
-// PRINT CONTENT TO PAGE
-echo $OUTPUT->header();
 
 // SET MENU
 $menu = '';
@@ -73,26 +78,45 @@ $menu .= '<p><form method="post" action="'.$url.'">
       <button type="submit" class="btn btn-secondary" title="">'.get_string('config', 'block_totem').'</button>
       </form></p>';
 
-if ($menu != '') {
-    echo $menu;
+// PRINT CONTENT TO PAGE
+echo $OUTPUT->header();
+
+// ADD MENU
+$menu = array();
+$menu[] = array(
+    'id' => 'totem_block_dropmenuitem_addevent',
+    'icon' => 'fa-calendar-plus-o',
+    'url' => new moodle_url('/blocks/totem/event.php', array('blockid' => $blockid)),
+    'date' => $date,
+    'title' => get_string('addtotemevent', 'block_totem')
+);
+$menu[] = array(
+    'id' => 'totem_block_dropmenuitem_addnews',
+    'icon' => 'fa-newspaper-o',
+    'url' => new moodle_url('/blocks/totem/news.php', array('blockid' => $blockid)),
+    'date' => $date,
+    'title' => get_string('addtotemnews', 'block_totem')
+);
+$menu[] = array(
+    'id' => 'totem_block_dropmenuitem_fullscreen',
+    'icon' => 'fa-window-maximize',
+    'url' => new moodle_url('/blocks/totem/fullscreen.php', array('blockid' => $blockid)),
+    'title' => get_string('fullscreen', 'block_totem')
+);
+$menu[] = array(
+    'id' => 'totem_block_dropmenuitem_config',
+    'icon' => 'fa-cog',
+    'url' => new moodle_url('/blocks/totem/config.php', array('blockid' => $blockid)),
+    'title' => get_string('config', 'block_totem')
+);
+if (count($menu) > 0) {
+    echo $PAGE->get_renderer('block_totem')->renderGearMenu(array('records' => $menu));
 }
 
 // ADD DATEPICKER
-$form = new \block_totem\classes\datepicker_form();
-if($form->get_data()) $date = $form->get_data()->date_search;
-$form->set_data(array('blockid' => $blockid, 'date_search' => $date));
-$form->display();
+$toolbar->display();
 
-
-//echo html_writer::start_tag('div', array('data-region' => "totem_view_sidebar", 'class' => 'totem_view_sidebar'));
-//echo html_writer::start_tag('div', array('data-region' => "totem_view_datepicker", 'class' => ''));
-//echo html_writer::end_tag('div');
-//echo html_writer::start_tag('div', array('data-region' => "totem_view_toolbuttons", 'class' => ''));
-//echo html_writer::end_tag('div');
-//echo html_writer::end_tag('div');
-
-
-
+// ADD TOTEM TABLE
 $d = new DateTime();
 if ($date) $d->setTimestamp($date);
 $d->setTime(0,0);

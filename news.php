@@ -24,7 +24,7 @@
  */
  
 require_once(__DIR__ . '/../../config.php');
-require_once('classes/event_edit_form.php');
+require_once('classes/news_edit_form.php');
 
 global $DB, $OUTPUT, $PAGE;
 
@@ -41,7 +41,7 @@ $block = block_instance($blockname, $blockinstance[$blockid]);
 $date = optional_param('date', '', PARAM_TEXT);
 
 // SET FORM
-$form = new \block_totem\classes\event_edit_form();
+$form = new \block_totem\classes\news_edit_form();
 
 // LOAD VALUES TO EDIT
 //if ($id) {
@@ -91,21 +91,14 @@ if ($action == 'delete') {
 $form->set_data(array(
     'id' => $id,
     'blockid' => $blockid,
-    'blockteachings' => $block->config->teachings,
-    'source' => $block->config->source,
-    'sourceid' => ($block->config->source == 0 ? $block->config->sourceroleid : $block->config->sourcecohortid),
-    'date' => $date
+    'date_from' => $date+60*60*5,
+    'date_to' => $date+60*60*19
 ));
 
 
 // SET PAGE ELEMENTS (HEADER)
 //$PAGE->requires->js(new moodle_url($CFG->wwwroot . '/blocks/totem/js/event_edit_form.js'));
-$PAGE->requires->js_call_amd('block_totem/add_event_edit_form_dynamics', 'init', array([
-    'blockteachings' => $block->config->teachings,
-    'source' => $block->config->source,
-    'sourceid' => ($block->config->source == 0 ? $block->config->sourceroleid : $block->config->sourcecohortid)
-]));
-$PAGE->set_url(new moodle_url('/blocks/totem/event.php'));
+$PAGE->set_url(new moodle_url('/blocks/totem/news.php'));
 $PAGE->set_context(\context_system::instance());
 $PAGE->set_title($block->get_title());
 $PAGE->set_heading($block->get_title());
@@ -113,8 +106,8 @@ $settingsnode = $PAGE->settingsnav->add(get_string('plugintitle', 'block_totem')
 $url = new moodle_url('/blocks/totem/view.php', array('blockid' => $blockid));
 $node = $settingsnode->add($block->get_title(), $url);
 $node->make_active();
-$url = new moodle_url('/blocks/totem/event.php', array('blockid' => $blockid, 'id' => $id));
-$editnode = $node->add(get_string('addtotemevent', 'block_totem'), $url);
+$url = new moodle_url('/blocks/totem/news.php', array('blockid' => $blockid, 'id' => $id));
+$editnode = $node->add(get_string('addtotemnews', 'block_totem'), $url);
 $editnode->make_active();
 
 // PRINT CONTENT TO PAGE

@@ -62,10 +62,11 @@ define(['jquery'], function() {
                                     document.getElementById("id_teachinglist").value = response2[0].id;
                                 }
                             } else {
-                            	if (document.getElementsByName('teaching')[0].value == '') {
-                                    document.getElementById("id_teachinglist").value = document.getElementsByName('teaching')[0].value;
-                            	} else {
-                            	    document.getElementById("id_teachinglist").value = document.getElementsByName('teaching')[0].value;
+                                var d = document.getElementById("id_teachinglist");
+                                if (document.getElementsByName('teaching')[0].value == '') {
+                                    d.value = document.getElementsByName('teaching')[0].value;
+                                } else {
+                                    d.value = document.getElementsByName('teaching')[0].value;
                                     if (document.getElementById("id_teachinglist").value == '') {
                                         document.getElementsByName('teaching')[0].value = response2[0].id;
                                         document.getElementById("id_teachinglist").value = response2[0].id;
