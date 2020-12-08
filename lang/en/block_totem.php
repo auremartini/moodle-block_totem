@@ -51,6 +51,7 @@ $string['copytotemelement'] = 'Copy event';
 $string['deletetotemelement'] = 'Delete event';
 $string['fullscreen'] = 'Fullscreen';
 $string['config'] = 'Configure';
+$string['gotoday'] = 'Go to';
 
 // Edit event
 $string['absentteacher'] = 'Absent teacher';

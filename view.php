@@ -1,5 +1,7 @@
 <?php
 
+use block_totem\classes\datepicker_form;
+
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -25,6 +27,7 @@
  
 require_once(__DIR__ . '/../../config.php');
 require_once(__DIR__ . '/classes/totemtable.php');
+require_once(__DIR__ . '/classes/datepicker_form.php');
 require_once(__DIR__ . '/output/renderer.php');
 
 global $DB, $OUTPUT, $PAGE;
@@ -52,20 +55,43 @@ $node->make_active();
 // PRINT CONTENT TO PAGE
 echo $OUTPUT->header();
 
+// SET MENU
+$menu = '';
+
 $url = new moodle_url('/blocks/totem/event.php', array('blockid' => $blockid));
-echo '<p><form method="post" action="'.$url.'">
+$menu .= '<p><form method="post" action="'.$url.'">
       <button type="submit" class="btn btn-secondary" title="">'.get_string('addtotemelement', 'block_totem').'</button>
       </form></p>';
 
 $url = new moodle_url('/blocks/totem/fullscreen.php', array('blockid' => $blockid));
-echo '<p><form method="post" action="'.$url.'">
+$menu .= '<p><form method="post" action="'.$url.'">
       <button type="submit" class="btn btn-secondary" title="">'.get_string('fullscreen', 'block_totem').'</button>
       </form></p>';
 
 $url = new moodle_url('/blocks/totem/config.php', array('blockid' => $blockid, 'date' => $date));
-echo '<p><form method="post" action="'.$url.'">
+$menu .= '<p><form method="post" action="'.$url.'">
       <button type="submit" class="btn btn-secondary" title="">'.get_string('config', 'block_totem').'</button>
       </form></p>';
+
+if ($menu != '') {
+    echo $menu;
+}
+
+// ADD DATEPICKER
+$form = new \block_totem\classes\datepicker_form();
+if($form->get_data()) $date = $form->get_data()->date_search;
+$form->set_data(array('blockid' => $blockid, 'date_search' => $date));
+$form->display();
+
+
+//echo html_writer::start_tag('div', array('data-region' => "totem_view_sidebar", 'class' => 'totem_view_sidebar'));
+//echo html_writer::start_tag('div', array('data-region' => "totem_view_datepicker", 'class' => ''));
+//echo html_writer::end_tag('div');
+//echo html_writer::start_tag('div', array('data-region' => "totem_view_toolbuttons", 'class' => ''));
+//echo html_writer::end_tag('div');
+//echo html_writer::end_tag('div');
+
+
 
 $d = new DateTime();
 if ($date) $d->setTimestamp($date);
