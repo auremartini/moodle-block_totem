@@ -42,12 +42,9 @@ class event_edit_form extends \moodleform {
         $mform->addElement('hidden', 'blockid');
         $mform->addElement('hidden', 'userid');
         $mform->addElement('hidden', 'teaching');
+        $mform->addElement('hidden', 'eventtype');
         
-        $EVENT_TYPES = array(
-            '-' => '',
-            'A' => get_string('absentteacher', 'block_totem'),
-            'R' => get_string('reportedclass', 'block_totem')
-        );
+        $EVENT_TYPES = array('' => '');
         
         $TEACHER_LIST = array('0' => '');
         
@@ -56,7 +53,7 @@ class event_edit_form extends \moodleform {
         $mform->addElement('header', 'generalhdr', get_string('general'));
 
         // add type element
-        $mform->addElement('select', 'eventtype', get_string('eventtype', 'block_totem'), $EVENT_TYPES);
+        $mform->addElement('select', 'eventtypelist', get_string('eventtype', 'block_totem'), $EVENT_TYPES);
         $mform->setType('eventtype', PARAM_TEXT);
         
         // add teacher element
@@ -85,7 +82,16 @@ class event_edit_form extends \moodleform {
         
         // add message element
         $mform->addElement('text', 'displaytext', get_string('displaytext', 'block_totem'), array('size'=>'255'));
-                           
+        $mform->setType('displaytext', PARAM_TEXT);
+        
+        // add displayevent element
+        $a=array();
+        $a[] = $mform->createElement('radio', 'displayevent', '', get_string('yes'), 1);
+        $a[] = $mform->createElement('radio', 'displayevent', '', get_string('no'), 0);
+        $mform->addGroup($a, 'displayeventgroup', get_string('show', 'block_totem'), array(' '), FALSE);
+        $mform->setDefault('displayevent', 1);
+        $mform->setType('displayevent', PARAM_INT);
+        
         $this->add_action_buttons();
     }
 }

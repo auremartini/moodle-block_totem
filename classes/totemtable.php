@@ -53,10 +53,23 @@ class totemtable extends \external_api implements \renderable, \templatable {
     
     public function get_records($params = NULL) {
         global $DB;
+
+        $blockname = 'totem';
+        $blockinstance = $DB->get_records('block_instances', array('id' => $this->data['blockid']));
+        $block = block_instance($blockname, $blockinstance[$this->data['blockid']]);
+        $list = explode("\n", $block->config->eventtypelist);
+        $eventtypelist = array();
+        foreach ($list as $item) {
+            $param = explode('|', $item);
+            if (count($param)==3) {
+                $eventtypelist[$param[0]] = $param[2];
+            }
+        }
+        
         $return = array();
         $sql = '';
         $rs = null;
-        $sql = "SELECT te.id, te.blockid, te.eventtype, u.idnumber, te.teaching, te.subject, te.section, te.time, te.displaytext
+        $sql = "SELECT te.id, te.blockid, te.eventtype, u.idnumber, te.teaching, te.subject, te.section, te.time, te.displaytext, te.displayevent
             FROM mdl_block_totem_event te
             LEFT JOIN mdl_user u ON te.userid = u.id
             WHERE te.blockid = :blockid AND te.date = :date
@@ -67,18 +80,20 @@ class totemtable extends \external_api implements \renderable, \templatable {
             $params['blockid'] = $this->data['blockid'];
             $params['date'] = $this->data['date'];
         }
-        
+      
         $rs = $DB->get_records_sql($sql, $params);
         foreach ($rs as $record) {
             $return[] = array(
                 'id' => $record->id,
                 'eventtype' => $record->eventtype,
+                'eventtypecss' => ($record->eventtype=='' ? '' : $eventtypelist[$record->eventtype]),
                 'idnumber' => $record->idnumber,
                 'teaching' => $record->teaching,
                 'subject' => $record->subject,
                 'section' => $record->section,
                 'time' => $record->time,
-                'displaytext' => $record->displaytext
+                'displaytext' => $record->displaytext,
+                'displayevent' => ($record->displayevent == 1 ? 'eye-slash' : 'eye')
             );
         }
         $this->data['recordcount'] = count($return);
@@ -143,12 +158,14 @@ class totemtable extends \external_api implements \renderable, \templatable {
             'records' => new \external_multiple_structure(new \external_single_structure(array(
                 'id' => new \external_value(PARAM_INT, 'Event ID', PARAM_REQUIRED),
                 'eventtype' => new \external_value(PARAM_TEXT, 'Event type', PARAM_REQUIRED),
+                'eventtypecss' => new \external_value(PARAM_TEXT, 'Event type', PARAM_REQUIRED),
                 'idnumber' => new \external_value(PARAM_TEXT, 'Teacher Number ID', PARAM_REQUIRED),
                 'teaching' => new \external_value(PARAM_TEXT, 'Teaching', PARAM_REQUIRED),
                 'subject' => new \external_value(PARAM_TEXT, 'Subject', PARAM_REQUIRED),
                 'section' => new \external_value(PARAM_TEXT, 'School section', PARAM_REQUIRED),
                 'time' => new \external_value(PARAM_TEXT, 'Event time', PARAM_REQUIRED),
-                'displaytext' => new \external_value(PARAM_TEXT, 'Display text', PARAM_REQUIRED)
+                'displaytext' => new \external_value(PARAM_TEXT, 'Display text', PARAM_REQUIRED),
+                'displayevent' => new \external_value(PARAM_INT, 'Show to public', PARAM_REQUIRED)
             )))
         ));
     }

@@ -3,5 +3,8 @@
 
 
 
+@todo news table
+@todo show news in block & view
+@todo show news in fullscreen & extend news if there is no events 
+
 @todo totem_table add priviledges (edit, delete)
-@todo event_edit edit an event (maybe there is some load teachers/subject issues)

@@ -9,8 +9,34 @@
 define(['jquery'], function() {
     return {
         init: function(params) {
-            //@todo in collegamento con il problema della definizione dei tipi di evento in admin settings
-            //document.getElementById('id_eventtype').children[1].style.color = "red";
+            //Event type list
+            document.getElementById('id_eventtypelist').innerHTML = "";
+            var option = document.createElement("option");
+            option.value = '';
+            option.text = '';
+            document.getElementById('id_eventtypelist').add(option);
+
+            var list = params.eventypelist.split('\n');
+            list.forEach(function(item) {
+                var params = item.split('|');
+                var option = document.createElement("option");
+                option.value = params[0];
+                option.text = params[1];
+                option.style = params[2];
+                document.getElementById('id_eventtypelist').add(option);
+            });
+
+            document.getElementById('id_eventtypelist').addEventListener('change', function(){
+                document.getElementsByName('eventtype')[0].value = document.getElementById("id_eventtypelist").value;
+            });
+
+            if (document.getElementsByName('eventtype')[0].value != '') {
+                var element = document.getElementById("id_eventtypelist");
+                element.value = document.getElementsByName('eventtype')[0].value;
+                element.dispatchEvent(new Event('change'));
+            }
+
+            //Teacher list
             require(['jquery', 'core/ajax', 'core/notification'], function($, ajax, notification) {
                 var promises = ajax.call([
                     {

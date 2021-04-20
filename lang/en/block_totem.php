@@ -41,12 +41,15 @@ $string['configteachingdesc'] = 'Teaching groups';
 $string['configpagedaysdesc'] = 'Days to show in extended page';
 $string['configfullscreendaysdesc'] = 'Days to show in fullscreen page';
 $string['configskipweekend'] = 'Hide week-end days';
+$string['configeventtypelist'] = 'Event type list';
+$string['configeventtypelistdefault'] = 'A|Absent teacher|color:red;&#13;R|Reported class|color:green;';
 
 // View page 
 $string['opentotempage'] = 'Open totem page';
 $string['slideshow'] = 'Slideshow';
 $string['addtotemevent'] = 'Add event';
 $string['addtotemnews'] = 'Add news';
+$string['showtotemelement'] = 'Visibility to public';
 $string['edittotemelement'] = 'Edit event';
 $string['copytotemelement'] = 'Copy event';
 $string['deletetotemelement'] = 'Delete event';
@@ -95,7 +98,11 @@ $string['month-11'] = 'Novembre';
 $string['month-12'] = 'Dicembre';
 
 //Colors
+$string['white'] = 'White';
 $string['red'] = 'Red';
 $string['blue'] = 'Blue';
 $string['green'] = 'Green';
 $string['yellow'] = 'Yellow';
+
+//Messages
+$string['show'] = 'Show in totem';

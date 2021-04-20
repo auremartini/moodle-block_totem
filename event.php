@@ -75,12 +75,32 @@ if ($action == 'delete') {
     }
     $courseurl = new moodle_url('/blocks/totem/view.php', array('blockid' => $blockid, 'date' => $record->date));
     redirect($courseurl);
-} elseif ($action == 'copy') {
+} else if ($action == 'copy') {
     // Load event id data and prepare a new record
     $record = $DB->get_record('block_totem_event', array('id' => $id));
     $id = null;
     $record->id = null;
     $form->set_data($record);
+} else if ($action == 'eye') {
+    // Update record to show to public
+    $record=new stdClass();
+    $record->id = $id;
+    $record->displayevent = 1;
+    if (!$DB->update_record('block_totem_event', $record)) {
+        print_error('updateeventerror', 'block_totem');
+    }
+    $courseurl = new moodle_url('/blocks/totem/view.php', array('blockid' => $blockid, 'date' => $record->date));
+    redirect($courseurl);
+} else if ($action == 'eye-slash') {
+    // Update record to hide to public
+    $record=new stdClass();
+    $record->id = $id;
+    $record->displayevent = 0;
+    if (!$DB->update_record('block_totem_event', $record)) {
+        print_error('updateeventerror', 'block_totem');
+    }
+    $courseurl = new moodle_url('/blocks/totem/view.php', array('blockid' => $blockid, 'date' => $record->date));
+    redirect($courseurl);
 } else {
     // Load values to edit
     if ($id) {
@@ -102,6 +122,7 @@ $form->set_data(array(
 //$PAGE->requires->js(new moodle_url($CFG->wwwroot . '/blocks/totem/js/event_edit_form.js'));
 $PAGE->requires->js_call_amd('block_totem/add_event_edit_form_dynamics', 'init', array([
     'blockteachings' => $block->config->teachings,
+    'eventypelist' => $block->config->eventtypelist,
     'source' => $block->config->source,
     'sourceid' => ($block->config->source == 0 ? $block->config->sourceroleid : $block->config->sourcecohortid)
 ]));

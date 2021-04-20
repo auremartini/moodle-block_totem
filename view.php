@@ -132,9 +132,11 @@ while ($i < $block->config->pagedays) {
             'collapsible' => $collapsible,
             'collapsed' => $collapsed,
             'showDate' => TRUE,
-            'edit' => TRUE,
-            'copy' => TRUE,
+            'showbtn' => TRUE,
+            'editbtn' => TRUE,
+            'copybtn' => TRUE,
             'delete' => TRUE,
+            'lang_show_totemelement' => get_string('showtotemelement', 'block_totem'),
             'lang_edit_totemelement' => get_string('edittotemelement', 'block_totem'),
             'lang_copy_totemelement' => get_string('copytotemelement', 'block_totem'),
             'lang_delete_totemelement' => get_string('deletetotemelement', 'block_totem')
