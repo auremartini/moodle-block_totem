@@ -66,7 +66,19 @@ $PAGE->requires->js_call_amd('block_totem/add_totemfullscreen_dynamics', 'init',
     'date' => $d->getTimestamp(),
     'offset' => 0,
     'limit' => intval($block->config->fullscreendays),
-    'skipweekend' => $block->config->fullscreenskipweekend
+    'skipweekend' => $block->config->fullscreenskipweekend,
+    'showHidden' => FALSE
 ]));
+
+
+/*echo $PAGE->get_renderer('block_totem')->render_fullscreen(new \block_totem\data\totemtable([
+    'blockid' => $block->instance->id,
+    'date' => $d->getTimestamp(),
+    'collapsible' => FALSE,
+    'collapsed' => FALSE,
+    'showDate' => TRUE,
+    'offset' => 0,
+    'skipweekend' => $block->config->pageskipweekend
+]));*/
 
 echo $OUTPUT->footer();

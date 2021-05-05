@@ -134,7 +134,8 @@ class block_totem extends block_base {
                     'date' => $d->getTimestamp(),
                     'collapsible' => $collapsible,
                     'collapsed' => $collapsed,
-                    'showDate' => TRUE
+                    'showDate' => TRUE,
+                    'showHidden' => FALSE
                 ]));
                 $i++;
             }

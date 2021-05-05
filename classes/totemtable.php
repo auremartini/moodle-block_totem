@@ -72,15 +72,16 @@ class totemtable extends \external_api implements \renderable, \templatable {
         $sql = "SELECT te.id, te.blockid, te.eventtype, u.idnumber, te.teaching, te.subject, te.section, te.time, te.displaytext, te.displayevent
             FROM mdl_block_totem_event te
             LEFT JOIN mdl_user u ON te.userid = u.id
-            WHERE te.blockid = :blockid AND te.date = :date
+            WHERE te.blockid = :blockid AND te.date = :date AND (te.displayevent = 1 OR te.displayevent = :hidden)
             ORDER BY te.date, te.time, u.idnumber";
-        
+
         if (!$params) {
             $params = array();
             $params['blockid'] = $this->data['blockid'];
             $params['date'] = $this->data['date'];
+            $params['hidden'] = ($this->data['showHidden'] == TRUE ? 0 : 1);
         }
-      
+        
         $rs = $DB->get_records_sql($sql, $params);
         foreach ($rs as $record) {
             $return[] = array(
@@ -92,6 +93,7 @@ class totemtable extends \external_api implements \renderable, \templatable {
                 'subject' => $record->subject,
                 'section' => $record->section,
                 'time' => $record->time,
+                'displayhidden' => ($record->displayevent == 1 ? FALSE : TRUE),
                 'displaytext' => $record->displaytext,
                 'displayevent' => ($record->displayevent == 1 ? 'eye-slash' : 'eye')
             );
@@ -158,14 +160,15 @@ class totemtable extends \external_api implements \renderable, \templatable {
             'records' => new \external_multiple_structure(new \external_single_structure(array(
                 'id' => new \external_value(PARAM_INT, 'Event ID', PARAM_REQUIRED),
                 'eventtype' => new \external_value(PARAM_TEXT, 'Event type', PARAM_REQUIRED),
-                'eventtypecss' => new \external_value(PARAM_TEXT, 'Event type', PARAM_REQUIRED),
+                'eventtypecss' => new \external_value(PARAM_TEXT, 'Event type css', PARAM_REQUIRED),
                 'idnumber' => new \external_value(PARAM_TEXT, 'Teacher Number ID', PARAM_REQUIRED),
                 'teaching' => new \external_value(PARAM_TEXT, 'Teaching', PARAM_REQUIRED),
                 'subject' => new \external_value(PARAM_TEXT, 'Subject', PARAM_REQUIRED),
                 'section' => new \external_value(PARAM_TEXT, 'School section', PARAM_REQUIRED),
                 'time' => new \external_value(PARAM_TEXT, 'Event time', PARAM_REQUIRED),
+                'displayhidden' => new \external_value(PARAM_BOOL, 'Hidden', PARAM_REQUIRED),
                 'displaytext' => new \external_value(PARAM_TEXT, 'Display text', PARAM_REQUIRED),
-                'displayevent' => new \external_value(PARAM_INT, 'Show to public', PARAM_REQUIRED)
+                'displayevent' => new \external_value(PARAM_TEXT, 'Show to public', PARAM_REQUIRED)
             )))
         ));
     }
