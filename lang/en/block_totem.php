@@ -32,8 +32,8 @@ $string['totem:addevent'] = 'Add a Totem event';
 $string['totem:editevent'] = 'Edit a Totem event';
 $string['totem:deleteevent'] = 'Delete a Totem event';
 $string['totem:addnews'] = 'Add a Totem news';
-$string['totem:editnews'] = 'Add a Totem news';
-$string['totem:deletenews'] = 'Add a Totem news';
+$string['totem:editnews'] = 'Edit a Totem news';
+$string['totem:deletenews'] = 'Delete a Totem news';
 $string['totem'] = 'Totem block';
 $string['pluginname'] = 'Totem block';
 $string['plugintitle'] = 'Totem';
@@ -50,18 +50,23 @@ $string['configpagedaysdesc'] = 'Days to show in extended page';
 $string['configfullscreendaysdesc'] = 'Days to show in fullscreen page';
 $string['configskipweekend'] = 'Hide week-end days';
 $string['configeventtypelist'] = 'Event type list';
-$string['configeventtypelistdefault'] = 'A|Absent teacher|color:red;&#13;R|Reported class|color:green;';
+$string['configeventtypelistdefault'] = 'A|Absent teacher|background-color:red;&#13;R|Reported class|background-color:yellow;&#13;F|Free time|background-color:green;';
 
 // View page 
 $string['opentotempage'] = 'Open totem page';
 $string['slideshow'] = 'Slideshow';
 $string['addtotemevent'] = 'Add event';
 $string['addtotemnews'] = 'Add news';
-$string['showtotemelement'] = 'Show to public';
-$string['hidetotemelement'] = 'Hide to public';
-$string['edittotemelement'] = 'Edit event';
-$string['copytotemelement'] = 'Copy event';
-$string['deletetotemelement'] = 'Delete event';
+$string['showtotemevent'] = 'Show to public';
+$string['hidetotemevent'] = 'Hide to public';
+$string['edittotemevent'] = 'Edit event';
+$string['copytotemevent'] = 'Copy event';
+$string['deletetotemevent'] = 'Delete event';
+$string['showtotemnews'] = 'Show to public';
+$string['hidetotemnews'] = 'Hide to public';
+$string['edittotemnews'] = 'Edit news';
+$string['copytotemnews'] = 'Copy news';
+$string['deletetotemnews'] = 'Delete news';
 $string['fullscreen'] = 'Fullscreen';
 $string['config'] = 'Configure';
 $string['gotodate'] = 'Go to';
@@ -70,6 +75,7 @@ $string['gotodate'] = 'Go to';
 $string['absentteacher'] = 'Absent teacher';
 $string['reportedclass'] = 'Reported class';
 $string['eventtype'] = 'Event type';
+$string['eventbackground'] = 'Event background';
 $string['teacher'] = 'Teacher';
 $string['teaching'] = 'Teaching and/or subject';
 $string['classsection'] = 'Class or section';
@@ -80,8 +86,8 @@ $string['displayfrom'] = 'Display from';
 $string['displayto'] = 'Display to';
 
 // Database
-$string['inserteventerror'] = 'Error in insert event record in database';
-$string['updateeventerror'] = 'Error in updating event record in database';
+$string['inserteventerror'] = 'Error in insert record in database';
+$string['updateeventerror'] = 'Error in updating record in database';
 
 //Days of the week
 $string['day-1'] = 'Lunedì';

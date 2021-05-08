@@ -66,6 +66,30 @@ $capabilities = array(
         )
     ),
 
+    'block/totem:addnews' => array(
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_BLOCK,
+        'archetypes' => array(
+            'manager' => CAP_ALLOW
+        )
+    ),
+    
+    'block/totem:editnews' => array(
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_BLOCK,
+        'archetypes' => array(
+            'manager' => CAP_ALLOW
+        )
+    ),
+    
+    'block/totem:deletenews' => array(
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_BLOCK,
+        'archetypes' => array(
+            'manager' => CAP_ALLOW
+        )
+    ),
+    
     'block/totem:fullscreen' => array(
         'captype' => 'write',
         'contextlevel' => CONTEXT_BLOCK,

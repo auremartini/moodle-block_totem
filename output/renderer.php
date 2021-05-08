@@ -26,6 +26,10 @@ class renderer extends \plugin_renderer_base {
     public function render_fullscreen($totem) {
         return parent::render_from_template('block_totem/totem_table_fullscreen', $totem->export_for_template($this));
     }
+
+    public function render_news($news) {
+        return parent::render_from_template('block_totem/totem_table_news', $news->export_for_template($this));
+    }
     
     public function open_totem($id) {
         $footer = null;
@@ -39,9 +43,5 @@ class renderer extends \plugin_renderer_base {
 
     public function renderGearMenu($config) {
         return parent::render_from_template('block_totem/dropMenu', $config);
-    }
-    
-    public function renderGearDropMenu($totem) {
-        return '';//parent::render_from_template('block_totem/totem_table', $totem->export_for_template($this));
     }
 }

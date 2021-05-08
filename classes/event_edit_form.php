@@ -32,7 +32,6 @@
 namespace block_totem\classes;
 
 require_once("{$CFG->libdir}/formslib.php");
-//require_once("userlist.php");
 
 class event_edit_form extends \moodleform {
     

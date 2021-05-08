@@ -38,26 +38,21 @@ $action = optional_param('action', '', PARAM_TEXT);
 $blockid = required_param('blockid', PARAM_INT);
 $blockinstance = $DB->get_records('block_instances', array('id' => $blockid));
 $block = block_instance($blockname, $blockinstance[$blockid]);
-$date = optional_param('date', '', PARAM_TEXT);
+$date = intval(optional_param('date', '', PARAM_TEXT));
+$date = (new DateTime(date('d-m-Y', ($date == 0 ? time() : $date))))->getTimestamp();
 
 // SET FORM
 $form = new \block_totem\classes\news_edit_form();
 
-// LOAD VALUES TO EDIT
-//if ($id) {
-//    $record = $DB->get_record('block_totem_event', array('id' => $id));
-//    $form->set_data($record);
-//}
-
 // HANDLE EVENTS
 if ($action == 'delete') {
-    if ($id != 0) {
+/*    if ($id != 0) {
         if (!$DB->delete_records('block_totem_event', array('id' => $id))) {
             print_error('deleteeventerror', 'block_totem');
         }
     }
-    $courseurl = new moodle_url('/blocks/totem/view.php', array('blockid' => $blockid, 'date' => $record->date));
-    redirect($courseurl);
+    $courseurl = new moodle_url('/blocks/totem/view.php', array('blockid' => $blockid));
+    redirect($courseurl);*/
 } elseif($form->is_cancelled()) {
     // Cancelled forms redirect to the course main page.
     $courseurl = new moodle_url('/blocks/totem/view.php', array('blockid' => $blockid));
@@ -65,11 +60,11 @@ if ($action == 'delete') {
 } else if ($record = $form->get_data()) {
     // We need to add code to appropriately act on and store the submitted data
     if ($id != 0) {
-        if (!$DB->update_record('block_totem_event', $record)) {
+        if (!$DB->update_record('block_totem_news', $record)) {
             print_error('updateeventerror', 'block_totem');
         }
     } else {
-        if (!$DB->insert_record('block_totem_event', $record)) {
+        if (!$DB->insert_record('block_totem_news', $record)) {
             print_error('inserteventerror', 'block_totem');
         }
     }
@@ -77,22 +72,23 @@ if ($action == 'delete') {
     redirect($courseurl);
 } elseif ($action == 'copy') {
     // Load event id data and prepare a new record
-    $record = $DB->get_record('block_totem_event', array('id' => $id));
+/*    $record = $DB->get_record('block_totem_event', array('id' => $id));
     $id = null;
     $record->id = null;
-    $form->set_data($record);
+    $form->set_data($record);*/
 } else {
     // Load values to edit
-    if ($id) {
+/*    if ($id) {
         $record = $DB->get_record('block_totem_event', array('id' => $id));
         $form->set_data($record);
-    }
+    } */
 }
+
 $form->set_data(array(
     'id' => $id,
     'blockid' => $blockid,
-    'date_from' => $date+60*60*5,
-    'date_to' => $date+60*60*19
+    'date_from' => intval($date)+60*60*5,
+    'date_to' => intval($date)+60*60*19
 ));
 
 

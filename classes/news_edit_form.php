@@ -32,7 +32,6 @@
 namespace block_totem\classes;
 
 require_once("{$CFG->libdir}/formslib.php");
-//require_once("userlist.php");
 
 class news_edit_form extends \moodleform {
     
@@ -40,6 +39,7 @@ class news_edit_form extends \moodleform {
         $mform =& $this->_form;
         $mform->addElement('hidden', 'id');
         $mform->addElement('hidden', 'blockid');
+        $mform->addElement('hidden', 'date');
         
         $NEWS_TYPES = array(
             '-' => get_string('white', 'block_totem'),
@@ -52,7 +52,7 @@ class news_edit_form extends \moodleform {
         $mform->addElement('header', 'generalhdr', get_string('general'));
 
         // add type element
-        $mform->addElement('select', 'eventtype', get_string('eventtype', 'block_totem'), $NEWS_TYPES);
+        $mform->addElement('select', 'eventtype', get_string('eventbackground', 'block_totem'), $NEWS_TYPES);
         $mform->setType('eventtype', PARAM_TEXT);
         
         // add date from element
@@ -63,9 +63,19 @@ class news_edit_form extends \moodleform {
         $mform->addElement('date_time_selector', 'date_to', get_string('displayto', 'block_totem'));
         $mform->setType('date_to', PARAM_INT);
         
+        // add displayevent element
+        $a=array();
+        $a[] = $mform->createElement('radio', 'displayevent', '', get_string('yes'), 1);
+        $a[] = $mform->createElement('radio', 'displayevent', '', get_string('no'), 0);
+        $mform->addGroup($a, 'displayeventgroup', get_string('show', 'block_totem'), array(' '), FALSE);
+        $mform->setDefault('displayevent', 1);
+        $mform->setType('displayevent', PARAM_INT);
+
         // add message element
-        $mform->addElement('htmleditor', 'displaytext', get_string('displaytext', 'block_totem'), array('size'=>'255'));
-                           
+        $mform->addElement('textarea', 'displaytext', get_string('displaytext', 'block_totem'), array(rows=>'10', cols=>'50', 'size'=>'1333'));
+        $mform->setType('displaytext', PARAM_TEXT);
+//        $mform->addElement('htmleditor', 'displaytext', get_string('displaytext', 'block_totem'), array('size'=>'255'));
+        
         $this->add_action_buttons();
     }
 }

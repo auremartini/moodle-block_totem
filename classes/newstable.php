@@ -20,7 +20,7 @@ defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir . "/externallib.php");
 
-class totemtable extends \external_api implements \renderable, \templatable {
+class newstable extends \external_api implements \renderable, \templatable {
     private $data = [];
     
     /**
@@ -69,30 +69,43 @@ class totemtable extends \external_api implements \renderable, \templatable {
         $return = array();
         $sql = '';
         $rs = null;
-        $sql = "SELECT te.id, te.eventtype, u.idnumber, te.teaching, te.subject, te.section, te.time, te.displaytext, te.displayevent
-            FROM mdl_block_totem_event te
-            LEFT JOIN mdl_user u ON te.userid = u.id
-            WHERE te.date = :date AND (te.displayevent = 1 OR te.displayevent = :hidden)
-            ORDER BY te.date, te.time, u.idnumber";
-       
+        $sql = "SELECT tn.id, tn.eventtype, tn.date_from, tn.date_to, tn.displaytext, tn.displayevent
+            FROM mdl_block_totem_news tn
+            WHERE (tn.date_from >= :date_from AND tn.date_to <= :date_to) AND (tn.displayevent = 1 OR tn.displayevent = :hidden)
+            ORDER BY tn.date_from, tn.eventtype";
+
         if (!$params) {
             $params = array();
-            $params['date'] = $this->data['date'];
+            $params['date_from'] = $this->data['date_from'];
+            $params['date_to'] = $this->data['date_to'];
             $params['hidden'] = ($this->data['showHidden'] == TRUE ? 0 : 1);
         }
         
         $rs = $DB->get_records_sql($sql, $params);
         foreach ($rs as $record) {
+            $displaydate = 'DATE';
+            if (date('Y', $record->date_from) == date('Y', $record->date_from)) {
+                if (date('m', $record->date_from) == date('m', $record->date_from)) {
+                    if (date('m', $record->date_from) == date('m', $record->date_from)) {
+                        $displaydate = date('d.m.Y', $record->date_from); //STESSO GIORNO
+                    } else {
+                        $displaydate = date('d.m', $record->date_from).' - '.date('d.m.Y', $record->date_to); //GIORNO DIFFERENTE
+                    }
+                } else {
+                    $displaydate = date('d.m', $record->date_from).' - '.date('d.m.Y', $record->date_to); //MESE DIFFERENTE
+                }
+            } else {
+                $displaydate = date('d.m.Y', $record->date_from) + ' - ' +  date('d.m.Y', $record->date_to); //ANNO DIFFERENTE
+            }
+            
             $return[] = array(
                 'id' => $record->id,
                 'eventtype' => $record->eventtype,
                 'eventtypecss' => ($record->eventtype=='' ? '' : $eventtypelist[$record->eventtype]),
-                'idnumber' => $record->idnumber,
-                'teaching' => $record->teaching,
-                'subject' => $record->subject,
-                'section' => $record->section,
-                'time' => $record->time,
+                'date_from' => $record->date_from,
+                'date_to' => $record->date_to,
                 'displayhidden' => ($record->displayevent == 1 ? FALSE : TRUE),
+                'displaydate' => $displaydate,
                 'displaytext' => $record->displaytext,
                 'displayevent' => ($record->displayevent == 1 ? 'eye-slash' : 'eye')
             );
@@ -113,7 +126,7 @@ class totemtable extends \external_api implements \renderable, \templatable {
         return $this->data;
     }
 
-    public static function get_totemtable_parameters() {
+    public static function get_newstable_parameters() {
         return new \external_function_parameters(array(
             'blockid' => new \external_value(PARAM_INT, 'Totem block ID', PARAM_REQUIRED),
             'date' => new \external_value(PARAM_INT, 'Timetable start date', PARAM_REQUIRED),
@@ -122,11 +135,11 @@ class totemtable extends \external_api implements \renderable, \templatable {
         ));
     }
     
-    public static function get_totemtable_is_allowed_from_ajax() {
+    public static function get_newstable_is_allowed_from_ajax() {
         return true;
     }
     
-    public static function get_totemtable($blockid, $date, $offset, $skipweekend) {
+    public static function get_newstable($blockid, $date, $offset, $skipweekend) {
         
         //Calculate the day to show
         $d = new \DateTime();
@@ -150,7 +163,7 @@ class totemtable extends \external_api implements \renderable, \templatable {
         return $totem->export_for_template();
     }
     
-    public static function get_totemtable_returns() {
+    public static function get_newstable_returns() {
         return new \external_single_structure(array(
             'blockid' => new \external_value(PARAM_TEXT, 'Totemtable block ID', PARAM_REQUIRED),
             'date' => new \external_value(PARAM_TEXT, 'Totemtable date', PARAM_REQUIRED),
@@ -160,12 +173,10 @@ class totemtable extends \external_api implements \renderable, \templatable {
                 'id' => new \external_value(PARAM_INT, 'Event ID', PARAM_REQUIRED),
                 'eventtype' => new \external_value(PARAM_TEXT, 'Event type', PARAM_REQUIRED),
                 'eventtypecss' => new \external_value(PARAM_TEXT, 'Event type css', PARAM_REQUIRED),
-                'idnumber' => new \external_value(PARAM_TEXT, 'Teacher Number ID', PARAM_REQUIRED),
-                'teaching' => new \external_value(PARAM_TEXT, 'Teaching', PARAM_REQUIRED),
-                'subject' => new \external_value(PARAM_TEXT, 'Subject', PARAM_REQUIRED),
-                'section' => new \external_value(PARAM_TEXT, 'School section', PARAM_REQUIRED),
-                'time' => new \external_value(PARAM_TEXT, 'Event time', PARAM_REQUIRED),
+                'date_from' => new \external_value(PARAM_INT, 'Display from date', PARAM_REQUIRED),
+                'date_to' => new \external_value(PARAM_INT, 'Display to date', PARAM_REQUIRED),
                 'displayhidden' => new \external_value(PARAM_BOOL, 'Hidden', PARAM_REQUIRED),
+                'displaydate' => new \external_value(PARAM_TEXT, 'Display date', PARAM_REQUIRED),
                 'displaytext' => new \external_value(PARAM_TEXT, 'Display text', PARAM_REQUIRED),
                 'displayevent' => new \external_value(PARAM_TEXT, 'Show to public', PARAM_REQUIRED)
             )))

@@ -1,0 +1,35 @@
+{{!
+	This file is part of Moodle - http://moodle.org/
+
+	Moodle is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	Moodle is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+	@template block_totem/totem_table
+	
+	Show totem as a table
+}}
+<div data-region="totem-element-news">
+	{{#records}}
+		<div style="border: 1px solid black; margin-bottom: 5px; padding: 5px; {{eventtypecss}}">
+			<b>{{displaydate}}</b><br />
+			{{displaytext}}
+			<div style="text-align:right">
+				{{#editbtn}}<a href="news.php?id={{id}}&blockid={{blockid}}"><i class="icon fa fa-cog fa-fw " title="{{lang_edit_totemelement}}" aria-label="{{lang_edit_totemelement}}"></i></a>{{/editbtn}}
+				{{#copybtn}}<a href="news.php?id={{id}}&blockid={{blockid}}&action=copy"><i class="icon fa fa-copy fa-fw " title="{{lang_copy_totemelement}}" aria-label="{{lang_copy_totemelement}}"></i></a>{{/copybtn}}
+				{{#showbtn}}<a href="news.php?id={{id}}&blockid={{blockid}}&action={{displayevent}}"><i class="icon fa fa-{{displayevent}} fa-fw " title="{{#displayhidden}}{{lang_show_totemelement}}{{/displayhidden}}{{^displayhidden}}{{lang_hide_totemelement}}{{/displayhidden}}" aria-label="{{lang_show_totemelement}}"></i></a>{{/showbtn}}
+				{{#delete}}<a href="#" src="news.php?id={{id}}&blockid={{blockid}}" class="icon-delete"><i class="icon fa fa-trash fa-fw " title="{{lang_delete_totemelement}}" aria-label="{{lang_delete_totemelement}}"></i></a>{{/delete}}
+			</div>
+		</div>
+	{{/records}}
+</div>

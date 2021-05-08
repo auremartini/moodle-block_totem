@@ -50,7 +50,7 @@ if ($action == 'delete') {
             print_error('deleteeventerror', 'block_totem');
         }
     }
-    $courseurl = new moodle_url('/blocks/totem/view.php', array('blockid' => $blockid, 'date' => $record->date));
+    $courseurl = new moodle_url('/blocks/totem/view.php', array('blockid' => $blockid));
     redirect($courseurl);
 } elseif($form->is_cancelled()) {
     // Cancelled forms redirect to the course main page.
@@ -100,12 +100,14 @@ if ($action == 'delete') {
         $form->set_data($record);
     }
 }
+
 $form->set_data(array(
     'id' => $id,
     'blockid' => $blockid,
     'blockteachings' => $block->config->teachings,
     'source' => $block->config->source,
-    'sourceid' => ($block->config->source == 0 ? $block->config->sourceroleid : $block->config->sourcecohortid)
+    'sourceid' => ($block->config->source == 0 ? $block->config->sourceroleid : $block->config->sourcecohortid),
+    'date' => $date
 ));
 
 
