@@ -43,12 +43,6 @@ $date = optional_param('date', '', PARAM_TEXT);
 // SET FORM
 $form = new \block_totem\classes\event_edit_form();
 
-// LOAD VALUES TO EDIT
-//if ($id) {
-//    $record = $DB->get_record('block_totem_event', array('id' => $id));
-//    $form->set_data($record);
-//}
-
 // HANDLE EVENTS
 if ($action == 'delete') {
     if ($id != 0) {
@@ -83,8 +77,7 @@ if ($action == 'delete') {
     $form->set_data($record);
 } else if ($action == 'eye') {
     // Update record to show to public
-    $record=new stdClass();
-    $record->id = $id;
+    $record = $DB->get_record('block_totem_event', array('id' => $id));
     $record->displayevent = 1;
     if (!$DB->update_record('block_totem_event', $record)) {
         print_error('updateeventerror', 'block_totem');
@@ -93,8 +86,7 @@ if ($action == 'delete') {
     redirect($courseurl);
 } else if ($action == 'eye-slash') {
     // Update record to hide to public
-    $record=new stdClass();
-    $record->id = $id;
+    $record = $DB->get_record('block_totem_event', array('id' => $id));
     $record->displayevent = 0;
     if (!$DB->update_record('block_totem_event', $record)) {
         print_error('updateeventerror', 'block_totem');
@@ -113,13 +105,11 @@ $form->set_data(array(
     'blockid' => $blockid,
     'blockteachings' => $block->config->teachings,
     'source' => $block->config->source,
-    'sourceid' => ($block->config->source == 0 ? $block->config->sourceroleid : $block->config->sourcecohortid),
-    'date' => $date
+    'sourceid' => ($block->config->source == 0 ? $block->config->sourceroleid : $block->config->sourcecohortid)
 ));
 
 
 // SET PAGE ELEMENTS (HEADER)
-//$PAGE->requires->js(new moodle_url($CFG->wwwroot . '/blocks/totem/js/event_edit_form.js'));
 $PAGE->requires->js_call_amd('block_totem/add_event_edit_form_dynamics', 'init', array([
     'blockteachings' => $block->config->teachings,
     'eventypelist' => $block->config->eventtypelist,
@@ -130,9 +120,8 @@ $PAGE->set_url(new moodle_url('/blocks/totem/event.php'));
 $PAGE->set_context(\context_system::instance());
 $PAGE->set_title($block->get_title());
 $PAGE->set_heading($block->get_title());
-$settingsnode = $PAGE->settingsnav->add(get_string('plugintitle', 'block_totem'));
 $url = new moodle_url('/blocks/totem/view.php', array('blockid' => $blockid));
-$node = $settingsnode->add($block->get_title(), $url);
+$node = $PAGE->settingsnav->add($block->get_title(), $url);
 $node->make_active();
 $url = new moodle_url('/blocks/totem/event.php', array('blockid' => $blockid, 'id' => $id));
 $editnode = $node->add(get_string('addtotemevent', 'block_totem'), $url);

@@ -26,26 +26,52 @@ defined('MOODLE_INTERNAL') || die();
 
 $capabilities = array(
 
-    'block/totem:myaddinstance' => array(
-        'captype' => 'write',
-        'contextlevel' => CONTEXT_SYSTEM,
-        'archetypes' => array(
-            'user' => CAP_ALLOW
-        ),
-        
-        'clonepermissionsfrom' => 'moodle/my:manageblocks'
-    ),
-    
     'block/totem:addinstance' => array(
-        'riskbitmask' => RISK_SPAM | RISK_XSS,
-        
         'captype' => 'write',
         'contextlevel' => CONTEXT_BLOCK,
         'archetypes' => array(
-            'editingteacher' => CAP_ALLOW,
             'manager' => CAP_ALLOW
-        ),
+        )
+    ),
+    
+    'block/totem:myaddinstance' => array(
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_BLOCK,
+        'archetypes' => array(
+            'manager' => CAP_ALLOW
+        )
+    ),
 
-        'clonepermissionsfrom' => 'moodle/site:manageblocks'
+    'block/totem:addevent' => array(
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_BLOCK,
+        'archetypes' => array(
+            'manager' => CAP_ALLOW
+        )
+    ),
+
+    'block/totem:editevent' => array(
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_BLOCK,
+        'archetypes' => array(
+            'manager' => CAP_ALLOW
+        )
+    ),
+    
+    'block/totem:deleteevent' => array(
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_BLOCK,
+        'archetypes' => array(
+            'manager' => CAP_ALLOW
+        )
+    ),
+
+    'block/totem:fullscreen' => array(
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_BLOCK,
+        'archetypes' => array(
+            'manager' => CAP_ALLOW
+        )
     )
+    
 );

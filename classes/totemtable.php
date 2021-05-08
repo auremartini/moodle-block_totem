@@ -72,7 +72,7 @@ class totemtable extends \external_api implements \renderable, \templatable {
         $sql = "SELECT te.id, te.blockid, te.eventtype, u.idnumber, te.teaching, te.subject, te.section, te.time, te.displaytext, te.displayevent
             FROM mdl_block_totem_event te
             LEFT JOIN mdl_user u ON te.userid = u.id
-            WHERE te.blockid = :blockid AND te.date = :date AND (te.displayevent = 1 OR te.displayevent = :hidden)
+            WHERE te.date = :date AND (te.displayevent = 1 OR te.displayevent = :hidden)
             ORDER BY te.date, te.time, u.idnumber";
 
         if (!$params) {

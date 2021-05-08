@@ -26,6 +26,14 @@
 // Administration
 $string['totem:addinstance'] = 'Add a new Totem block';
 $string['totem:myaddinstance'] = 'Add a new Totem block to Dashboard';
+$string['totem:myaddinstance'] = 'Edit a block\'s settings';
+$string['totem:fullscreen'] = 'Open Totem in fullscreen';
+$string['totem:addevent'] = 'Add a Totem event';
+$string['totem:editevent'] = 'Edit a Totem event';
+$string['totem:deleteevent'] = 'Delete a Totem event';
+$string['totem:addnews'] = 'Add a Totem news';
+$string['totem:editnews'] = 'Add a Totem news';
+$string['totem:deletenews'] = 'Add a Totem news';
 $string['totem'] = 'Totem block';
 $string['pluginname'] = 'Totem block';
 $string['plugintitle'] = 'Totem';

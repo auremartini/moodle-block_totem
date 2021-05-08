@@ -55,9 +55,8 @@ $PAGE->set_url(new moodle_url('/blocks/totem/view.php'));
 $PAGE->set_context(\context_system::instance());
 $PAGE->set_title($block->get_title());
 $PAGE->set_heading($block->get_title());
-$settingsnode = $PAGE->settingsnav->add(get_string('plugintitle', 'block_totem'));
 $url = new moodle_url('/blocks/totem/view.php', array('blockid' => $blockid));
-$node = $settingsnode->add($block->get_title(), $url);
+$node = $PAGE->settingsnav->add($block->get_title(), $url);
 $node->make_active();
 
 // SET MENU
@@ -79,36 +78,45 @@ $menu .= '<p><form method="post" action="'.$url.'">
       </form></p>';
 
 // PRINT CONTENT TO PAGE
+$context = context_block::instance($blockid);
 echo $OUTPUT->header();
 
 // ADD MENU
 $menu = array();
-$menu[] = array(
-    'id' => 'totem_block_dropmenuitem_addevent',
-    'icon' => 'fa-calendar-plus-o',
-    'url' => new moodle_url('/blocks/totem/event.php', array('blockid' => $blockid)),
-    'date' => $date,
-    'title' => get_string('addtotemevent', 'block_totem')
-);
-$menu[] = array(
-    'id' => 'totem_block_dropmenuitem_addnews',
-    'icon' => 'fa-newspaper-o',
-    'url' => new moodle_url('/blocks/totem/news.php', array('blockid' => $blockid)),
-    'date' => $date,
-    'title' => get_string('addtotemnews', 'block_totem')
-);
-$menu[] = array(
-    'id' => 'totem_block_dropmenuitem_fullscreen',
-    'icon' => 'fa-window-maximize',
-    'url' => new moodle_url('/blocks/totem/fullscreen.php', array('blockid' => $blockid)),
-    'title' => get_string('fullscreen', 'block_totem')
-);
-$menu[] = array(
-    'id' => 'totem_block_dropmenuitem_config',
-    'icon' => 'fa-cog',
-    'url' => new moodle_url('/blocks/totem/config.php', array('blockid' => $blockid)),
-    'title' => get_string('config', 'block_totem')
-);
+if (has_capability('block/totem:addevent', $context)) {
+    $menu[] = array(
+        'id' => 'totem_block_dropmenuitem_addevent',
+        'icon' => 'fa-calendar-plus-o',
+        'url' => new moodle_url('/blocks/totem/event.php', array('blockid' => $blockid)),
+        'date' => $date,
+        'title' => get_string('addtotemevent', 'block_totem')
+    );
+}
+if (has_capability('block/totem:addnews', $context)) {
+    $menu[] = array(
+        'id' => 'totem_block_dropmenuitem_addnews',
+        'icon' => 'fa-newspaper-o',
+        'url' => new moodle_url('/blocks/totem/news.php', array('blockid' => $blockid)),
+        'date' => $date,
+        'title' => get_string('addtotemnews', 'block_totem')
+    );
+}
+if (has_capability('block/totem:fullscreen', $context)) {
+    $menu[] = array(
+        'id' => 'totem_block_dropmenuitem_fullscreen',
+        'icon' => 'fa-window-maximize',
+        'url' => new moodle_url('/blocks/totem/fullscreen.php', array('blockid' => $blockid)),
+        'title' => get_string('fullscreen', 'block_totem')
+    );
+}
+if (has_capability('block/totem:addinstance', $context)) {
+    $menu[] = array(
+        'id' => 'totem_block_dropmenuitem_config',
+        'icon' => 'fa-cog',
+        'url' => new moodle_url('/blocks/totem/config.php', array('blockid' => $blockid)),
+        'title' => get_string('config', 'block_totem')
+    );
+}
 if (count($menu) > 0) {
     echo $PAGE->get_renderer('block_totem')->renderGearMenu(array('records' => $menu));
 }
@@ -131,12 +139,12 @@ while ($i < $block->config->pagedays) {
             'date' => $d->getTimestamp(),
             'collapsible' => $collapsible,
             'collapsed' => $collapsed,
-            'showHidden' => TRUE,
+            'showHidden' => has_capability('block/totem:editevent', $context),
             'showDate' => TRUE,
-            'showbtn' => TRUE,
-            'editbtn' => TRUE,
-            'copybtn' => TRUE,
-            'delete' => TRUE,
+            'showbtn' => has_capability('block/totem:editevent', $context),
+            'editbtn' => has_capability('block/totem:editevent', $context),
+            'copybtn' => has_capability('block/totem:addevent', $context),
+            'delete' => has_capability('block/totem:deleteevent', $context),
             'lang_show_totemelement' => get_string('showtotemelement', 'block_totem'),
             'lang_hide_totemelement' => get_string('hidetotemelement', 'block_totem'),
             'lang_edit_totemelement' => get_string('edittotemelement', 'block_totem'),
