@@ -35,7 +35,12 @@
 			{{/records}}
 		</table>
 	</div>	
-	<div data-region="totem_fullscreen-msg">
-
+	<div data-region="totem_fullscreen-msg" style="margin-bottom: 10px;">
+		<center>{{#calendar}}
+			<div class="totem-box">
+				<b>{{name}}</b>{{#location}}<br /><i><small>{{location}}</small></i>{{/location}}{{#description}}<br />{{{description}}}{{/description}}</i>
+			</div>
+		{{/calendar}}</center>
+		<div>&nbsp;</div>
 	</div>
 </div>

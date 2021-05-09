@@ -74,7 +74,7 @@ class totemtable extends \external_api implements \renderable, \templatable {
             LEFT JOIN mdl_user u ON te.userid = u.id
             WHERE te.date = :date AND (te.displayevent = 1 OR te.displayevent = :hidden)
             ORDER BY te.date, te.time, u.idnumber";
-       
+
         if (!$params) {
             $params = array();
             $params['date'] = $this->data['date'];
@@ -100,7 +100,36 @@ class totemtable extends \external_api implements \renderable, \templatable {
         $this->data['recordcount'] = count($return);
         $this->data['records'] = $return;
 
-        return $return;
+        $return = array();
+        $sql = '';
+        $rs = null;
+        $sql = "SELECT e.id, e.name, e.location, e.description, e.timestart, e.timeduration, e.visible
+            FROM mdl_event e
+            WHERE e.timestart <= :date_to AND (e.timestart + e.timeduration) >= :date_from AND (e.visible = 1 OR e.visible = :hidden)
+            ORDER BY e.timestart, e.timeduration, e.name";
+        
+        $params = array();
+        $params['date_from'] = $this->data['date'];
+        $params['date_to'] = $this->data['date'] + 1*24*60*60;
+        $params['hidden'] = ($this->data['showHidden'] == TRUE ? 0 : 1);
+        
+        $rs = $DB->get_records_sql($sql, $params);
+        foreach ($rs as $record) {
+            $return[] = array(
+                'id' => $record->id,
+                'name' => $record->name,
+                'location' => $record->location,
+                'description' => $record->description,
+                'date' => '',
+                'timestart' => $record->timestart,
+                'timeduration' => $record->timeduration,
+                'visible' => $record->visible,
+            );
+        }
+        $this->data['calendarcount'] = count($return);
+        $this->data['calendar'] = $return;
+        
+        return $this->data;
     }
     
     /**
@@ -168,6 +197,17 @@ class totemtable extends \external_api implements \renderable, \templatable {
                 'displayhidden' => new \external_value(PARAM_BOOL, 'Hidden', PARAM_REQUIRED),
                 'displaytext' => new \external_value(PARAM_TEXT, 'Display text', PARAM_REQUIRED),
                 'displayevent' => new \external_value(PARAM_TEXT, 'Show to public', PARAM_REQUIRED)
+            ))),
+            'calendarcount' => new \external_value(PARAM_TEXT, 'Totemtable date extended text', PARAM_REQUIRED),
+            'calendar' => new \external_multiple_structure(new \external_single_structure(array(
+                'id' => new \external_value(PARAM_INT, 'Calendar event ID', PARAM_REQUIRED),
+                'name' => new \external_value(PARAM_TEXT, 'Calendar event name', PARAM_REQUIRED),
+                'location' => new \external_value(PARAM_TEXT, 'Calendar event location', PARAM_REQUIRED),
+                'description' => new \external_value(PARAM_RAW, 'Calendar event description', PARAM_REQUIRED),
+                'date' => new \external_value(PARAM_TEXT, 'Calendar event date', PARAM_REQUIRED),
+                'timestart' => new \external_value(PARAM_INT, 'Calendar event start', PARAM_REQUIRED),
+                'timeduration' => new \external_value(PARAM_INT, 'Calendar event duration', PARAM_REQUIRED),
+                'visible' => new \external_value(PARAM_INT, 'Calendar visibility', PARAM_REQUIRED)
             )))
         ));
     }

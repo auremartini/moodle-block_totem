@@ -10,3 +10,15 @@ div.totem-fullscreen {
     -moz-transform-origin: 0 0;
     background-color: white;
 }
+
+div.totem_fullscreen-msg {
+    width: 100%;
+}
+
+div.totem-box {
+    display: inline-block;
+    border: 1px solid black;
+    margin: 5px;
+    padding: 5px;
+    text-align: center;
+}

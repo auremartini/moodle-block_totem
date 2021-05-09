@@ -140,9 +140,8 @@ class block_totem extends block_base {
                 $i++;
             }
             $d->modify('+1 day');
-            
         }
-        
+                
         $this->content->footer = $PAGE->get_renderer('block_totem')->open_totem($this->instance->id);
         
         return $this->content;

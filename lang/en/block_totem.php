@@ -26,14 +26,10 @@
 // Administration
 $string['totem:addinstance'] = 'Add a new Totem block';
 $string['totem:myaddinstance'] = 'Add a new Totem block to Dashboard';
-$string['totem:myaddinstance'] = 'Edit a block\'s settings';
 $string['totem:fullscreen'] = 'Open Totem in fullscreen';
 $string['totem:addevent'] = 'Add a Totem event';
 $string['totem:editevent'] = 'Edit a Totem event';
 $string['totem:deleteevent'] = 'Delete a Totem event';
-$string['totem:addnews'] = 'Add a Totem news';
-$string['totem:editnews'] = 'Edit a Totem news';
-$string['totem:deletenews'] = 'Delete a Totem news';
 $string['totem'] = 'Totem block';
 $string['pluginname'] = 'Totem block';
 $string['plugintitle'] = 'Totem';
@@ -54,70 +50,49 @@ $string['configeventtypelistdefault'] = 'A|Absent teacher|background-color:red;&
 
 // View page 
 $string['opentotempage'] = 'Open totem page';
-$string['slideshow'] = 'Slideshow';
 $string['addtotemevent'] = 'Add event';
-$string['addtotemnews'] = 'Add news';
 $string['showtotemevent'] = 'Show to public';
 $string['hidetotemevent'] = 'Hide to public';
 $string['edittotemevent'] = 'Edit event';
 $string['copytotemevent'] = 'Copy event';
 $string['deletetotemevent'] = 'Delete event';
-$string['showtotemnews'] = 'Show to public';
-$string['hidetotemnews'] = 'Hide to public';
-$string['edittotemnews'] = 'Edit news';
-$string['copytotemnews'] = 'Copy news';
-$string['deletetotemnews'] = 'Delete news';
 $string['fullscreen'] = 'Fullscreen';
 $string['config'] = 'Configure';
 $string['gotodate'] = 'Go to';
 
 // Edit event
-$string['absentteacher'] = 'Absent teacher';
-$string['reportedclass'] = 'Reported class';
 $string['eventtype'] = 'Event type';
-$string['eventbackground'] = 'Event background';
 $string['teacher'] = 'Teacher';
 $string['teaching'] = 'Teaching and/or subject';
 $string['classsection'] = 'Class or section';
 $string['displaydate'] = 'Event date';
 $string['displaytime'] = 'Event time';
 $string['displaytext'] = 'Display message';
-$string['displayfrom'] = 'Display from';
-$string['displayto'] = 'Display to';
+$string['displayevent'] = 'Show event';
 
 // Database
-$string['inserteventerror'] = 'Error in insert record in database';
-$string['updateeventerror'] = 'Error in updating record in database';
+$string['inserteventerror'] = 'Error in insert record in database.';
+$string['updateeventerror'] = 'Error in updating record in database.';
 
 //Days of the week
-$string['day-1'] = 'Lunedì';
-$string['day-2'] = 'Martedì';
-$string['day-3'] = 'Mercoledì';
-$string['day-4'] = 'Giovedì';
-$string['day-5'] = 'Venerdì';
-$string['day-6'] = 'Sabato';
-$string['day-7'] = 'Domenica';
+$string['day-1'] = 'Monday';
+$string['day-2'] = 'Tuesday';
+$string['day-3'] = 'Wednesday';
+$string['day-4'] = 'Thursday';
+$string['day-5'] = 'Friday';
+$string['day-6'] = 'Saturday';
+$string['day-7'] = 'Sunday';
 
 //Months
-$string['month-1'] = 'Gennaio';
-$string['month-2'] = 'Febbraio';
-$string['month-3'] = 'Marzo';
-$string['month-4'] = 'Aprile';
-$string['month-5'] = 'Maggio';
-$string['month-6'] = 'Giugno';
-$string['month-7'] = 'Luglio';
-$string['month-8'] = 'Agosto';
-$string['month-9'] = 'Settembre';
-$string['month-10'] = 'Ottobre';
-$string['month-11'] = 'Novembre';
-$string['month-12'] = 'Dicembre';
-
-//Colors
-$string['white'] = 'White';
-$string['red'] = 'Red';
-$string['blue'] = 'Blue';
-$string['green'] = 'Green';
-$string['yellow'] = 'Yellow';
-
-//Messages
-$string['show'] = 'Show in totem';
+$string['month-1'] = 'January';
+$string['month-2'] = 'February';
+$string['month-3'] = 'March';
+$string['month-4'] = 'April';
+$string['month-5'] = 'May';
+$string['month-6'] = 'June';
+$string['month-7'] = 'July';
+$string['month-8'] = 'August';
+$string['month-9'] = 'September';
+$string['month-10'] = 'October';
+$string['month-11'] = 'November';
+$string['month-12'] = 'December';

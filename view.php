@@ -27,7 +27,6 @@ use block_totem\classes\datepicker_form;
  
 require_once(__DIR__ . '/../../config.php');
 require_once(__DIR__ . '/classes/totemtable.php');
-require_once(__DIR__ . '/classes/newstable.php');
 require_once(__DIR__ . '/classes/datepicker_form.php');
 require_once(__DIR__ . '/output/renderer.php');
 
@@ -41,7 +40,12 @@ $blockname = 'totem';
 $blockid = required_param('blockid', PARAM_INT);
 $blockinstance = $DB->get_records('block_instances', array('id' => $blockid));
 $block = block_instance($blockname, $blockinstance[$blockid]);
-$date = optional_param('date', 0, PARAM_INT);
+$date = intval(optional_param('date', '', PARAM_TEXT));
+$d = new DateTime();
+if ($date) $d->setTimestamp(($date == 0 ? time() : $date));
+$d->setTime(0,0);
+$date=$d->getTimestamp();
+
 
 // LOAD AND HANDLE TOOLBAR FORM EVENT
 $toolbar = new \block_totem\classes\datepicker_form();
@@ -59,6 +63,7 @@ $PAGE->set_heading($block->get_title());
 $url = new moodle_url('/blocks/totem/view.php', array('blockid' => $blockid));
 $node = $PAGE->settingsnav->add($block->get_title(), $url);
 $node->make_active();
+
 
 // SET MENU
 $menu = '';
@@ -93,15 +98,6 @@ if (has_capability('block/totem:addevent', $context)) {
         'title' => get_string('addtotemevent', 'block_totem')
     );
 }
-if (has_capability('block/totem:addnews', $context)) {
-    $menu[] = array(
-        'id' => 'totem_block_dropmenuitem_addnews',
-        'icon' => 'fa-newspaper-o',
-        'url' => new moodle_url('/blocks/totem/news.php', array('blockid' => $blockid)),
-        'date' => $date,
-        'title' => get_string('addtotemnews', 'block_totem')
-    );
-}
 if (has_capability('block/totem:fullscreen', $context)) {
     $menu[] = array(
         'id' => 'totem_block_dropmenuitem_fullscreen',
@@ -125,14 +121,7 @@ if (count($menu) > 0) {
 // ADD DATEPICKER
 $toolbar->display();
 
-// ADD TOTEM TABLE
-$d = new DateTime();
-if ($date) $d->setTimestamp($date);
-$d->setTime(0,0);
-$i = 0;
-
 //ADD EVENT TABLES
-echo '<div style="display: inline-block; float:left; width:75%;">';
 while ($i < $block->config->pagedays) {
     $collapsible = ($block->config->pagedays == 1 ? FALSE : TRUE);
     $collapsed = ($i==0 ? FALSE : TRUE);
@@ -149,36 +138,16 @@ while ($i < $block->config->pagedays) {
             'editbtn' => has_capability('block/totem:editevent', $context),
             'copybtn' => has_capability('block/totem:addevent', $context),
             'delete' => has_capability('block/totem:deleteevent', $context),
-            'lang_show_totemelement' => get_string('showtotemevent', 'block_totem'),
-            'lang_hide_totemelement' => get_string('hidetotemevent', 'block_totem'),
-            'lang_edit_totemelement' => get_string('edittotemevent', 'block_totem'),
-            'lang_copy_totemelement' => get_string('copytotemevent', 'block_totem'),
-            'lang_delete_totemelement' => get_string('deletetotemevent', 'block_totem')
+            'lang_show_totemevent' => get_string('showtotemevent', 'block_totem'),
+            'lang_hide_totemevent' => get_string('hidetotemevent', 'block_totem'),
+            'lang_edit_totemevent' => get_string('edittotemevent', 'block_totem'),
+            'lang_copy_totemevent' => get_string('copytotemevent', 'block_totem'),
+            'lang_delete_totemevent' => get_string('deletetotemevent', 'block_totem')
         ]));
         $i++;
     }
     $d->modify('+1 day');
 }
-echo '</div>';
-echo '<div style="display: inline-block; margin-left:20px; width:20%;">';
-echo $PAGE->get_renderer('block_totem')->render_news(new \block_totem\data\newstable([
-    'blockid' => $block->instance->id,
-    'blockid' => $block->instance->id,
-    'date_from' => 0,
-    'date_to' => time() + 10000,
-    'showHidden' => has_capability('block/totem:editnews', $context),
-    'showbtn' => has_capability('block/totem:editnews', $context),
-    'editbtn' => has_capability('block/totem:editnews', $context),
-    'copybtn' => has_capability('block/totem:addnews', $context),
-    'delete' => has_capability('block/totem:deletenews', $context),
-    'lang_show_totemelement' => get_string('showtotemnews', 'block_totem'),
-    'lang_hide_totemelement' => get_string('hidetotemnews', 'block_totem'),
-    'lang_edit_totemelement' => get_string('edittotemnews', 'block_totem'),
-    'lang_copy_totemelement' => get_string('copytotemnews', 'block_totem'),
-    'lang_delete_totemelement' => get_string('deletetotemnews', 'block_totem')
-]));
-echo '</div>';
-
 
 $PAGE->requires->js_call_amd('block_totem/delete_confirm', 'init', array());
 echo $OUTPUT->footer();

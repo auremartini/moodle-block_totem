@@ -43,6 +43,7 @@ $date = optional_param('date', '', PARAM_TEXT);
 // SET FORM
 $form = new \block_totem\classes\event_edit_form();
 
+
 // HANDLE EVENTS
 if ($action == 'delete') {
     if ($id != 0) {
@@ -110,11 +111,10 @@ $form->set_data(array(
     'date' => $date
 ));
 
-
 // SET PAGE ELEMENTS (HEADER)
 $PAGE->requires->js_call_amd('block_totem/add_event_edit_form_dynamics', 'init', array([
     'blockteachings' => $block->config->teachings,
-    'eventypelist' => $block->config->eventtypelist,
+    'eventtypelist' => $block->config->eventtypelist,
     'source' => $block->config->source,
     'sourceid' => ($block->config->source == 0 ? $block->config->sourceroleid : $block->config->sourcecohortid)
 ]));

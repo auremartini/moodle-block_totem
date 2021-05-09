@@ -107,9 +107,10 @@ class block_totem_edit_form extends block_edit_form {
         $mform->setType('config_fullscreenskipweekend', PARAM_BOOL);
         $mform->setDefault('config_fullscreendays', 3);
 
-        // Fullscreen settings
+        // Event type list
         $mform->addElement('textarea', 'config_eventtypelist', get_string('configeventtypelist', 'block_totem'), array('cols'=>'50', rows=>'4'));
         $mform->setDefault('config_eventtypelist', get_string('configeventtypelistdefault', 'block_totem'));
+        
     }
 
     function set_data($defaults) {

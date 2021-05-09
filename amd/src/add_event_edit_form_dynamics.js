@@ -16,7 +16,7 @@ define(['jquery'], function() {
             option.text = '';
             document.getElementById('id_eventtypelist').add(option);
 
-            var list = params.eventypelist.split('\n');
+            var list = params.eventtypelist.split('\n');
             list.forEach(function(item) {
                 var params = item.split('|');
                 var option = document.createElement("option");
