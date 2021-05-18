@@ -40,13 +40,18 @@ $string['configurenewinstance'] = 'Clicca l\'icona modifica per configurare ques
 // Block edit
 $string['configtitledesc'] = 'Titolo del blocco Totem';
 $string['configsourcedesc'] = 'Fonte dei docenti';
+$string['configteachingshow'] = 'Mostra docenti come';
 $string['configblockdaysdesc'] = 'Giorni da mostrare in visualizzazione blocco';
 $string['configteachingdesc'] = 'Materie';
 $string['configpagedaysdesc'] = 'Giorni da mostrare in visalizzazione estesa';
-$string['configfullscreendaysdesc'] = 'Days to show in fullscreen page';
+$string['configfullscreendaysdesc'] = 'Giorni da mostrare in fullscreen';
 $string['configskipweekend'] = 'Nascondi i fine settimana';
 $string['configeventtypelist'] = 'Tipi di evento';
 $string['configeventtypelistdefault'] = 'A|Assenza docente|background-color:red;&#13;R|Recupero ore|background-color:yellow;&#13;F|Liberi|background-color:green;';
+$string['configblockdisplay'] = 'Modello per visualizzazione a blocco';
+$string['configpagedisplay'] = 'Modello per visualizzazione a pagina';
+$string['configdisplaytable'] = 'Tabella';
+$string['configdisplaycompact'] = 'Tabella compatta';
 
 // View page 
 $string['opentotempage'] = 'Visualizza in esteso';

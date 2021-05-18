@@ -129,14 +129,23 @@ class block_totem extends block_base {
             $collapsed = ($i==0 ? FALSE : TRUE);
             if ($this->config->blockskipweekend == 0 || intval($d->format('N')) <= 5) {
                 // initalise new totem element
-                $this->content->text .= $PAGE->get_renderer('block_totem')->render(new \block_totem\data\totemtable([
+                $totem = new \block_totem\data\totemtable([
                     'blockid' => $this->instance->id,
                     'date' => $d->getTimestamp(),
                     'collapsible' => $collapsible,
                     'collapsed' => $collapsed,
                     'showDate' => TRUE,
                     'showHidden' => FALSE
-                ]));
+                ]);
+
+                switch($this->config->blockdisplay) {
+                    case 1:
+                        $this->content->text .= $PAGE->get_renderer('block_totem')->render_compact($totem);
+                        break;
+                    default:
+                        $this->content->text .= $PAGE->get_renderer('block_totem')->render($totem);
+                }
+                
                 $i++;
             }
             $d->modify('+1 day');

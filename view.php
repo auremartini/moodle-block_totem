@@ -127,7 +127,7 @@ while ($i < $block->config->pagedays) {
     $collapsed = ($i==0 ? FALSE : TRUE);
     if ($block->config->pageskipweekend == 0 || intval($d->format('N')) <= 5) {
         // initalise new totem element
-        echo $PAGE->get_renderer('block_totem')->render(new \block_totem\data\totemtable([
+        $totem = new \block_totem\data\totemtable([
             'blockid' => $block->instance->id,
             'date' => $d->getTimestamp(),
             'collapsible' => $collapsible,
@@ -143,7 +143,16 @@ while ($i < $block->config->pagedays) {
             'lang_edit_totemevent' => get_string('edittotemevent', 'block_totem'),
             'lang_copy_totemevent' => get_string('copytotemevent', 'block_totem'),
             'lang_delete_totemevent' => get_string('deletetotemevent', 'block_totem')
-        ]));
+        ]);
+        
+        switch($block->config->pagedisplay) {
+            case 1:
+                echo $PAGE->get_renderer('block_totem')->render_compact($totem);
+                break;
+            default:
+                echo $PAGE->get_renderer('block_totem')->render($totem);
+        }
+        
         $i++;
     }
     $d->modify('+1 day');

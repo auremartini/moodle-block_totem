@@ -40,6 +40,12 @@ class block_totem_edit_form extends block_edit_form {
         $mform->addElement('text', 'config_title', get_string('configtitledesc', 'block_totem'));
         $mform->setType('config_title', PARAM_TEXT);
         
+        // Teachers show setting
+        $TEACHERSDISPLAY = array();
+        $TEACHERSDISPLAY[0] = get_string('idnumber', 'moodle');
+        $TEACHERSDISPLAY[1] = get_string('lastname', 'moodle');
+        $mform->addElement('select', 'config_teachingshow', get_string('configteachingshow', 'block_totem'), $TEACHERSDISPLAY);
+        
         // Teachers list
         $SOURCE = array();
         $SOURCE[0] = get_string('roles', 'moodle');
@@ -79,6 +85,14 @@ class block_totem_edit_form extends block_edit_form {
             'size'=>'20',
             'multiple' => TRUE
         ));
+        $string['configblockdisplay'] = 'Mostra come';
+        $string['configdisplaytable'] = 'Tabella';
+        $string['configdisplaycompact'] = 'Tabella compatta';
+        
+        // Teachers show setting
+        $DISPLAYOPTION = array();
+        $DISPLAYOPTION[0] = get_string('configdisplaytable', 'block_totem');
+        $DISPLAYOPTION[1] = get_string('configdisplaycompact', 'block_totem');
         
         // Block settings
         $a=array();
@@ -88,6 +102,9 @@ class block_totem_edit_form extends block_edit_form {
         $mform->setType('config_blockdays', PARAM_INT);
         $mform->setType('config_blockskipweekend', PARAM_BOOL);
         $mform->setDefault('config_blockdays', 1);
+
+        $mform->addElement('select', 'config_blockdisplay', get_string('configblockdisplay', 'block_totem'), $DISPLAYOPTION);
+        $mform->setDefault('config_blockdisplay', 0);
         
         // Page settings
         $a=array();
@@ -97,6 +114,9 @@ class block_totem_edit_form extends block_edit_form {
         $mform->setType('config_pagedays', PARAM_INT);
         $mform->setType('config_pageskipweekend', PARAM_BOOL);
         $mform->setDefault('config_pagedays', 5);
+
+        $mform->addElement('select', 'config_pagedisplay', get_string('configblockdisplay', 'block_totem'), $DISPLAYOPTION);
+        $mform->setDefault('config_pagedisplay', 0);
         
         // Fullscreen settings
         $a=array();
@@ -106,7 +126,7 @@ class block_totem_edit_form extends block_edit_form {
         $mform->setType('config_fullscreendays', PARAM_INT);
         $mform->setType('config_fullscreenskipweekend', PARAM_BOOL);
         $mform->setDefault('config_fullscreendays', 3);
-
+        
         // Event type list
         $mform->addElement('textarea', 'config_eventtypelist', get_string('configeventtypelist', 'block_totem'), array('cols'=>'50', rows=>'4'));
         $mform->setDefault('config_eventtypelist', get_string('configeventtypelistdefault', 'block_totem'));

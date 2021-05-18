@@ -27,8 +27,8 @@ class renderer extends \plugin_renderer_base {
         return parent::render_from_template('block_totem/totem_table_fullscreen', $totem->export_for_template($this));
     }
 
-    public function render_news($news) {
-        return parent::render_from_template('block_totem/totem_table_news', $news->export_for_template($this));
+    public function render_compact($totem) {
+        return parent::render_from_template('block_totem/totem_table_compact', $totem->export_for_template($this));
     }
     
     public function open_totem($id) {

@@ -69,11 +69,20 @@ class totemtable extends \external_api implements \renderable, \templatable {
         $return = array();
         $sql = '';
         $rs = null;
-        $sql = "SELECT te.id, te.eventtype, u.idnumber, te.teaching, te.subject, te.section, te.time, te.displaytext, te.displayevent
+        $teacherfield = '';
+        switch ($block->config->teachingshow) {
+            case 1: //$TEACHERSDISPLAY[1] = get_string('lastname', 'moodle');
+                $teacherfield = 'u.lastname';
+                break;
+            default:
+                $teacherfield = 'u.idnumber';
+        }
+        
+        $sql = "SELECT te.id, te.eventtype, " . $teacherfield . " AS teacher, te.teaching, te.subject, te.section, te.time, te.displaytext, te.displayevent
             FROM mdl_block_totem_event te
             LEFT JOIN mdl_user u ON te.userid = u.id
             WHERE te.date = :date AND (te.displayevent = 1 OR te.displayevent = :hidden)
-            ORDER BY te.date, te.time, u.idnumber";
+            ORDER BY te.date, te.time, teacher";
 
         if (!$params) {
             $params = array();
@@ -87,7 +96,7 @@ class totemtable extends \external_api implements \renderable, \templatable {
                 'id' => $record->id,
                 'eventtype' => $record->eventtype,
                 'eventtypecss' => ($record->eventtype=='' ? '' : $eventtypelist[$record->eventtype]),
-                'idnumber' => $record->idnumber,
+                'teacher' => $record->teacher,
                 'teaching' => $record->teaching,
                 'subject' => $record->subject,
                 'section' => $record->section,
@@ -189,7 +198,7 @@ class totemtable extends \external_api implements \renderable, \templatable {
                 'id' => new \external_value(PARAM_INT, 'Event ID', PARAM_REQUIRED),
                 'eventtype' => new \external_value(PARAM_TEXT, 'Event type', PARAM_REQUIRED),
                 'eventtypecss' => new \external_value(PARAM_TEXT, 'Event type css', PARAM_REQUIRED),
-                'idnumber' => new \external_value(PARAM_TEXT, 'Teacher Number ID', PARAM_REQUIRED),
+                'teacher' => new \external_value(PARAM_TEXT, 'Teacher', PARAM_REQUIRED),
                 'teaching' => new \external_value(PARAM_TEXT, 'Teaching', PARAM_REQUIRED),
                 'subject' => new \external_value(PARAM_TEXT, 'Subject', PARAM_REQUIRED),
                 'section' => new \external_value(PARAM_TEXT, 'School section', PARAM_REQUIRED),

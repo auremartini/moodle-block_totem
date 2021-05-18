@@ -40,6 +40,7 @@ $string['configurenewinstance'] = 'Click the edit icon above to configure this b
 // Block edit
 $string['configtitledesc'] = 'Totem block title';
 $string['configsourcedesc'] = 'Get teachers from';
+$string['configteachingshow'] = 'Teachers shown as';
 $string['configblockdaysdesc'] = 'Days to show in block';
 $string['configteachingdesc'] = 'Teaching groups';
 $string['configpagedaysdesc'] = 'Days to show in extended page';
@@ -47,6 +48,11 @@ $string['configfullscreendaysdesc'] = 'Days to show in fullscreen page';
 $string['configskipweekend'] = 'Hide week-end days';
 $string['configeventtypelist'] = 'Event type list';
 $string['configeventtypelistdefault'] = 'A|Absent teacher|background-color:red;&#13;R|Reported class|background-color:yellow;&#13;F|Free time|background-color:green;';
+$string['configblockdisplay'] = 'Block display template';
+$string['configpagedisplay'] = 'Page display template';
+$string['configdisplaytable'] = 'Table';
+$string['configdisplaycompact'] = 'Compact table';
+
 
 // View page 
 $string['opentotempage'] = 'Open totem page';

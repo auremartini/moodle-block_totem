@@ -67,7 +67,7 @@ class event_edit_form extends \moodleform {
         $mform->setType('teaching', PARAM_TEXT);
         $mform->setType('subject', PARAM_TEXT);
         
-        // add time element
+        // add section element
         $mform->addElement('text', 'section', get_string('classsection', 'block_totem'), array('size'=>'20'));
         $mform->setType('section', PARAM_TEXT);
         
@@ -87,7 +87,7 @@ class event_edit_form extends \moodleform {
         $a=array();
         $a[] = $mform->createElement('radio', 'displayevent', '', get_string('yes'), 1);
         $a[] = $mform->createElement('radio', 'displayevent', '', get_string('no'), 0);
-        $mform->addGroup($a, 'displayeventgroup', get_string('show', 'block_totem'), array(' '), FALSE);
+        $mform->addGroup($a, 'displayeventgroup', get_string('displayevent', 'block_totem'), array(' '), FALSE);
         $mform->setDefault('displayevent', 1);
         $mform->setType('displayevent', PARAM_INT);
         
