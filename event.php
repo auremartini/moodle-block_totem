@@ -107,8 +107,7 @@ $form->set_data(array(
     'blockid' => $blockid,
     'blockteachings' => $block->config->teachings,
     'source' => $block->config->source,
-    'sourceid' => ($block->config->source == 0 ? $block->config->sourceroleid : $block->config->sourcecohortid),
-    'date' => $date
+    'sourceid' => ($block->config->source == 0 ? $block->config->sourceroleid : $block->config->sourcecohortid)
 ));
 
 // SET PAGE ELEMENTS (HEADER)
