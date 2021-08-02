@@ -41,10 +41,6 @@ class totemtable extends \external_api implements \renderable, \templatable {
         $d->setTimestamp($date);        
         $d->setTime(0,0);
         
-        while ($this->data['skipweekend'] == 1 && intval($d->format('N')) > 5) {
-            $d->modify('+1 day');
-        }
-        
         $this->data['date'] = $d->getTimestamp();
         $this->data['date_text'] = get_string('day-'.$d->format('N'), 'block_totem').' '.$d->format('j').' '.get_string('month-'.$d->format('n'), 'block_totem').' '.$d->format('Y');
 
@@ -82,7 +78,7 @@ class totemtable extends \external_api implements \renderable, \templatable {
             FROM mdl_block_totem_event te
             LEFT JOIN mdl_user u ON te.userid = u.id
             WHERE te.date = :date AND (te.displayevent = 1 OR te.displayevent = :hidden)
-            ORDER BY te.date, te.time, teacher";
+            ORDER BY te.date, te.time, teacher, te.section";
 
         if (!$params) {
             $params = array();

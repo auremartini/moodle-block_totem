@@ -37,9 +37,12 @@ $blockinstance = $DB->get_records('block_instances', array('id' => $blockid));
 $block = block_instance($blockname, $blockinstance[$blockid]);
 $date = optional_param('date', 0, PARAM_INT);
 
+// START PAGE
+$PAGE->set_context(\context_system::instance());
+
+
 // SET PAGE ELEMENTS (HEADER)
 $PAGE->set_url(new moodle_url('/blocks/totem/view.php'));
-$PAGE->set_context(\context_system::instance());
 $PAGE->set_title($block->get_title());
 $PAGE->set_heading($block->get_title());
 $settingsnode = $PAGE->settingsnav->add(get_string('plugintitle', 'block_totem'));

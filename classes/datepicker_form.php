@@ -39,6 +39,7 @@ class datepicker_form extends \moodleform {
     function definition() {
         $mform =& $this->_form;
         $mform->addElement('hidden', 'blockid');
+        $mform->setType('blockid', PARAM_INT);
         
         $a=array();
         $a[] =& $mform->createElement('date_selector', 'date_search', '');

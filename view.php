@@ -33,19 +33,27 @@ require_once(__DIR__ . '/output/renderer.php');
 global $DB, $OUTPUT, $PAGE;
 
 //REQUIRE LOGIN TO SHOW THE CONTENT
-require_login();
+//require_login();
 
 //LOAD PARAMS & OBJECTS
 $blockname = 'totem';
 $blockid = required_param('blockid', PARAM_INT);
 $blockinstance = $DB->get_records('block_instances', array('id' => $blockid));
 $block = block_instance($blockname, $blockinstance[$blockid]);
-$date = intval(optional_param('date', '', PARAM_TEXT));
-$d = new DateTime();
-if ($date) $d->setTimestamp(($date == 0 ? time() : $date));
-$d->setTime(0,0);
-$date=$d->getTimestamp();
 
+$date = intval(optional_param('date', '', PARAM_TEXT));
+$date_search = optional_param('date_search', '', PARAM_INT);
+$d = new DateTime();
+if ($date_search) {
+    $d = date_create($date_search['year']."-".$date_search['month']."-".$date_search['day']." 00:00:00");
+} else {
+    if ($date) $d->setTimestamp(($date == 0 ? time() : $date));
+    $d->setTime(0,0);
+}
+$date = $d->getTimestamp();
+
+// START PAGE
+$PAGE->set_context(\context_system::instance());
 
 // LOAD AND HANDLE TOOLBAR FORM EVENT
 $toolbar = new \block_totem\classes\datepicker_form();
@@ -57,31 +65,12 @@ $PAGE->set_cacheable(false);
 
 // SET PAGE ELEMENTS (HEADER)
 $PAGE->set_url(new moodle_url('/blocks/totem/view.php'));
-$PAGE->set_context(\context_system::instance());
 $PAGE->set_title($block->get_title());
 $PAGE->set_heading($block->get_title());
 $url = new moodle_url('/blocks/totem/view.php', array('blockid' => $blockid));
 $node = $PAGE->settingsnav->add($block->get_title(), $url);
 $node->make_active();
 
-
-// SET MENU
-$menu = '';
-
-$url = new moodle_url('/blocks/totem/event.php', array('blockid' => $blockid));
-$menu .= '<p><form method="post" action="'.$url.'">
-      <button type="submit" class="btn btn-secondary" title="">'.get_string('addtotemelement', 'block_totem').'</button>
-      </form></p>';
-
-$url = new moodle_url('/blocks/totem/fullscreen.php', array('blockid' => $blockid));
-$menu .= '<p><form method="post" action="'.$url.'">
-      <button type="submit" class="btn btn-secondary" title="">'.get_string('fullscreen', 'block_totem').'</button>
-      </form></p>';
-
-$url = new moodle_url('/blocks/totem/config.php', array('blockid' => $blockid, 'date' => $date));
-$menu .= '<p><form method="post" action="'.$url.'">
-      <button type="submit" class="btn btn-secondary" title="">'.get_string('config', 'block_totem').'</button>
-      </form></p>';
 
 // PRINT CONTENT TO PAGE
 $context = context_block::instance($blockid);
@@ -122,6 +111,7 @@ if (count($menu) > 0) {
 $toolbar->display();
 
 //ADD EVENT TABLES
+$i = 0;
 while ($i < $block->config->pagedays) {
     $collapsible = ($block->config->pagedays == 1 ? FALSE : TRUE);
     $collapsed = ($i==0 ? FALSE : TRUE);

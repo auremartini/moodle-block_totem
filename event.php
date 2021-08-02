@@ -40,9 +40,11 @@ $blockinstance = $DB->get_records('block_instances', array('id' => $blockid));
 $block = block_instance($blockname, $blockinstance[$blockid]);
 $date = optional_param('date', '', PARAM_TEXT);
 
+// START PAGE
+$PAGE->set_context(\context_system::instance());
+
 // SET FORM
 $form = new \block_totem\classes\event_edit_form();
-
 
 // HANDLE EVENTS
 if ($action == 'delete') {
@@ -118,7 +120,6 @@ $PAGE->requires->js_call_amd('block_totem/add_event_edit_form_dynamics', 'init',
     'sourceid' => ($block->config->source == 0 ? $block->config->sourceroleid : $block->config->sourcecohortid)
 ]));
 $PAGE->set_url(new moodle_url('/blocks/totem/event.php'));
-$PAGE->set_context(\context_system::instance());
 $PAGE->set_title($block->get_title());
 $PAGE->set_heading($block->get_title());
 $url = new moodle_url('/blocks/totem/view.php', array('blockid' => $blockid));

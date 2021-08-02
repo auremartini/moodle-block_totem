@@ -38,10 +38,15 @@ class event_edit_form extends \moodleform {
     function definition() {
         $mform =& $this->_form;
         $mform->addElement('hidden', 'id');
+        $mform->setType('id', PARAM_INT);
         $mform->addElement('hidden', 'blockid');
+        $mform->setType('blockid', PARAM_INT);
         $mform->addElement('hidden', 'userid');
+        $mform->setType('userid', PARAM_INT);
         $mform->addElement('hidden', 'teaching');
+        $mform->setType('teaching', PARAM_TEXT);
         $mform->addElement('hidden', 'eventtype');
+        $mform->setType('eventtype', PARAM_TEXT);
         
         $EVENT_TYPES = array('' => '');
         

@@ -128,7 +128,7 @@ class block_totem_edit_form extends block_edit_form {
         $mform->setDefault('config_fullscreendays', 3);
         
         // Event type list
-        $mform->addElement('textarea', 'config_eventtypelist', get_string('configeventtypelist', 'block_totem'), array('cols'=>'50', rows=>'4'));
+        $mform->addElement('textarea', 'config_eventtypelist', get_string('configeventtypelist', 'block_totem'), array('cols'=>'50', 'rows'=>'4'));
         $mform->setDefault('config_eventtypelist', get_string('configeventtypelistdefault', 'block_totem'));
         
     }

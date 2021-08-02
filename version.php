@@ -24,6 +24,6 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2021051805;        // The current plugin version (Date: YYYYMMDDXX)
+$plugin->version   = 2021080202;        // The current plugin version (Date: YYYYMMDDXX)
 $plugin->requires  = 2020060900;        // Requires this Moodle version
 $plugin->component = 'block_totem';      // Full name of the plugin (used for diagnostics)
