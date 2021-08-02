@@ -115,7 +115,7 @@ class block_totem_edit_form extends block_edit_form {
         $mform->setType('config_pageskipweekend', PARAM_BOOL);
         $mform->setDefault('config_pagedays', 5);
 
-        $mform->addElement('select', 'config_pagedisplay', get_string('configblockdisplay', 'block_totem'), $DISPLAYOPTION);
+        $mform->addElement('select', 'config_pagedisplay', get_string('configpagedisplay', 'block_totem'), $DISPLAYOPTION);
         $mform->setDefault('config_pagedisplay', 0);
         
         // Fullscreen settings
