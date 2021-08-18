@@ -128,13 +128,7 @@ while ($i < $block->config->pagedays) {
             'showbtn' => has_capability('block/totem:editevent', $context),
             'editbtn' => has_capability('block/totem:editevent', $context),
             'copybtn' => has_capability('block/totem:addevent', $context),
-            'delete' => has_capability('block/totem:deleteevent', $context),
-            'lang_add_totemevent' => get_string('addtotemevent', 'block_totem'),
-            'lang_show_totemevent' => get_string('showtotemevent', 'block_totem'),
-            'lang_hide_totemevent' => get_string('hidetotemevent', 'block_totem'),
-            'lang_edit_totemevent' => get_string('edittotemevent', 'block_totem'),
-            'lang_copy_totemevent' => get_string('copytotemevent', 'block_totem'),
-            'lang_delete_totemevent' => get_string('deletetotemevent', 'block_totem')
+            'delete' => has_capability('block/totem:deleteevent', $context)
         ]);
         
         switch($block->config->pagedisplay) {

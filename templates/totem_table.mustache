@@ -34,7 +34,7 @@
 		   id="totem-switchon-{{date}}" class="{{^collapsed}}hidden{{/collapsed}}">&#9656;</a>
 	{{/collapsible}}
 	{{date_text}}
-	{{#addbtn}}<a href="event.php?blockid={{blockid}}&date={{date}}"><i class="icon fa fa-calendar-plus-o fa-fw  " title="{{lang_new_totemevent}}" aria-label="{{lang_new_totemevent}}"></i></a>{{/addbtn}}
+	{{#addbtn}}<a href="event.php?blockid={{blockid}}&date={{date}}"><i class="icon fa fa-calendar-plus-o fa-fw  " title="{{#str}} addtotemevent, block_totem {{/str}}" aria-label="{{#str}} addtotemevent, block_totem {{/str}}"></i></a>{{/addbtn}}
 	</h3>{{/showDate}}
 	<table id="totem-table-{{date}}" class="generaltable{{#collapsible}}{{#collapsed}} hidden{{/collapsed}}{{/collapsible}}">
 		{{#records}}
@@ -46,10 +46,10 @@
 			<td class="cell c4" width="160rem"><span style="{{#displayhidden}}color: #868e96;{{/displayhidden}}">{{time}}</span></td>
 			<td class="cell c5"><span style="{{#displayhidden}}color: #868e96;{{/displayhidden}}">{{displaytext}}</span></td>
 			<td class="cell c6">
-				{{#editbtn}}<a href="event.php?id={{id}}&blockid={{blockid}}"><i class="icon fa fa-cog fa-fw " title="{{lang_edit_totemevent}}" aria-label="{{lang_edit_totemevent}}"></i></a>{{/editbtn}}
-				{{#copybtn}}<a href="event.php?id={{id}}&blockid={{blockid}}&action=copy"><i class="icon fa fa-copy fa-fw " title="{{lang_copy_totemevent}}" aria-label="{{lang_copy_totemevent}}"></i></a>{{/copybtn}}
-				{{#showbtn}}<a href="event.php?id={{id}}&blockid={{blockid}}&action={{displayevent}}"><i class="icon fa fa-{{displayevent}} fa-fw " title="{{#displayhidden}}{{lang_show_totemevent}}{{/displayhidden}}{{^displayhidden}}{{lang_hide_totemevent}}{{/displayhidden}}" aria-label="{{lang_show_totemevent}}"></i></a>{{/showbtn}}
-				{{#delete}}<a href="#" src="event.php?id={{id}}&blockid={{blockid}}" class="icon-delete"><i class="icon fa fa-trash fa-fw " title="{{lang_delete_totemevent}}" aria-label="{{lang_delete_totemevent}}"></i></a>{{/delete}}
+				{{#editbtn}}<a href="event.php?id={{id}}&blockid={{blockid}}"><i class="icon fa fa-cog fa-fw " title="{{#str}} edittotemevent, block_totem {{/str}}" aria-label="{{#str}} edittotemevent, block_totem {{/str}}"></i></a>{{/editbtn}}
+				{{#copybtn}}<a href="event.php?id={{id}}&blockid={{blockid}}&action=copy"><i class="icon fa fa-copy fa-fw " title="{{#str}} copytotemevent, block_totem {{/str}}" aria-label="{{#str}} copytotemevent, block_totem {{/str}}"></i></a>{{/copybtn}}
+				{{#showbtn}}<a href="event.php?id={{id}}&blockid={{blockid}}&action={{displayevent}}"><i class="icon fa fa-{{displayevent}} fa-fw " title="{{#displayhidden}}{{#str}} showtotemevent, block_totem {{/str}}{{/displayhidden}}{{^displayhidden}}{{#str}} hidetotemevent, block_totem {{/str}}{{/displayhidden}}" aria-label="{{#str}} showtotemevent, block_totem {{/str}}"></i></a>{{/showbtn}}
+				{{#delete}}<a href="#" src="event.php?id={{id}}&blockid={{blockid}}" class="icon-delete"><i class="icon fa fa-trash fa-fw " title="{{#str}} deletetotemevent, block_totem {{/str}}" aria-label="{{#str}} deletetotemevent, block_totem {{/str}}"></i></a>{{/delete}}
 			</td>
 			</tr>
 		{{/records}}
