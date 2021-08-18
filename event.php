@@ -45,6 +45,7 @@ $PAGE->set_context(\context_system::instance());
 
 // SET FORM
 $form = new \block_totem\classes\event_edit_form();
+$form->set_data(array('date'=> $date));
 
 // HANDLE EVENTS
 if ($action == 'delete') {

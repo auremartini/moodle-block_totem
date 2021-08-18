@@ -78,15 +78,15 @@ echo $OUTPUT->header();
 
 // ADD MENU
 $menu = array();
-if (has_capability('block/totem:addevent', $context)) {
-    $menu[] = array(
-        'id' => 'totem_block_dropmenuitem_addevent',
-        'icon' => 'fa-calendar-plus-o',
-        'url' => new moodle_url('/blocks/totem/event.php', array('blockid' => $blockid)),
-        'date' => $date,
-        'title' => get_string('addtotemevent', 'block_totem')
-    );
-}
+// if (has_capability('block/totem:addevent', $context)) {
+//     $menu[] = array(
+//         'id' => 'totem_block_dropmenuitem_addevent',
+//         'icon' => 'fa-calendar-plus-o',
+//         'url' => new moodle_url('/blocks/totem/event.php', array('blockid' => $blockid)),
+//         'date' => $date,
+//         'title' => get_string('addtotemevent', 'block_totem')
+//     );
+// }
 if (has_capability('block/totem:fullscreen', $context)) {
     $menu[] = array(
         'id' => 'totem_block_dropmenuitem_fullscreen',
@@ -124,10 +124,12 @@ while ($i < $block->config->pagedays) {
             'collapsed' => $collapsed,
             'showHidden' => has_capability('block/totem:editevent', $context),
             'showDate' => TRUE,
+            'addbtn' => has_capability('block/totem:addevent', $context),
             'showbtn' => has_capability('block/totem:editevent', $context),
             'editbtn' => has_capability('block/totem:editevent', $context),
             'copybtn' => has_capability('block/totem:addevent', $context),
             'delete' => has_capability('block/totem:deleteevent', $context),
+            'lang_add_totemevent' => get_string('addtotemevent', 'block_totem'),
             'lang_show_totemevent' => get_string('showtotemevent', 'block_totem'),
             'lang_hide_totemevent' => get_string('hidetotemevent', 'block_totem'),
             'lang_edit_totemevent' => get_string('edittotemevent', 'block_totem'),

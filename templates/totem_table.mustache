@@ -33,7 +33,9 @@
 		     document.getElementById('totem-switchon-{{date}}').classList.add('hidden');"
 		   id="totem-switchon-{{date}}" class="{{^collapsed}}hidden{{/collapsed}}">&#9656;</a>
 	{{/collapsible}}
-	{{date_text}}</h3>{{/showDate}}
+	{{date_text}}
+	{{#addbtn}}<a href="event.php?blockid={{blockid}}&date={{date}}"><i class="icon fa fa-calendar-plus-o fa-fw  " title="{{lang_new_totemevent}}" aria-label="{{lang_new_totemevent}}"></i></a>{{/addbtn}}
+	</h3>{{/showDate}}
 	<table id="totem-table-{{date}}" class="generaltable{{#collapsible}}{{#collapsed}} hidden{{/collapsed}}{{/collapsible}}">
 		{{#records}}
 			<tr>
