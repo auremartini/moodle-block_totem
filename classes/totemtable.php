@@ -152,7 +152,8 @@ class totemtable extends \external_api implements \renderable, \templatable {
             'blockid' => new \external_value(PARAM_INT, 'Totem block ID', PARAM_REQUIRED),
             'date' => new \external_value(PARAM_INT, 'Timetable start date', PARAM_REQUIRED),
             'offset' => new \external_value(PARAM_INT, 'Offset filter day', VALUE_OPTIONAL, 0),
-            'skipweekend' => new \external_value(PARAM_INT, 'Skip weekend in offset', PARAM_OPTIONAL, 0)
+            'skipweekend' => new \external_value(PARAM_INT, 'Skip weekend in offset', PARAM_OPTIONAL, 0),
+            'logo' => new \external_value(PARAM_TEXT, 'Moodle logo', PARAM_OPTIONAL, 0)
         ));
     }
     
@@ -160,7 +161,7 @@ class totemtable extends \external_api implements \renderable, \templatable {
         return true;
     }
     
-    public static function get_totemtable($blockid, $date, $offset, $skipweekend) {
+    public static function get_totemtable($blockid, $date, $offset, $skipweekend, $logo) {
         
         //Calculate the day to show
         $d = new \DateTime();
@@ -178,7 +179,8 @@ class totemtable extends \external_api implements \renderable, \templatable {
         //get_records
         $totem = new totemtable(array(
             'blockid' => $blockid,
-            'date' => $d->getTimestamp()
+            'date' => $d->getTimestamp(),
+            'logo' => $logo
         ));
         
         return $totem->export_for_template();
@@ -187,6 +189,7 @@ class totemtable extends \external_api implements \renderable, \templatable {
     public static function get_totemtable_returns() {
         return new \external_single_structure(array(
             'blockid' => new \external_value(PARAM_TEXT, 'Totemtable block ID', PARAM_REQUIRED),
+            'logo' => new \external_value(PARAM_TEXT, 'Moodle logo url', PARAM_REQUIRED),
             'date' => new \external_value(PARAM_TEXT, 'Totemtable date', PARAM_REQUIRED),
             'date_text' => new \external_value(PARAM_TEXT, 'Totemtable date extended text', PARAM_REQUIRED),
             'recordcount' => new \external_value(PARAM_TEXT, 'Totemtable date extended text', PARAM_REQUIRED),

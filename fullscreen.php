@@ -61,7 +61,10 @@ $d->setTime(0,0);
 echo html_writer::start_tag('div', array('data-region' => "totem_fullscreen", 'class' => 'totem-fullscreen'));
 echo html_writer::end_tag('div');
 
+$render = $PAGE->get_renderer('block_totem');
+
 $PAGE->requires->js_call_amd('block_totem/add_totemfullscreen_dynamics', 'init', array([
+    'logo' => $PAGE->get_renderer('block_totem')->get_logo_url()->__toString(),
     'blockid' => intval($block->instance->id),
     'date' => $d->getTimestamp(),
     'offset' => 0,

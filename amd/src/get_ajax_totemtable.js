@@ -8,7 +8,7 @@
 
 define(['jquery', 'core/ajax', 'core/templates', 'core/notification'], function($, ajax, templates, notification) {
     return {
-        load: function(blockid, date, offset, limit, skipweekend) {
+        load: function(blockid, date, offset, limit, skipweekend, logo) {
             if (offset == limit) {
                 offset = 0;
             }
@@ -20,7 +20,8 @@ define(['jquery', 'core/ajax', 'core/templates', 'core/notification'], function(
                         blockid: blockid,
                         date: date,
                         offset: offset,
-                        skipweekend: skipweekend
+                        skipweekend: skipweekend,
+                        logo: logo
                     }
                 }
             ]);
@@ -56,7 +57,7 @@ define(['jquery', 'core/ajax', 'core/templates', 'core/notification'], function(
 
                                 //AJAX CALL
                                 require(["block_totem/get_ajax_totemtable"], function(totemtable) {
-                                    totemtable.load(blockid, date, offset+1, limit, skipweekend);
+                                    totemtable.load(blockid, date, offset+1, limit, skipweekend, logo);
                                 });
                             }, speed);
                         }

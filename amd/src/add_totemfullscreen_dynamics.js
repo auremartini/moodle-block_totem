@@ -10,7 +10,7 @@ define(['jquery'], function() {
     return {
         init: function(params) {
             require(['block_totem/get_ajax_totemtable'], function(totemtable) {
-                totemtable.load(params.blockid, params.date, params.offset, params.limit, params.skipweekend);
+                totemtable.load(params.blockid, params.date, params.offset, params.limit, params.skipweekend, params.logo);
             });
         }
     };
