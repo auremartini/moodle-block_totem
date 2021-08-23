@@ -30,7 +30,7 @@
                     <div class="dropdown-menu dropdown-menu-right menu align-tr-br" id="action-menu-2-menu" data-rel="menu-content" aria-labelledby="action-menu-toggle-2" role="menu" data-align="tr-br">
 						{{#records}}
                     	<div class="dropdown-item">
-							<a href="{{url}}&date={{date}}" id="{{id}}" class="" role="menuitem"><i class="icon fa {{icon}} fa-fw " aria-hidden="true"></i>{{title}}</a>
+							<a href="{{url}}&date={{date}}" {{#target}}target="{{target}}"{{/target}} id="{{id}}" class="" role="menuitem"><i class="icon fa {{icon}} fa-fw " aria-hidden="true"></i>{{title}}</a>
 						</div>
                     	{{/records}}
                     </div>

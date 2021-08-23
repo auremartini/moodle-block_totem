@@ -92,7 +92,8 @@ if (has_capability('block/totem:fullscreen', $context)) {
         'id' => 'totem_block_dropmenuitem_fullscreen',
         'icon' => 'fa-window-maximize',
         'url' => new moodle_url('/blocks/totem/fullscreen.php', array('blockid' => $blockid)),
-        'title' => get_string('fullscreen', 'block_totem')
+        'title' => get_string('fullscreen', 'block_totem'),
+        'target' => '_blank'
     );
 }
 if (has_capability('block/totem:addinstance', $context)) {
