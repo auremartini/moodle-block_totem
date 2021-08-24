@@ -15,6 +15,10 @@ div.totem_fullscreen-msg {
     width: 100%;
 }
 
+.totem-fullscreen .generaltable th, .totem-fullscreen .generaltable td {
+	padding: .6rem;
+}
+
 div.totem-box {
     display: inline-block;
     border: 1px solid black;
