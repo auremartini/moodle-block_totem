@@ -78,7 +78,7 @@ class totemtable extends \external_api implements \renderable, \templatable {
             FROM mdl_block_totem_event te
             LEFT JOIN mdl_user u ON te.userid = u.id
             WHERE te.date = :date AND (te.displayevent = 1 OR te.displayevent = :hidden)
-            ORDER BY te.date, te.time, teacher, te.section";
+            ORDER BY te.date, te.time, te.section";
 
         if (!$params) {
             $params = array();
