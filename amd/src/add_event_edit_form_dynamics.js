@@ -53,7 +53,7 @@ define(['jquery'], function() {
                     response.forEach(function(item) {
                         var option = document.createElement("option");
                         option.value = item.id;
-                        option.text = item.firstname + " " + item.lastname;
+                        option.text = item.lastname + " " + item.firstname;
                         document.getElementById('id_useridlist').add(option);
                     });
                     document.getElementById('id_useridlist').addEventListener('change', function(){
