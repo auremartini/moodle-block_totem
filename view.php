@@ -78,15 +78,15 @@ echo $OUTPUT->header();
 
 // ADD MENU
 $menu = array();
-// if (has_capability('block/totem:addevent', $context)) {
-//     $menu[] = array(
-//         'id' => 'totem_block_dropmenuitem_addevent',
-//         'icon' => 'fa-calendar-plus-o',
-//         'url' => new moodle_url('/blocks/totem/event.php', array('blockid' => $blockid)),
-//         'date' => $date,
-//         'title' => get_string('addtotemevent', 'block_totem')
-//     );
-// }
+if (has_capability('block/totem:filter', $context)) {
+    $menu[] = array(
+        'id' => 'totem_block_dropmenuitem_addevent',
+        'icon' => 'fa-filter',
+        'url' => new moodle_url('/blocks/totem/filter.php', array('blockid' => $blockid)),
+        'date' => $date,
+        'title' => get_string('filterevents', 'block_totem')
+    );
+}
 if (has_capability('block/totem:fullscreen', $context)) {
     $menu[] = array(
         'id' => 'totem_block_dropmenuitem_fullscreen',
@@ -120,6 +120,7 @@ while ($i < $block->config->pagedays) {
         // initalise new totem element
         $totem = new \block_totem\data\totemtable([
             'blockid' => $block->instance->id,
+            'url'=>'/blocks/totem/view.php',
             'date' => $d->getTimestamp(),
             'collapsible' => $collapsible,
             'collapsed' => $collapsed,

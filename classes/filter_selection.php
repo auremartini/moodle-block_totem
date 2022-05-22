@@ -33,28 +33,41 @@ namespace block_totem\classes;
 
 require_once("{$CFG->libdir}/formslib.php");
 
-class event_edit_form extends \moodleform {
+class filter_selection extends \moodleform {
     
     function definition() {
         $mform =& $this->_form;
-        $mform->addElement('hidden', 'id');
-        $mform->setType('id', PARAM_INT);
         $mform->addElement('hidden', 'blockid');
         $mform->setType('blockid', PARAM_INT);
-        $mform->addElement('hidden', 'userid');
-        $mform->setType('userid', PARAM_INT);
         $mform->addElement('hidden', 'url');
         $mform->setType('url', PARAM_TEXT);
-        $mform->addElement('hidden', 'teaching');
+
+        // add date element
+        $mform->addElement('date_selector', 'date', get_string('displaydatefrom', 'block_totem'));
+        $mform->setType('date', PARAM_INT);
+        $mform->addElement('date_selector', 'date_to', get_string('displaydateto', 'block_totem'));
+        $mform->setType('date_to', PARAM_INT);
+        
+        // add teacher element
+        $mform->addElement('text', 'teacher', get_string('teacher', 'block_totem'), array('size'=>'20'));
+        $mform->setType('teacher', PARAM_TEXT);
+        
+        // add subject element
+        $mform->addElement('text', 'teaching', get_string('teaching', 'block_totem'), array('size'=>'20'));
         $mform->setType('teaching', PARAM_TEXT);
-        $mform->addElement('hidden', 'eventtype');
-        $mform->setType('eventtype', PARAM_TEXT);
+
+        // add section element
+        $mform->addElement('text', 'classsection', get_string('classsection', 'block_totem'), array('size'=>'20'));
+        $mform->setType('classsection', PARAM_TEXT);
         
-        $EVENT_TYPES = array('' => '');
+        $this->add_action_buttons();
+
         
-        $TEACHER_LIST = array('0' => '');
-        
-        $TEACHINGS = array();
+/*        
+        'eventtype' => $eventtype,
+        'teacher' => $teacher,
+        'teaching' => $teaching,
+        'classsection' => $classsection
         
         $mform->addElement('header', 'generalhdr', get_string('general'));
 
@@ -62,9 +75,6 @@ class event_edit_form extends \moodleform {
         $mform->addElement('select', 'eventtypelist', get_string('eventtype', 'block_totem'), $EVENT_TYPES);
         $mform->setType('eventtype', PARAM_TEXT);
         
-        // add teacher element
-        $mform->addElement('select', 'useridlist', get_string('teacher', 'block_totem'), $TEACHER_LIST);
-        $mform->setType('useridlist', PARAM_INT);
         
         // add subject element
         $a=array();
@@ -78,9 +88,6 @@ class event_edit_form extends \moodleform {
         $mform->addElement('text', 'section', get_string('classsection', 'block_totem'), array('size'=>'20'));
         $mform->setType('section', PARAM_TEXT);
         
-        // add date element
-        $mform->addElement('date_selector', 'date', get_string('displaydate', 'block_totem'));
-        $mform->setType('date', PARAM_INT);
         
         // add time element
         $mform->addElement('text', 'time', get_string('displaytime', 'block_totem'), array('size'=>'20'));
@@ -98,6 +105,6 @@ class event_edit_form extends \moodleform {
         $mform->setDefault('displayevent', 1);
         $mform->setType('displayevent', PARAM_INT);
         
-        $this->add_action_buttons();
+        $this->add_action_buttons();*/
     }
 }

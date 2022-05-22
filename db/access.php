@@ -72,6 +72,13 @@ $capabilities = array(
         'archetypes' => array(
             'manager' => CAP_ALLOW
         )
-    )
+    ),
     
+    'block/totem:filter' => array(
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_BLOCK,
+        'archetypes' => array(
+            'manager' => CAP_ALLOW
+        )
+    )
 );

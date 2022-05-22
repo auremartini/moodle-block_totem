@@ -57,6 +57,7 @@ $string['configdisplaycompact'] = 'Compact table';
 // View page 
 $string['opentotempage'] = 'Open totem page';
 $string['addtotemevent'] = 'Add event';
+$string['filterevents'] = 'Events filter';
 $string['showtotemevent'] = 'Show to public';
 $string['hidetotemevent'] = 'Hide to public';
 $string['edittotemevent'] = 'Edit event';
@@ -75,6 +76,11 @@ $string['displaydate'] = 'Event date';
 $string['displaytime'] = 'Event time';
 $string['displaytext'] = 'Display message';
 $string['displayevent'] = 'Show event';
+
+// Filter
+$string['selectfilter'] = 'Set filter';
+$string['displaydatefrom'] = 'Show from';
+$string['displaydateto'] = 'Show to';
 
 // Database
 $string['inserteventerror'] = 'Error in insert record in database.';

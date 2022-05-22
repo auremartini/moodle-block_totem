@@ -39,6 +39,7 @@ $blockid = required_param('blockid', PARAM_INT);
 $blockinstance = $DB->get_records('block_instances', array('id' => $blockid));
 $block = block_instance($blockname, $blockinstance[$blockid]);
 $date = optional_param('date', '', PARAM_TEXT);
+$url = optional_param('url', '/blocks/totem/view.php', PARAM_TEXT);
 
 // START PAGE
 $PAGE->set_context(\context_system::instance());
@@ -54,11 +55,11 @@ if ($action == 'delete') {
             print_error('deleteeventerror', 'block_totem');
         }
     }
-    $courseurl = new moodle_url('/blocks/totem/view.php', array('blockid' => $blockid));
+    $courseurl = new moodle_url($url, array('blockid' => $blockid));
     redirect($courseurl);
 } elseif($form->is_cancelled()) {
     // Cancelled forms redirect to the course main page.
-    $courseurl = new moodle_url('/blocks/totem/view.php', array('blockid' => $blockid));
+    $courseurl = new moodle_url($url, array('blockid' => $blockid));
     redirect($courseurl);
 } else if ($record = $form->get_data()) {
     // We need to add code to appropriately act on and store the submitted data
@@ -71,7 +72,7 @@ if ($action == 'delete') {
             print_error('inserteventerror', 'block_totem');
         }
     }
-    $courseurl = new moodle_url('/blocks/totem/view.php', array('blockid' => $blockid, 'date' => $record->date));
+    $courseurl = new moodle_url($url, array('blockid' => $blockid, 'date' => $record->date));
     redirect($courseurl);
 } else if ($action == 'copy') {
     // Load event id data and prepare a new record
@@ -86,7 +87,7 @@ if ($action == 'delete') {
     if (!$DB->update_record('block_totem_event', $record)) {
         print_error('updateeventerror', 'block_totem');
     }
-    $courseurl = new moodle_url('/blocks/totem/view.php', array('blockid' => $blockid, 'date' => $record->date));
+    $courseurl = new moodle_url($url, array('blockid' => $blockid, 'date' => $record->date));
     redirect($courseurl);
 } else if ($action == 'eye-slash') {
     // Update record to hide to public
@@ -95,7 +96,7 @@ if ($action == 'delete') {
     if (!$DB->update_record('block_totem_event', $record)) {
         print_error('updateeventerror', 'block_totem');
     }
-    $courseurl = new moodle_url('/blocks/totem/view.php', array('blockid' => $blockid, 'date' => $record->date));
+    $courseurl = new moodle_url($url, array('blockid' => $blockid, 'date' => $record->date));
     redirect($courseurl);
 } else {
     // Load values to edit
@@ -108,6 +109,7 @@ if ($action == 'delete') {
 $form->set_data(array(
     'id' => $id,
     'blockid' => $blockid,
+    'url'=> $url,
     'blockteachings' => $block->config->teachings,
     'source' => $block->config->source,
     'sourceid' => ($block->config->source == 0 ? $block->config->sourceroleid : $block->config->sourcecohortid)
@@ -123,7 +125,7 @@ $PAGE->requires->js_call_amd('block_totem/add_event_edit_form_dynamics', 'init',
 $PAGE->set_url(new moodle_url('/blocks/totem/event.php'));
 $PAGE->set_title($block->get_title());
 $PAGE->set_heading($block->get_title());
-$url = new moodle_url('/blocks/totem/view.php', array('blockid' => $blockid));
+$url = new moodle_url($url, array('blockid' => $blockid));
 $node = $PAGE->settingsnav->add($block->get_title(), $url);
 $node->make_active();
 $url = new moodle_url('/blocks/totem/event.php', array('blockid' => $blockid, 'id' => $id));

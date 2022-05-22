@@ -42,9 +42,17 @@ class totemtable extends \external_api implements \renderable, \templatable {
         $d->setTime(0,0);
         
         $this->data['date'] = $d->getTimestamp();
-        $this->data['date_text'] = get_string('day-'.$d->format('N'), 'block_totem').' '.$d->format('j').' '.get_string('month-'.$d->format('n'), 'block_totem').' '.$d->format('Y');
+        $this->data['date_text'] = $this->format_date($date);
 
         return $this->data['date'];
+    }
+    
+    private function format_date($date) {
+        $d = new \DateTime();
+        $d->setTimestamp($date);
+        $d->setTime(0,0);
+        
+        return get_string('day-'.$d->format('N'), 'block_totem').' '.$d->format('j').' '.get_string('month-'.$d->format('n'), 'block_totem').' '.$d->format('Y');
     }
     
     public function get_records($params = NULL) {
@@ -74,22 +82,59 @@ class totemtable extends \external_api implements \renderable, \templatable {
                 $teacherfield = 'u.idnumber';
         }
         
-        $sql = "SELECT te.id, te.eventtype, " . $teacherfield . " AS teacher, te.teaching, te.subject, te.section, te.time, te.displaytext, te.displayevent
-            FROM mdl_block_totem_event te
-            LEFT JOIN mdl_user u ON te.userid = u.id
-            WHERE te.date = :date AND (te.displayevent = 1 OR te.displayevent = :hidden)
-            ORDER BY te.date, te.time, te.section";
-
-        if (!$params) {
+        if ($params == null) {
             $params = array();
             $params['date'] = $this->data['date'];
+            if (array_key_exists('date_to', $this->data)) {
+                $params['date_to'] = $this->data['date_to'];
+            }
+            if (array_key_exists('teacher', $this->data) && $this->data['teacher'] != '') {
+                $params['teacher'] = $this->data['teacher'];
+            }
+            if (array_key_exists('teaching', $this->data) && $this->data['teaching'] != '') {
+                $params['teaching'] = $this->data['teaching'];
+            }
+            if (array_key_exists('classsection', $this->data) && $this->data['classsection'] != '') {
+                $params['classsection'] = $this->data['classsection'];
+            }
             $params['hidden'] = ($this->data['showHidden'] == TRUE ? 0 : 1);
         }
+        
+        //SET FILTERS
+        $where = "";
+        //by date
+        if (array_key_exists('date_to', $params)) {
+            $where = " (te.date >= :date AND te.date < :date_to)";
+        } else {
+            $where = " (te.date = :date)";
+        }
+        //by teacher
+        if (array_key_exists('teacher', $params)) {
+            $where .= " AND (LEFT(". $teacherfield .", " . strlen($params['teacher']) .") = :teacher)";
+        }
+        //by teaching
+        if (array_key_exists('teaching', $params)) {
+            $where .= " AND (LEFT(CONCAT(te.teaching, te.subject), " . strlen($params['teaching']) .") = :teaching)";
+        }
+        //by classsection
+        if (array_key_exists('classsection', $params)) {
+            $where .= " AND (te.section = :classsection)";
+        }
+        //by visibility
+        $where .= " AND (te.displayevent = 1 OR te.displayevent = :hidden)";
+
+        $sql = "SELECT te.id, te.date, te.eventtype, " . $teacherfield . " AS teacher, te.teaching, te.subject, te.section, te.time, te.displaytext, te.displayevent
+            FROM mdl_block_totem_event te
+            LEFT JOIN mdl_user u ON te.userid = u.id 
+            WHERE" . $where . "
+            ORDER BY te.date, te.time, te.section";
         
         $rs = $DB->get_records_sql($sql, $params);
         foreach ($rs as $record) {
             $return[] = array(
                 'id' => $record->id,
+                'date' => $record->date,
+                'date_text' => $this->format_date($record->date),
                 'eventtype' => $record->eventtype,
                 'eventtypecss' => ($record->eventtype=='' ? '' : $eventtypelist[$record->eventtype]),
                 'teacher' => $record->teacher,

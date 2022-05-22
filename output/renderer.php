@@ -31,6 +31,10 @@ class renderer extends \plugin_renderer_base {
         return parent::render_from_template('block_totem/totem_table_compact', $totem->export_for_template($this));
     }
     
+    public function render_list($totem) {
+        return parent::render_from_template('block_totem/totem_list', $totem->export_for_template($this));
+    }
+    
     public function open_totem($id) {
         $footer = null;
         $url = new \moodle_url('/blocks/totem/view.php', array('blockid' => $id));

@@ -56,6 +56,7 @@ $string['configdisplaycompact'] = 'Tabella compatta';
 // View page 
 $string['opentotempage'] = 'Visualizza in esteso';
 $string['addtotemevent'] = 'Aggiungi evento';
+$string['filterevents'] = 'Filtra gli eventi';
 $string['showtotemevent'] = 'Pubblica';
 $string['hidetotemevent'] = 'Nascondi';
 $string['edittotemevent'] = 'Modifica';
@@ -74,6 +75,11 @@ $string['displaydate'] = 'Data';
 $string['displaytime'] = 'Orario';
 $string['displaytext'] = 'Messaggio';
 $string['displayevent'] = 'Visualizza evento';
+
+// Filter
+$string['selectfilter'] = 'Imposta filtro';
+$string['displaydatefrom'] = 'Visualizza da';
+$string['displaydateto'] = 'Visualizza fino';
 
 // Database
 $string['inserteventerror'] = 'Errore nell\'inserimento dei dati.';
